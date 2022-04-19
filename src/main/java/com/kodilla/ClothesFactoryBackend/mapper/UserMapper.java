@@ -7,6 +7,8 @@ import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,14 +20,13 @@ public class UserMapper {
 
     public User mapToUser(final UserDto userDto) throws UserNotFoundException, OrderNotFoundException {
         return User.builder()
-                .id(userDto.getId())
                 .name(userDto.getName())
                 .surname(userDto.getSurname())
                 .phoneNumber(userDto.getPhoneNumber())
                 .emailAddress(userDto.getEmailAddress())
                 .password(userDto.getPassword())
-                .cart(cartRepository.findById(userDto.getId()).orElseThrow(UserNotFoundException::new))
-                .ordersList(orderMapper.mapToOrdersFromIds(userDto.getOrdersIdList()))
+               // .cart(cartRepository.findById(userDto.getId()).orElseThrow(UserNotFoundException::new))
+                .ordersList(new ArrayList<>())
                 .build();
     }
 

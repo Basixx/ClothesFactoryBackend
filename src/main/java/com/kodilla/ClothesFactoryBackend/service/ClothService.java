@@ -43,7 +43,7 @@ public class ClothService {
 
     public Cloth editCloth (final Long id, final Cloth cloth) throws ClothNotFoundException {
         Cloth clothFromDb = clothRepository.findById(id).orElseThrow(ClothNotFoundException::new);
-        clothFromDb.setType(clothFromDb.getType());
+        clothFromDb.setFashion(clothFromDb.getFashion());
         clothFromDb.setColor(cloth.getColor());
         clothFromDb.setPrint(cloth.getPrint());
         clothFromDb.setFont(cloth.getFont());

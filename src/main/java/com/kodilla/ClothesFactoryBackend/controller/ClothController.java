@@ -35,7 +35,7 @@ public class ClothController {
     }
 
     @PostMapping
-    public ResponseEntity<ClothDto> createCloth(@RequestBody ClothDto clothDto) throws OrderNotFoundException, CartNotFoundException {
+    public ResponseEntity<ClothDto> createCloth(@RequestBody ClothDto clothDto) {
         return ResponseEntity.ok(clothMapper.mapToClothDto(clothService.createCloth(clothMapper.mapToCloth(clothDto))));
     }
 

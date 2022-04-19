@@ -46,8 +46,8 @@ public class UserService {
     }
 
     public void deleteUser(final Long id) {
-        userRepository.deleteById(id);
         Cart cartFromDb = userRepository.findById(id).get().getCart();
         cartRepository.deleteById(cartFromDb.getId());
+        userRepository.deleteById(id);
     }
 }

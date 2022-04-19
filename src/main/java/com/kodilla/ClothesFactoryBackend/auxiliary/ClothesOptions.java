@@ -30,4 +30,17 @@ public class ClothesOptions {
             Font.LOBSTER, "Lobster",
             Font.COMIC_SANS, "Comic Sans"
     );
+
+    private static final Map<Size, String> sizeMap = Map.of(
+            Size.XS, "XS",
+            Size.S, "S",
+            Size.M, "M",
+            Size.L, "L",
+            Size.XL, "XL",
+            Size.XXL, "XXL"
+    );
+
+    public static String getFashion(String fashion) {
+        return fashionMap.get(fashion);
+    }
 }

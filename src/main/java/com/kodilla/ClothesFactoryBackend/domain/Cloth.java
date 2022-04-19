@@ -1,5 +1,9 @@
 package com.kodilla.ClothesFactoryBackend.domain;
 
+import com.kodilla.ClothesFactoryBackend.auxiliary.Color;
+import com.kodilla.ClothesFactoryBackend.auxiliary.Fashion;
+import com.kodilla.ClothesFactoryBackend.auxiliary.Font;
+import com.kodilla.ClothesFactoryBackend.auxiliary.Size;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,7 +23,7 @@ public class Cloth {
     private Long id;
 
     @NotNull
-    private String type;
+    private String fashion;
 
     @NotNull
     private String color;
@@ -32,6 +36,9 @@ public class Cloth {
 
     @NotNull
     private String printColor;
+
+    @NotNull
+    private String size;
 
     @NotNull
     private int quantity;

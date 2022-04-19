@@ -5,18 +5,19 @@ import com.kodilla.ClothesFactoryBackend.domain.CartDto;
 import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
 public class CartMapper {
-    private final ClothMapper clothMapper;
+    private ClothMapper clothMapper;
 
     public Cart mapToCart(final CartDto cartDto) throws ClothNotFoundException {
         return Cart.builder()
-                .id(cartDto.getId())
                 .totalPrice(cartDto.getTotalPrice())
                 .clothesList(clothMapper.mapToClothesFromIds(cartDto.getClothesIdList()))
                 .build();
