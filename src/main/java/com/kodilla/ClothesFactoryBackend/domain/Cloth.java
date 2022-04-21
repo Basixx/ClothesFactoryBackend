@@ -23,22 +23,27 @@ public class Cloth {
     private Long id;
 
     @NotNull
-    private String fashion;
+    @Enumerated
+    private Fashion fashion;
 
     @NotNull
-    private String color;
+    @Enumerated
+    private Color color;
 
     @NotNull
     private String print;
 
     @NotNull
-    private String font;
+    @Enumerated
+    private Font font;
 
     @NotNull
-    private String printColor;
+    @Enumerated
+    private Color printColor;
 
     @NotNull
-    private String size;
+    @Enumerated
+    private Size size;
 
     @NotNull
     private int quantity;

@@ -7,10 +7,12 @@ import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -42,7 +44,7 @@ public class UserService {
         userFromDb.setPhoneNumber(user.getPhoneNumber());
         userFromDb.setEmailAddress(user.getEmailAddress());
         userFromDb.setPassword(user.getPassword());
-        return userRepository.save(userFromDb);
+        return userFromDb;
     }
 
     public void deleteUser(final Long id) {

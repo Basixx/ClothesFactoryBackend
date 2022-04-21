@@ -12,7 +12,9 @@ import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class CartService {
@@ -39,7 +41,6 @@ public class CartService {
                 .findFirst()
                 .orElseThrow(ClothNotFoundException::new);
         cartFromDb.getClothesList().remove(clothFromCart);
-        cartRepository.save(cartFromDb);
         return cartFromDb;
     }
 }

@@ -13,12 +13,12 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ClothDto {
     private Long id;
-    private String fashion;
-    private String color;
+    private Fashion fashion;
+    private Color color;
     private String print;
-    private String font;
-    private String printColor;
-    private String size;
+    private Font font;
+    private Color printColor;
+    private Size size;
     private int quantity;
     private BigDecimal price;
 }

@@ -1,5 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.service;
 
+import com.kodilla.ClothesFactoryBackend.auxiliary.Prices;
 import com.kodilla.ClothesFactoryBackend.domain.Cart;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
@@ -11,15 +12,20 @@ import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class ClothService {
     private final ClothRepository clothRepository;
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
+    private final Prices prices = new Prices();
 
     public List<Cloth> getAllClothes() {
         return clothRepository.findAll();
@@ -43,11 +49,14 @@ public class ClothService {
 
     public Cloth editCloth (final Long id, final Cloth cloth) throws ClothNotFoundException {
         Cloth clothFromDb = clothRepository.findById(id).orElseThrow(ClothNotFoundException::new);
-        clothFromDb.setFashion(clothFromDb.getFashion());
+        clothFromDb.setFashion(cloth.getFashion());
         clothFromDb.setColor(cloth.getColor());
         clothFromDb.setPrint(cloth.getPrint());
         clothFromDb.setFont(cloth.getFont());
         clothFromDb.setPrintColor(cloth.getPrintColor());
-        return clothRepository.save(clothFromDb);
+        clothFromDb.setSize(cloth.getSize());
+        clothFromDb.setQuantity(cloth.getQuantity());
+        clothFromDb.setPrice(prices.findPrice(clothFromDb.getFashion()).multiply(BigDecimal.valueOf(clothFromDb.getQuantity())));
+        return clothFromDb;
     }
 }

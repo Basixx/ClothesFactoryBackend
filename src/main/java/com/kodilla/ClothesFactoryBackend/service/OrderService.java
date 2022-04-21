@@ -11,11 +11,13 @@ import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -60,7 +62,6 @@ public class OrderService {
             throw new OrderPaidException();
         }
         orderFromDb.setPaid(true);
-        orderRepository.save(orderFromDb);
         return orderFromDb;
     }
 
@@ -70,7 +71,6 @@ public class OrderService {
             throw new OrderPaidException();
         }
         orderFromDb.setSent(true);
-        orderRepository.save(orderFromDb);
         return orderFromDb;
     }
 }

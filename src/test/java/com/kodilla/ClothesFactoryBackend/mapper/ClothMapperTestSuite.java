@@ -1,26 +1,40 @@
 package com.kodilla.ClothesFactoryBackend.mapper;
 
+import com.kodilla.ClothesFactoryBackend.auxiliary.Color;
+import com.kodilla.ClothesFactoryBackend.auxiliary.Fashion;
+import com.kodilla.ClothesFactoryBackend.auxiliary.Font;
+import com.kodilla.ClothesFactoryBackend.auxiliary.Size;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
+import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@ExtendWith(MockitoExtension.class)
 public class ClothMapperTestSuite {
-    private ClothMapper clothMapper = new ClothMapper();
+
+    @Mock
+    private ClothRepository clothRepository;
+
+    private final ClothMapper clothMapper = new ClothMapper();
+
 
     @Test
     public void testMapToCloth() {
         //Given
         ClothDto clothDto = ClothDto.builder()
-                .fashion("Hoodie")
-                .color("red")
+                .fashion(Fashion.HOODIE)
+                .color(Color.RED)
                 .print("hello")
-                .font("Comic sans")
-                .printColor("white")
-                .size("M")
+                .font(Font.ARIAL)
+                .printColor(Color.BLACK)
+                .size(Size.M)
                 .quantity(2)
                 .build();
 
@@ -28,12 +42,12 @@ public class ClothMapperTestSuite {
         Cloth cloth = clothMapper.mapToCloth(clothDto);
 
         //Then
-        assertEquals("Hoodie", cloth.getFashion());
-        assertEquals("red", cloth.getColor());
+        assertEquals(Fashion.HOODIE, cloth.getFashion());
+        assertEquals(Color.RED, cloth.getColor());
         assertEquals("hello", cloth.getPrint());
-        assertEquals("Comic sans", cloth.getFont());
-        assertEquals("white", cloth.getPrintColor());
-        assertEquals("M", cloth.getSize());
+        assertEquals(Font.ARIAL, cloth.getFont());
+        assertEquals(Color.BLACK, cloth.getPrintColor());
+        assertEquals(Size.M, cloth.getSize());
         assertEquals(2, cloth.getQuantity());
         assertEquals(new BigDecimal(200), cloth.getPrice());
     }
@@ -41,29 +55,19 @@ public class ClothMapperTestSuite {
     @Test
     public void testMapToClothDto() {
         //Given
-        Cloth cloth = Cloth.builder()
-                .id(1L)
-                .fashion("Hoodie")
-                .color("red")
-                .print("hello")
-                .font("Comic sans")
-                .printColor("white")
-                .size("M")
-                .quantity(2)
-                .price(new BigDecimal(200))
-                .build();
+        Cloth cloth = createCloth1();
 
         //When
         ClothDto clothDto = clothMapper.mapToClothDto(cloth);
 
         //Then
         assertEquals(1L, clothDto.getId());
-        assertEquals("Hoodie", clothDto.getFashion());
-        assertEquals("red", clothDto.getColor());
+        assertEquals(Fashion.HOODIE, clothDto.getFashion());
+        assertEquals(Color.RED, clothDto.getColor());
         assertEquals("hello", clothDto.getPrint());
-        assertEquals("Comic sans", clothDto.getFont());
-        assertEquals("white", clothDto.getPrintColor());
-        assertEquals("M", clothDto.getSize());
+        assertEquals(Font.ARIAL, clothDto.getFont());
+        assertEquals(Color.BLACK, clothDto.getPrintColor());
+        assertEquals(Size.M, clothDto.getSize());
         assertEquals(2, clothDto.getQuantity());
         assertEquals(new BigDecimal(200), clothDto.getPrice());
     }
@@ -71,32 +75,11 @@ public class ClothMapperTestSuite {
     @Test
     public void testMapToClothDtoList() {
         //Given
-        Cloth cloth = Cloth.builder()
-                .id(1L)
-                .fashion("Hoodie")
-                .color("red")
-                .print("hello")
-                .font("Comic sans")
-                .printColor("white")
-                .size("M")
-                .quantity(2)
-                .price(new BigDecimal(200))
-                .build();
-
-        Cloth cloth2 = Cloth.builder()
-                .id(2L)
-                .fashion("T-Shirt")
-                .color("red")
-                .print("drama")
-                .font("Arial")
-                .printColor("black")
-                .size("XL")
-                .quantity(3)
-                .price(new BigDecimal(150))
-                .build();
+        Cloth cloth1 = createCloth1();
+        Cloth cloth2 = createCloth2();
 
         List<Cloth> clothList = new ArrayList<>();
-        clothList.add(cloth);
+        clothList.add(cloth1);
         clothList.add(cloth2);
 
         //When
@@ -106,81 +89,94 @@ public class ClothMapperTestSuite {
         assertEquals(2, clothDtoList.size());
 
         assertEquals(1L, clothDtoList.get(0).getId());
-        assertEquals("Hoodie", clothDtoList.get(0).getFashion());
-        assertEquals("red", clothDtoList.get(0).getColor());
+        assertEquals(Fashion.HOODIE, clothDtoList.get(0).getFashion());
+        assertEquals(Color.RED, clothDtoList.get(0).getColor());
         assertEquals("hello", clothDtoList.get(0).getPrint());
-        assertEquals("Comic sans", clothDtoList.get(0).getFont());
-        assertEquals("white", clothDtoList.get(0).getPrintColor());
-        assertEquals("M", clothDtoList.get(0).getSize());
+        assertEquals(Font.ARIAL, clothDtoList.get(0).getFont());
+        assertEquals(Color.BLACK, clothDtoList.get(0).getPrintColor());
+        assertEquals(Size.M, clothDtoList.get(0).getSize());
         assertEquals(2, clothDtoList.get(0).getQuantity());
         assertEquals(new BigDecimal(200), clothDtoList.get(0).getPrice());
 
         assertEquals(2L, clothDtoList.get(1).getId());
-        assertEquals("T-Shirt", clothDtoList.get(1).getFashion());
-        assertEquals("red", clothDtoList.get(1).getColor());
+        assertEquals(Fashion.T_SHIRT, clothDtoList.get(1).getFashion());
+        assertEquals(Color.BLACK, clothDtoList.get(1).getColor());
         assertEquals("drama", clothDtoList.get(1).getPrint());
-        assertEquals("Arial", clothDtoList.get(1).getFont());
-        assertEquals("black", clothDtoList.get(1).getPrintColor());
-        assertEquals("XL", clothDtoList.get(1).getSize());
+        assertEquals(Font.COMIC_SANS, clothDtoList.get(1).getFont());
+        assertEquals(Color.WHITE, clothDtoList.get(1).getPrintColor());
+        assertEquals(Size.XXL, clothDtoList.get(1).getSize());
         assertEquals(3, clothDtoList.get(1).getQuantity());
         assertEquals(new BigDecimal(150), clothDtoList.get(1).getPrice());
     }
 
+//    @Test
+//    public void testMapToClothesFromId() throws ClothNotFoundException {
+//
+//        //Given
+//        MockitoAnnotations.openMocks(this);
+//        List<Long> clothesIds = new ArrayList<>();
+//        clothesIds.add(1L);
+//        clothesIds.add(2L);
+//
+//        Cloth cloth1 = createCloth1();
+//        Cloth cloth2 = createCloth2();
+//        when(clothRepository.findById(1L)).thenReturn(Optional.of(cloth1));
+//        when(clothRepository.findById(2L)).thenReturn(Optional.of(cloth2));
+//
+//        //When
+//        List<Cloth> clothes = clothMapper.mapToClothesFromIds(clothesIds);
+//
+//        //Then
+//        assertEquals(2, clothes.size());
+//        assertEquals(1L, clothes.get(0).getId());
+//        assertEquals(2L, clothes.get(1).getId());
+//    }
+
     @Test
     public void mapToClothesIdsFromClothes() {
         //Given
-        Cloth cloth3 = Cloth.builder()
-                .id(3L)
-                .fashion("Hoodie")
-                .color("red")
-                .print("hello")
-                .font("Comic sans")
-                .printColor("white")
-                .size("M")
-                .quantity(2)
-                .price(new BigDecimal(200))
-                .build();
-
-
-
-        Cloth cloth5 = Cloth.builder()
-                .id(5L)
-                .fashion("Hoodie")
-                .color("red")
-                .print("hello")
-                .font("Comic sans")
-                .printColor("white")
-                .size("M")
-                .quantity(2)
-                .price(new BigDecimal(200))
-                .build();
-
-
-        Cloth cloth8 = Cloth.builder()
-                .id(8L)
-                .fashion("Hoodie")
-                .color("red")
-                .print("hello")
-                .font("Comic sans")
-                .printColor("white")
-                .size("M")
-                .quantity(2)
-                .price(new BigDecimal(200))
-                .build();
+        Cloth cloth1 = createCloth1();
+        Cloth cloth2 = createCloth2();
 
         List<Cloth> clothList = new ArrayList<>();
-        clothList.add(cloth3);
-        clothList.add(cloth5);
-        clothList.add(cloth8);
+        clothList.add(cloth1);
+        clothList.add(cloth2);
 
         //When
         List<Long> ids = clothMapper.mapToClothesIdsFromClothes(clothList);
 
         //Then
-        assertEquals(3, ids.size());
+        assertEquals(2, ids.size());
 
-        assertEquals(3L, ids.get(0));
-        assertEquals(5L, ids.get(1));
-        assertEquals(8L, ids.get(2));
+        assertEquals(1L, ids.get(0));
+        assertEquals(2L, ids.get(1));
+    }
+
+    private Cloth createCloth1(){
+        return Cloth.builder()
+                .id(1L)
+                .fashion(Fashion.HOODIE)
+                .color(Color.RED)
+                .print("hello")
+                .font(Font.ARIAL)
+                .printColor(Color.BLACK)
+                .size(Size.M)
+                .quantity(2)
+                .price(new BigDecimal(200))
+                .build();
+    }
+
+    private Cloth createCloth2(){
+        return Cloth.builder()
+                .id(2L)
+                .fashion(Fashion.T_SHIRT)
+                .color(Color.BLACK)
+                .print("drama")
+                .font(Font.COMIC_SANS)
+                .printColor(Color.WHITE)
+                .size(Size.XXL)
+                .quantity(3)
+                .price(new BigDecimal(150))
+                .build();
     }
 }
