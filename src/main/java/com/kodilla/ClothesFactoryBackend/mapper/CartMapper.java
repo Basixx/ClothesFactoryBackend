@@ -12,9 +12,8 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class CartMapper {
-    private ClothMapper clothMapper;
+    private final ClothMapper clothMapper;
 
     public Cart mapToCart(final CartDto cartDto) throws ClothNotFoundException {
         return Cart.builder()

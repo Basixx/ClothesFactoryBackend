@@ -22,8 +22,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ClothService {
+    @Autowired
     private final ClothRepository clothRepository;
+    @Autowired
     private final UserRepository userRepository;
+    @Autowired
     private final OrderRepository orderRepository;
     private final Prices prices = new Prices();
 

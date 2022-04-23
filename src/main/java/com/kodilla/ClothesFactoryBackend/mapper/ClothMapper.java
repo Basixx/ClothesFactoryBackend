@@ -1,14 +1,12 @@
 package com.kodilla.ClothesFactoryBackend.mapper;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.ClothesOptions;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Color;
+
 import com.kodilla.ClothesFactoryBackend.auxiliary.Prices;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
 import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,9 +15,9 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class ClothMapper {
-    private ClothRepository clothRepository;
+    private final ClothRepository clothRepository;
+
     private final Prices prices = new Prices();
 
     public Cloth mapToCloth(final ClothDto clothDto) {
@@ -61,7 +59,8 @@ public class ClothMapper {
 
         if(clothesIds.size() > 0) {
             for (Long clothId : clothesIds) {
-                clothes.add(clothRepository.findById(clothId).orElseThrow(ClothNotFoundException::new));
+                Cloth cloth = clothRepository.findById(clothId).orElseThrow(ClothNotFoundException::new);
+                clothes.add(cloth);
             }
         }
         return clothes;

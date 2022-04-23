@@ -33,6 +33,7 @@ public class UserService {
                 .clothesList(new ArrayList<>())
                 .build();
         user.setCart(userCart);
+        user.setOrdersList(new ArrayList<>());
         cartRepository.save(userCart);
         return userRepository.save(user);
     }

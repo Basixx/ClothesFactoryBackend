@@ -22,12 +22,11 @@ public class OrderMapper {
 
     public Order mapToOrder(final OrderDto orderDto) throws UserNotFoundException, ClothNotFoundException {
         return Order.builder()
-                .id(orderDto.getId())
                 .orderDate(orderDto.getOrderDate())
                 .totalOrderPrice(orderDto.getTotalOrderPrice())
                 .paid(orderDto.isPaid())
                 .sent(orderDto.isSent())
-                .user(userRepository.findById(orderDto.getId()).orElseThrow(UserNotFoundException::new))
+                .user(userRepository.findById(orderDto.getUserId()).orElseThrow(UserNotFoundException::new))
                 .clothesList(clothMapper.mapToClothesFromIds(orderDto.getClothesIdList()))
                 .build();
     }

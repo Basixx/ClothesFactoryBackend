@@ -1,6 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.facade;
 
 import com.kodilla.ClothesFactoryBackend.domain.UserDto;
+import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.mapper.UserMapper;
@@ -23,11 +24,11 @@ public class UserFacade {
         return userMapper.mapToUserDto(userService.getUser(id));
     }
 
-    public UserDto createUser(UserDto userDto) throws UserNotFoundException, OrderNotFoundException {
+    public UserDto createUser(UserDto userDto) throws CartNotFoundException, OrderNotFoundException {
         return userMapper.mapToUserDto(userService.createUser(userMapper.mapToUser(userDto)));
     }
 
-    public UserDto updateUser(Long id, UserDto userDto) throws UserNotFoundException, OrderNotFoundException {
+    public UserDto updateUser(Long id, UserDto userDto) throws UserNotFoundException, CartNotFoundException, OrderNotFoundException {
         return userMapper.mapToUserDto(userService.editUser(id, userMapper.mapToUser(userDto)));
     }
 

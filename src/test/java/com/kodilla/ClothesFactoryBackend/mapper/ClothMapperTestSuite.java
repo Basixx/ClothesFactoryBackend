@@ -6,24 +6,26 @@ import com.kodilla.ClothesFactoryBackend.auxiliary.Font;
 import com.kodilla.ClothesFactoryBackend.auxiliary.Size;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
+import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@ExtendWith(MockitoExtension.class)
+
+@SpringBootTest
+@Transactional
 public class ClothMapperTestSuite {
 
-    @Mock
+    @Autowired
     private ClothRepository clothRepository;
-
-    private final ClothMapper clothMapper = new ClothMapper();
-
+    @Autowired
+    private  ClothMapper clothMapper;
 
     @Test
     public void testMapToCloth() {
@@ -109,11 +111,54 @@ public class ClothMapperTestSuite {
         assertEquals(new BigDecimal(150), clothDtoList.get(1).getPrice());
     }
 
-//    @Test
-//    public void testMapToClothesFromId() throws ClothNotFoundException {
+    @Test
+    public void testMapToClothesFromIds() throws ClothNotFoundException {
+
+        //Given
+        Cloth cloth1 = Cloth.builder()
+                .fashion(Fashion.HOODIE)
+                .color(Color.RED)
+                .print("hello")
+                .font(Font.ARIAL)
+                .printColor(Color.BLACK)
+                .size(Size.M)
+                .quantity(2)
+                .price(new BigDecimal(200))
+                .build();
+        Cloth cloth2 = Cloth.builder()
+                .fashion(Fashion.T_SHIRT)
+                .color(Color.BLACK)
+                .print("drama")
+                .font(Font.COMIC_SANS)
+                .printColor(Color.WHITE)
+                .size(Size.XXL)
+                .quantity(3)
+                .price(new BigDecimal(150))
+                .build();
+
+        clothRepository.save(cloth1);
+        Long cloth1Id = cloth1.getId();
+        clothRepository.save(cloth2);
+        Long cloth2Id = cloth2.getId();
+
+        List<Long> clothesIds = new ArrayList<>();
+        clothesIds.add(cloth1.getId());
+        clothesIds.add(cloth2.getId());
+
+        //When
+        List<Cloth> clothes = clothMapper.mapToClothesFromIds(clothesIds);
+
+        //Then
+        assertEquals(2, clothes.size());
+        assertEquals(cloth1Id, clothes.get(0).getId());
+        assertEquals(cloth2Id, clothes.get(1).getId());
+    }
+
+//        @Test
+//    public void testMapToClothesFromId222() throws ClothNotFoundException {
 //
 //        //Given
-//        MockitoAnnotations.openMocks(this);
+//       // MockitoAnnotations.openMocks(this);
 //        List<Long> clothesIds = new ArrayList<>();
 //        clothesIds.add(1L);
 //        clothesIds.add(2L);

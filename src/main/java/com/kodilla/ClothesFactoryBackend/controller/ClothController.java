@@ -6,6 +6,7 @@ import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.facade.ClothFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequestMapping("/v1/clothes")
 @RequiredArgsConstructor
 public class ClothController {
+    @Autowired
     private final ClothFacade clothFacade;
 
     @GetMapping
