@@ -9,22 +9,24 @@ import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
 import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 
 @SpringBootTest
 @Transactional
 public class ClothMapperTestSuite {
 
-    @Autowired
+    @Mock
     private ClothRepository clothRepository;
-    @Autowired
+    @InjectMocks
     private  ClothMapper clothMapper;
 
     @Test
@@ -80,12 +82,12 @@ public class ClothMapperTestSuite {
         Cloth cloth1 = createCloth1();
         Cloth cloth2 = createCloth2();
 
-        List<Cloth> clothList = new ArrayList<>();
-        clothList.add(cloth1);
-        clothList.add(cloth2);
+        List<Cloth> clothes = new ArrayList<>();
+        clothes.add(cloth1);
+        clothes.add(cloth2);
 
         //When
-        List<ClothDto> clothDtoList = clothMapper.mapToClothDtoList(clothList);
+        List<ClothDto> clothDtoList = clothMapper.mapToClothDtoList(clothes);
 
         //Then
         assertEquals(2, clothDtoList.size());
@@ -113,69 +115,24 @@ public class ClothMapperTestSuite {
 
     @Test
     public void testMapToClothesFromIds() throws ClothNotFoundException {
-
         //Given
-        Cloth cloth1 = Cloth.builder()
-                .fashion(Fashion.HOODIE)
-                .color(Color.RED)
-                .print("hello")
-                .font(Font.ARIAL)
-                .printColor(Color.BLACK)
-                .size(Size.M)
-                .quantity(2)
-                .price(new BigDecimal(200))
-                .build();
-        Cloth cloth2 = Cloth.builder()
-                .fashion(Fashion.T_SHIRT)
-                .color(Color.BLACK)
-                .print("drama")
-                .font(Font.COMIC_SANS)
-                .printColor(Color.WHITE)
-                .size(Size.XXL)
-                .quantity(3)
-                .price(new BigDecimal(150))
-                .build();
-
-        clothRepository.save(cloth1);
-        Long cloth1Id = cloth1.getId();
-        clothRepository.save(cloth2);
-        Long cloth2Id = cloth2.getId();
-
         List<Long> clothesIds = new ArrayList<>();
-        clothesIds.add(cloth1.getId());
-        clothesIds.add(cloth2.getId());
+        clothesIds.add(1L);
+        clothesIds.add(2L);
+
+        Cloth cloth1 = createCloth1();
+        Cloth cloth2 = createCloth2();
+        when(clothRepository.findById(1L)).thenReturn(Optional.of(cloth1));
+        when(clothRepository.findById(2L)).thenReturn(Optional.of(cloth2));
 
         //When
         List<Cloth> clothes = clothMapper.mapToClothesFromIds(clothesIds);
 
         //Then
         assertEquals(2, clothes.size());
-        assertEquals(cloth1Id, clothes.get(0).getId());
-        assertEquals(cloth2Id, clothes.get(1).getId());
+        assertEquals(1L, clothes.get(0).getId());
+        assertEquals(2L, clothes.get(1).getId());
     }
-
-//        @Test
-//    public void testMapToClothesFromId222() throws ClothNotFoundException {
-//
-//        //Given
-//       // MockitoAnnotations.openMocks(this);
-//        List<Long> clothesIds = new ArrayList<>();
-//        clothesIds.add(1L);
-//        clothesIds.add(2L);
-//
-//        Cloth cloth1 = createCloth1();
-//        Cloth cloth2 = createCloth2();
-//        when(clothRepository.findById(1L)).thenReturn(Optional.of(cloth1));
-//        when(clothRepository.findById(2L)).thenReturn(Optional.of(cloth2));
-//
-//        //When
-//        List<Cloth> clothes = clothMapper.mapToClothesFromIds(clothesIds);
-//
-//        //Then
-//        assertEquals(2, clothes.size());
-//        assertEquals(1L, clothes.get(0).getId());
-//        assertEquals(2L, clothes.get(1).getId());
-//    }
 
     @Test
     public void mapToClothesIdsFromClothes() {
@@ -183,12 +140,12 @@ public class ClothMapperTestSuite {
         Cloth cloth1 = createCloth1();
         Cloth cloth2 = createCloth2();
 
-        List<Cloth> clothList = new ArrayList<>();
-        clothList.add(cloth1);
-        clothList.add(cloth2);
+        List<Cloth> clothes = new ArrayList<>();
+        clothes.add(cloth1);
+        clothes.add(cloth2);
 
         //When
-        List<Long> ids = clothMapper.mapToClothesIdsFromClothes(clothList);
+        List<Long> ids = clothMapper.mapToClothesIdsFromClothes(clothes);
 
         //Then
         assertEquals(2, ids.size());

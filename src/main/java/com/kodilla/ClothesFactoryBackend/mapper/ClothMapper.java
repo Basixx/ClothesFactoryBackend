@@ -1,6 +1,5 @@
 package com.kodilla.ClothesFactoryBackend.mapper;
 
-
 import com.kodilla.ClothesFactoryBackend.auxiliary.Prices;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ClothMapper {
     private final ClothRepository clothRepository;
-
     private final Prices prices = new Prices();
 
     public Cloth mapToCloth(final ClothDto clothDto) {

@@ -37,7 +37,10 @@ public class CartRepositoryTestSuite {
                 .emailAddress("john@smith.com")
                 .password("password")
                 .build();
-        Cart cart = Cart.builder().clothesList(new ArrayList<>()).totalPrice(new BigDecimal(50)).build();
+        Cart cart = Cart.builder()
+                .clothesList(new ArrayList<>())
+                .totalPrice(new BigDecimal(50))
+                .build();
         user.setCart(cart);
 
 

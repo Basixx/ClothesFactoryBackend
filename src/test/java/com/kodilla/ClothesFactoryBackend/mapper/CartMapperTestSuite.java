@@ -36,10 +36,7 @@ public class CartMapperTestSuite {
     @Test
     public void testMapToCartDto() {
         //Given
-        Cart cart = Cart.builder()
-                .totalPrice(new BigDecimal(300))
-                .clothesList(new ArrayList<>())
-                .build();
+        Cart cart = createCart(new BigDecimal(300));
 
         //When
         CartDto cartDto = cartMapper.mapToCartDto(cart);
@@ -51,15 +48,9 @@ public class CartMapperTestSuite {
 
     @Test
     public void testMapToCartDtoList() {
-        Cart cart1 = Cart.builder()
-                .totalPrice(new BigDecimal(300))
-                .clothesList(new ArrayList<>())
-                .build();
+        Cart cart1 = createCart(new BigDecimal(300));
 
-        Cart cart2 = Cart.builder()
-                .totalPrice(new BigDecimal(500))
-                .clothesList(new ArrayList<>())
-                .build();
+        Cart cart2 = createCart(new BigDecimal(500));
 
         List<Cart> carts = new ArrayList<>();
         carts.add(cart1);
@@ -72,5 +63,12 @@ public class CartMapperTestSuite {
         assertEquals(2, cartDtoList.size());
         assertEquals(new BigDecimal(300), cartDtoList.get(0).getTotalPrice());
         assertEquals(new BigDecimal(500), cartDtoList.get(1).getTotalPrice());
+    }
+
+    private Cart createCart(BigDecimal price) {
+        return Cart.builder()
+                .totalPrice(price)
+                .clothesList(new ArrayList<>())
+                .build();
     }
 }
