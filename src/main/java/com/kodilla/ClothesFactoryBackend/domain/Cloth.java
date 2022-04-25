@@ -55,7 +55,7 @@ public class Cloth {
     @JoinColumn(name = "ID_CART")
     private Cart cart;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_ORDER")
     private Order order;
 }

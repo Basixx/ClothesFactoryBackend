@@ -52,13 +52,14 @@ public class UserMapperTestSuite {
         //When
         User user = userMapper.mapToUser(userDto);
 
+        Long cartId = user.getCart().getId();
         //Then
         assertEquals("John", user.getName());
         assertEquals("Smith", user.getSurname());
         assertEquals("111111111", user.getPhoneNumber());
         assertEquals("john@smith.com", user.getEmailAddress());
         assertEquals("password1", user.getPassword());
-        assertEquals(2L, user.getCart().getId());
+        assertEquals(2L, cartId);
         assertEquals(0, user.getOrdersList().size());
     }
 

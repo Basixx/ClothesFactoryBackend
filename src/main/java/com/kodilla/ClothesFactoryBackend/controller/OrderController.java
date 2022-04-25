@@ -1,6 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
+import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.OrderPaidException;
 import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
@@ -32,7 +33,7 @@ public class OrderController {
     }
 
     @PostMapping(value = "/{userId}")
-    public ResponseEntity<OrderDto> createOrder(@PathVariable Long userId) throws UserNotFoundException {
+    public ResponseEntity<OrderDto> createOrder(@PathVariable Long userId) throws UserNotFoundException, CartNotFoundException {
         return ResponseEntity.ok(orderFacade.createOrder(userId));
     }
 

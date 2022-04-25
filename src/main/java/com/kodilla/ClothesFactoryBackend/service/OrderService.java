@@ -1,12 +1,15 @@
 package com.kodilla.ClothesFactoryBackend.service;
 
 import com.kodilla.ClothesFactoryBackend.domain.Cart;
+import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.User;
+import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.OrderPaidException;
 import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
+import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,9 +41,9 @@ public class OrderService {
         return orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
     }
 
-    public Order createOrder(final Long userId) throws UserNotFoundException{
+    public Order createOrder(final Long userId) throws UserNotFoundException, CartNotFoundException {
         User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-        Cart cartFromDb = userFromDb.getCart();
+        Cart cartFromDb = cartRepository.findById(userFromDb.getCart().getId()).orElseThrow(CartNotFoundException::new);
         BigDecimal shipping = new BigDecimal(10);
         Order order = Order.builder()
                 .orderDate(LocalDate.now())
@@ -51,8 +54,10 @@ public class OrderService {
                 .clothesList(cartFromDb.getClothesList())
                 .build();
         cartFromDb.setClothesList(new ArrayList<>());
-        cartRepository.save(cartFromDb);
-        orderRepository.save(order);
+        for(Cloth cloth : cartFromDb.getClothesList()){
+            cloth.setCart(null);
+        }
+        System.out.println(cartFromDb.getClothesList().size());
         return order;
     }
 

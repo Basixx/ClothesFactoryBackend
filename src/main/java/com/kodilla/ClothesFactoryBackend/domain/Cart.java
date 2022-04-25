@@ -23,6 +23,7 @@ public class Cart {
     private BigDecimal totalPrice;
 
     @OneToMany(
+            cascade = CascadeType.REMOVE,
             targetEntity = Cloth.class,
             mappedBy = "cart"
     )

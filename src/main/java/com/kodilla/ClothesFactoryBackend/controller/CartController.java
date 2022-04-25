@@ -27,6 +27,6 @@ public class CartController {
 
     @PutMapping("/{idCart}/{idCloth}")
     public ResponseEntity<CartDto> deleteClothFromCart(@PathVariable Long idCart, @PathVariable Long idCloth) throws ClothNotFoundException, CartNotFoundException {
-        return ResponseEntity.ok(cartFacade.addClothToCart(idCart, idCloth));
+        return ResponseEntity.ok(cartFacade.deleteClothFromCart(idCart, idCloth));
     }
 }

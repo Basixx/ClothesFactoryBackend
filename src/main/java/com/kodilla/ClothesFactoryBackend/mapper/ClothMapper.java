@@ -6,6 +6,7 @@ import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
 import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class ClothMapper {
+    @Autowired
     private final ClothRepository clothRepository;
     private final Prices prices = new Prices();
 

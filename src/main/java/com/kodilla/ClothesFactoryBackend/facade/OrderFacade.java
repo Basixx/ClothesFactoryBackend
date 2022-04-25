@@ -1,6 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.facade;
 
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
+import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.OrderPaidException;
 import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
@@ -28,7 +29,7 @@ public class OrderFacade {
         return orderMapper.mapToOrderDtoList(orderService.getAllUsersOrder(userId));
     }
 
-    public OrderDto createOrder(Long userId) throws UserNotFoundException {
+    public OrderDto createOrder(Long userId) throws UserNotFoundException, CartNotFoundException {
         return orderMapper.mapToOrderDto(orderService.createOrder(userId));
     }
 

@@ -37,6 +37,8 @@ public class Order {
     private User user;
 
     @OneToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.REMOVE,
             targetEntity = Cloth.class,
             mappedBy = "order"
     )

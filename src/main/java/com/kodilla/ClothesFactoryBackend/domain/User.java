@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @NotNull
     @Column(unique = true)
     private Long id;
