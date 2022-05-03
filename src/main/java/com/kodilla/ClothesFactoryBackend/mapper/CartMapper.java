@@ -17,7 +17,7 @@ public class CartMapper {
     public Cart mapToCart(final CartDto cartDto) throws ClothNotFoundException {
         return Cart.builder()
                 .totalPrice(cartDto.getTotalPrice())
-                .clothesList(clothMapper.mapToClothesFromIds(cartDto.getClothesIdList()))
+                .clothesList(cartDto.getClothesIdList() == null ? null : clothMapper.mapToClothesFromIds(cartDto.getClothesIdList()))
                 .build();
     }
 

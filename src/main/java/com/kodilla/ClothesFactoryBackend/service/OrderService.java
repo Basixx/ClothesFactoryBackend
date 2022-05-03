@@ -53,12 +53,16 @@ public class OrderService {
                 .totalOrderPrice(cartFromDb.getTotalPrice().add(shipping))
                 .clothesList(cartFromDb.getClothesList())
                 .build();
-        cartFromDb.setClothesList(new ArrayList<>());
+
+
         for(Cloth cloth : cartFromDb.getClothesList()){
             cloth.setCart(null);
+            cloth.setOrder(order);
         }
+        cartFromDb.setTotalPrice(BigDecimal.ZERO);
+        cartFromDb.setClothesList(new ArrayList<>());
         System.out.println(cartFromDb.getClothesList().size());
-        return order;
+        return orderRepository.save(order);
     }
 
     public Order setOrderPaid(final Long id) throws OrderNotFoundException, OrderPaidException {

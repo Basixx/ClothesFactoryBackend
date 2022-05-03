@@ -26,8 +26,8 @@ public class OrderMapper {
                 .totalOrderPrice(orderDto.getTotalOrderPrice())
                 .paid(orderDto.isPaid())
                 .sent(orderDto.isSent())
-                .user(userRepository.findById(orderDto.getUserId()).orElseThrow(UserNotFoundException::new))
-                .clothesList(clothMapper.mapToClothesFromIds(orderDto.getClothesIdList()))
+                .user(orderDto.getUserId() == null ? null : userRepository.findById(orderDto.getUserId()).orElseThrow(UserNotFoundException::new))
+                .clothesList(orderDto.getClothesIdList() == null ? null : clothMapper.mapToClothesFromIds(orderDto.getClothesIdList()))
                 .build();
     }
 

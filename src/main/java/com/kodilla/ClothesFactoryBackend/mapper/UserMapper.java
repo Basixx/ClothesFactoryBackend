@@ -19,14 +19,15 @@ public class UserMapper {
     private final OrderMapper orderMapper;
 
     public User mapToUser(final UserDto userDto) throws CartNotFoundException, OrderNotFoundException {
+
         return User.builder()
                 .name(userDto.getName())
                 .surname(userDto.getSurname())
                 .phoneNumber(userDto.getPhoneNumber())
                 .emailAddress(userDto.getEmailAddress())
                 .password(userDto.getPassword())
-                .cart(cartRepository.findById(userDto.getCartId()).orElseThrow(CartNotFoundException::new))
-                .ordersList(orderMapper.mapToOrdersFromIds(userDto.getOrdersIdList()))
+                .cart(userDto.getCartId() == null ? null : cartRepository.findById(userDto.getCartId()).orElseThrow(CartNotFoundException::new))
+                .ordersList(userDto.getOrdersIdList() == null ? null : orderMapper.mapToOrdersFromIds(userDto.getOrdersIdList()))
                 .build();
     }
 

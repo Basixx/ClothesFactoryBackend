@@ -29,4 +29,5 @@ public class CartController {
     public ResponseEntity<CartDto> deleteClothFromCart(@PathVariable Long idCart, @PathVariable Long idCloth) throws ClothNotFoundException, CartNotFoundException {
         return ResponseEntity.ok(cartFacade.deleteClothFromCart(idCart, idCloth));
     }
+
 }

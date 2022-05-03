@@ -12,7 +12,7 @@ public class Prices {
             case HOODIE:
                 return new BigDecimal(100);
             default:
-                return new BigDecimal(0);
+                return BigDecimal.ZERO;
         }
     }
 }
