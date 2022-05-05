@@ -1,16 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
 import com.google.gson.Gson;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Color;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Fashion;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Font;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Size;
 import com.kodilla.ClothesFactoryBackend.domain.CartDto;
-import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
-import com.kodilla.ClothesFactoryBackend.domain.UserDto;
-import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.facade.CartFacade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +12,14 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @SpringJUnitWebConfig
 @WebMvcTest(CartController.class)
-class CartControllerTestSuit {
+class CartControllerTestSuite {
 
     @Autowired
     private MockMvc mockMvc;

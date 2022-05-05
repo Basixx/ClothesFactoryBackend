@@ -98,14 +98,14 @@ public class OrderMapperTestSuite {
         orders.add(order2);
 
         //When
-        List<OrderDto> orderDtos = orderMapper.mapToOrderDtoList(orders);
+        List<OrderDto> ordersDto = orderMapper.mapToOrderDtoList(orders);
 
         //Then
-        assertEquals(2, orderDtos.size());
-        assertEquals(2L, orderDtos.get(0).getId());
-        assertEquals(3L, orderDtos.get(1).getId());
-        assertEquals(new BigDecimal(20), orderDtos.get(0).getTotalOrderPrice());
-        assertEquals(new BigDecimal(50), orderDtos.get(1).getTotalOrderPrice());
+        assertEquals(2, ordersDto.size());
+        assertEquals(2L, ordersDto.get(0).getId());
+        assertEquals(3L, ordersDto.get(1).getId());
+        assertEquals(new BigDecimal(20), ordersDto.get(0).getTotalOrderPrice());
+        assertEquals(new BigDecimal(50), ordersDto.get(1).getTotalOrderPrice());
     }
 
     @Test

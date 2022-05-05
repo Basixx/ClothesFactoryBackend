@@ -1,10 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
-import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.OrderPaidException;
-import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.facade.OrderFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,17 +30,17 @@ public class OrderController {
     }
 
     @PostMapping(value = "/{userId}")
-    public ResponseEntity<OrderDto> createOrder(@PathVariable Long userId) throws UserNotFoundException, CartNotFoundException {
+    public ResponseEntity<OrderDto> createOrder(@PathVariable Long userId) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
         return ResponseEntity.ok(orderFacade.createOrder(userId));
     }
 
     @PutMapping(value = "/paid/{id}")
-    public ResponseEntity<OrderDto> setOrderToPaid(@PathVariable Long id) throws OrderNotFoundException, OrderPaidException {
+    public ResponseEntity<OrderDto> setOrderToPaid(@PathVariable Long id) throws OrderNotFoundException, OrderAlreadyPaidException {
         return ResponseEntity.ok(orderFacade.setOrderToPaid(id));
     }
 
     @PutMapping(value = "/sent/{id}")
-    public ResponseEntity<OrderDto> setOrderToSent(@PathVariable Long id) throws OrderNotFoundException, OrderPaidException {
+    public ResponseEntity<OrderDto> setOrderToSent(@PathVariable Long id) throws OrderNotFoundException, OrderNotPaidException {
         return ResponseEntity.ok(orderFacade.setOrderToSent(id));
     }
 }

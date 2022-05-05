@@ -98,14 +98,14 @@ public class UserMapperTestSuite {
         users.add(user2);
 
         //When
-        List<UserDto> userDtos = userMapper.mapToUserDtoList(users);
+        List<UserDto> usersDto = userMapper.mapToUserDtoList(users);
 
         //Then
-        assertEquals(2, userDtos.size());
-        assertEquals(6L, userDtos.get(0).getId());
-        assertEquals(7L, userDtos.get(1).getId());
-        assertEquals(4L, userDtos.get(0).getCartId());
-        assertEquals(5L, userDtos.get(1).getCartId());
+        assertEquals(2, usersDto.size());
+        assertEquals(6L, usersDto.get(0).getId());
+        assertEquals(7L, usersDto.get(1).getId());
+        assertEquals(4L, usersDto.get(0).getCartId());
+        assertEquals(5L, usersDto.get(1).getCartId());
     }
 
     private User createUser(Long id, Cart cart) {

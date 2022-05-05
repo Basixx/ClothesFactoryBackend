@@ -1,12 +1,9 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
 import com.kodilla.ClothesFactoryBackend.domain.UserDto;
-import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -15,7 +12,7 @@ import java.util.List;
 @RequestMapping("/v1/users")
 @RequiredArgsConstructor
 public class UserController {
-    @Autowired
+
     private final UserFacade userFacade;
 
     @GetMapping
@@ -29,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) throws CartNotFoundException, OrderNotFoundException {
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) throws CartNotFoundException, OrderNotFoundException, UserAlreadyExistsException {
         return ResponseEntity.ok(userFacade.createUser(userDto));
     }
 
@@ -42,5 +39,10 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userFacade.deleteUser(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/{email}/{password}")
+    public ResponseEntity<UserDto> authenticateUser(@PathVariable String email, @PathVariable String password) throws UserNotFoundException, WrongPasswordException {
+        return ResponseEntity.ok(userFacade.authenticateUser(email, password));
     }
 }

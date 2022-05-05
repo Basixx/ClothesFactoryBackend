@@ -2,11 +2,12 @@ package com.kodilla.ClothesFactoryBackend.service;
 
 import com.kodilla.ClothesFactoryBackend.domain.Cart;
 import com.kodilla.ClothesFactoryBackend.domain.User;
+import com.kodilla.ClothesFactoryBackend.exception.UserAlreadyExistsException;
 import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.WrongPasswordException;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
@@ -17,9 +18,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    @Autowired
+
     private final UserRepository userRepository;
-    @Autowired
     private final CartRepository cartRepository;
 
     public List<User> getAllUsers() {
@@ -30,15 +30,19 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
-    public User createUser(final User user) {
-        Cart userCart = Cart.builder()
-                .totalPrice(BigDecimal.ZERO)
-                .clothesList(new ArrayList<>())
-                .build();
-        user.setCart(userCart);
-        user.setOrdersList(new ArrayList<>());
-        cartRepository.save(userCart);
-        return userRepository.save(user);
+    public User createUser(final User user) throws UserAlreadyExistsException {
+        if(userRepository.existsUserByEmailAddress(user.getEmailAddress())) {
+            throw new UserAlreadyExistsException();
+        } else {
+            Cart userCart = Cart.builder()
+                    .totalPrice(BigDecimal.ZERO)
+                    .clothesList(new ArrayList<>())
+                    .build();
+            user.setCart(userCart);
+            user.setOrdersList(new ArrayList<>());
+            cartRepository.save(userCart);
+            return userRepository.save(user);
+        }
     }
 
     public User editUser(final Long id, final User user) throws UserNotFoundException {
@@ -55,5 +59,17 @@ public class UserService {
         Cart cartFromDb = userRepository.findById(id).get().getCart();
         cartRepository.deleteById(cartFromDb.getId());
         userRepository.deleteById(id);
+    }
+
+    public User authenticateUser(final String email, final String password) throws UserNotFoundException, WrongPasswordException {
+        User userFromDb = userRepository.findByEmailAddress(email).orElseThrow(UserNotFoundException::new);
+
+        if(password.equals(userFromDb.getPassword())) {
+            return userFromDb;
+        } else {
+            throw new WrongPasswordException();
+        }
+
+
     }
 }

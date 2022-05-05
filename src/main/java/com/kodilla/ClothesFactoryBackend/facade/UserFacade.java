@@ -1,9 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.facade;
 
 import com.kodilla.ClothesFactoryBackend.domain.UserDto;
-import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.mapper.UserMapper;
 import com.kodilla.ClothesFactoryBackend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +22,7 @@ public class UserFacade {
         return userMapper.mapToUserDto(userService.getUser(id));
     }
 
-    public UserDto createUser(UserDto userDto) throws CartNotFoundException, OrderNotFoundException {
+    public UserDto createUser(UserDto userDto) throws CartNotFoundException, OrderNotFoundException, UserAlreadyExistsException {
         return userMapper.mapToUserDto(userService.createUser(userMapper.mapToUser(userDto)));
     }
 
@@ -34,5 +32,9 @@ public class UserFacade {
 
     public void deleteUser(Long id) {
         userService.deleteUser(id);
+    }
+
+    public UserDto authenticateUser(String email, String password) throws UserNotFoundException, WrongPasswordException {
+        return userMapper.mapToUserDto(userService.authenticateUser(email, password));
     }
 }

@@ -1,10 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.facade;
 
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
-import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.OrderPaidException;
-import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.mapper.OrderMapper;
 import com.kodilla.ClothesFactoryBackend.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -32,15 +29,15 @@ public class OrderFacade {
         return orderMapper.mapToOrderDtoList(orderService.getAllUsersOrder(userId));
     }
 
-    public OrderDto createOrder(Long userId) throws UserNotFoundException, CartNotFoundException {
+    public OrderDto createOrder(Long userId) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
         return orderMapper.mapToOrderDto(orderService.createOrder(userId));
     }
 
-    public OrderDto setOrderToPaid(Long id) throws OrderNotFoundException, OrderPaidException {
+    public OrderDto setOrderToPaid(Long id) throws OrderNotFoundException, OrderAlreadyPaidException {
         return orderMapper.mapToOrderDto(orderService.setOrderPaid(id));
     }
 
-    public OrderDto setOrderToSent(Long id) throws OrderNotFoundException, OrderPaidException {
+    public OrderDto setOrderToSent(Long id) throws OrderNotFoundException, OrderNotPaidException {
         return orderMapper.mapToOrderDto(orderService.setOrderSent(id));
     }
 }

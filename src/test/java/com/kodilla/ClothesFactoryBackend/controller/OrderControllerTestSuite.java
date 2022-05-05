@@ -1,12 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
-import com.google.gson.Gson;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
-import com.kodilla.ClothesFactoryBackend.domain.UserDto;
-import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.OrderPaidException;
-import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.facade.OrderFacade;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -24,7 +18,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 

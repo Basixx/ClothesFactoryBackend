@@ -4,12 +4,8 @@ import com.kodilla.ClothesFactoryBackend.domain.Cart;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.User;
-import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.OrderPaidException;
-import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
-import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,43 +37,48 @@ public class OrderService {
         return orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
     }
 
-    public Order createOrder(final Long userId) throws UserNotFoundException, CartNotFoundException {
+    public Order createOrder(final Long userId) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
         User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Cart cartFromDb = cartRepository.findById(userFromDb.getCart().getId()).orElseThrow(CartNotFoundException::new);
         BigDecimal shipping = new BigDecimal(10);
-        Order order = Order.builder()
-                .orderDate(LocalDate.now())
-                .paid(false)
-                .sent(false)
-                .user(userFromDb)
-                .totalOrderPrice(cartFromDb.getTotalPrice().add(shipping))
-                .clothesList(cartFromDb.getClothesList())
-                .build();
+
+        if(cartFromDb.getClothesList().size() == 0) {
+            throw new EmptyCartException();
+        } else {
+            Order order = Order.builder()
+                    .orderDate(LocalDate.now())
+                    .paid(false)
+                    .sent(false)
+                    .user(userFromDb)
+                    .totalOrderPrice(cartFromDb.getTotalPrice().add(shipping))
+                    .clothesList(cartFromDb.getClothesList())
+                    .build();
 
 
-        for(Cloth cloth : cartFromDb.getClothesList()){
-            cloth.setCart(null);
-            cloth.setOrder(order);
+            for(Cloth cloth : cartFromDb.getClothesList()){
+                cloth.setCart(null);
+                cloth.setOrder(order);
+            }
+            cartFromDb.setTotalPrice(BigDecimal.ZERO);
+            cartFromDb.setClothesList(new ArrayList<>());
+            System.out.println(cartFromDb.getClothesList().size());
+            return orderRepository.save(order);
         }
-        cartFromDb.setTotalPrice(BigDecimal.ZERO);
-        cartFromDb.setClothesList(new ArrayList<>());
-        System.out.println(cartFromDb.getClothesList().size());
-        return orderRepository.save(order);
     }
 
-    public Order setOrderPaid(final Long id) throws OrderNotFoundException, OrderPaidException {
+    public Order setOrderPaid(final Long id) throws OrderNotFoundException, OrderAlreadyPaidException {
         Order orderFromDb = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
         if (orderFromDb.isPaid()) {
-            throw new OrderPaidException();
+            throw new OrderAlreadyPaidException();
         }
         orderFromDb.setPaid(true);
         return orderFromDb;
     }
 
-    public Order setOrderSent(final Long id) throws OrderNotFoundException, OrderPaidException {
+    public Order setOrderSent(final Long id) throws OrderNotFoundException, OrderNotPaidException {
         Order orderFromDb = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
         if (!orderFromDb.isPaid()) {
-            throw new OrderPaidException();
+            throw new OrderNotPaidException();
         }
         orderFromDb.setSent(true);
         return orderFromDb;

@@ -10,10 +10,8 @@ import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
 import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.math.BigDecimal;
 
 @Transactional
@@ -34,7 +32,7 @@ public class CartService {
         Cloth clothFromDb = clothRepository.findById(clothId).orElseThrow(ClothNotFoundException::new);
         clothFromDb.setCart(cartFromDb);
         cartFromDb.getClothesList().add(clothFromDb);
-        BigDecimal price = cartFromDb.getClothesList().stream().map(cloth -> cloth.getPrice()).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal price = cartFromDb.getClothesList().stream().map(Cloth::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
         cartFromDb.setTotalPrice(price);
         return cartFromDb;
     }
@@ -46,7 +44,7 @@ public class CartService {
                 .findFirst()
                 .orElseThrow(ClothNotFoundException::new);
         cartFromDb.getClothesList().remove(clothFromCart);
-        BigDecimal price = cartFromDb.getClothesList().stream().map(cloth -> cloth.getPrice()).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal price = cartFromDb.getClothesList().stream().map(Cloth::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
         cartFromDb.setTotalPrice(price);
         clothRepository.delete(clothFromCart);
         return cartFromDb;

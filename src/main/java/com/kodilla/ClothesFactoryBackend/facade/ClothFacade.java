@@ -7,17 +7,13 @@ import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.mapper.ClothMapper;
 import com.kodilla.ClothesFactoryBackend.service.ClothService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ClothFacade {
-
-    @Autowired
     private final ClothMapper clothMapper;
-    @Autowired
     private final ClothService clothService;
 
     public List<ClothDto> getClothes(){

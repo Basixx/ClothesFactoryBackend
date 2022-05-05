@@ -12,7 +12,6 @@ import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
@@ -22,11 +21,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ClothService {
-    @Autowired
     private final ClothRepository clothRepository;
-    @Autowired
+
     private final UserRepository userRepository;
-    @Autowired
+
     private final OrderRepository orderRepository;
     private final Prices prices = new Prices();
 
