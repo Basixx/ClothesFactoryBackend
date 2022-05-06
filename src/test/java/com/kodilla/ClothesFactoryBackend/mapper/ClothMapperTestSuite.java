@@ -1,9 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.mapper;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.Color;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Fashion;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Font;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Size;
+import com.kodilla.ClothesFactoryBackend.auxiliary.*;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
 import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
@@ -11,6 +8,7 @@ import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,6 +26,10 @@ public class ClothMapperTestSuite {
     private ClothRepository clothRepository;
     @InjectMocks
     private  ClothMapper clothMapper;
+
+    @Autowired
+    private Prices prices;
+
 
     @Test
     public void testMapToCloth() {

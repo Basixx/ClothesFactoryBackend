@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 @Component
 public class Prices {
-    public final BigDecimal findPrice(final Fashion fashion){
+    public static BigDecimal findPrice(final Fashion fashion){
         switch (fashion){
             case T_SHIRT:
                 return new BigDecimal(50);
