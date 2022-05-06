@@ -1,5 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.client.exchange_rates_api;
 
+import com.kodilla.ClothesFactoryBackend.domain.ExchangeRatesClientDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public class ExchangeRatesClient {
     @Value("${exchange.rates.api.key:defaultValue}")
     private String getExchangeRateKey;
 
-    public ExchangeRatesDto getConversion(String to, String from, BigDecimal amount) {
+    public ExchangeRatesClientDto getConversion(String to, String from, BigDecimal amount) {
         URI url = UriComponentsBuilder.fromHttpUrl(
                 exchangeRateEndpoint)
                 .queryParam("to", to)
@@ -32,10 +33,10 @@ public class ExchangeRatesClient {
                 .encode()
                 .toUri();
 
-        ExchangeRatesDto rateResponse = restTemplate.getForObject(
+        ExchangeRatesClientDto rateResponse = restTemplate.getForObject(
                 url,
-                ExchangeRatesDto.class
+                ExchangeRatesClientDto.class
         );
-        return Optional.ofNullable(rateResponse).orElse(new ExchangeRatesDto());
+        return Optional.ofNullable(rateResponse).orElse(new ExchangeRatesClientDto());
     }
 }
