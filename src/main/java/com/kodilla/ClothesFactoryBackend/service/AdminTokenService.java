@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -16,7 +18,10 @@ public class AdminTokenService {
         return adminTokenRepository.existsByToken(token);
     }
 
-    public AdminToken saveToken(final AdminToken adminToken) {
+    public AdminToken saveToken() {
+        adminTokenRepository.deleteAll();
+        String tokenString = UUID.randomUUID().toString();
+        AdminToken adminToken = AdminToken.builder().token(tokenString).build();
         return adminTokenRepository.save(adminToken);
     }
 }

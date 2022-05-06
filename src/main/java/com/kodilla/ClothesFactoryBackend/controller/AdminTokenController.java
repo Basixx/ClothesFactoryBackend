@@ -19,7 +19,7 @@ public class AdminTokenController {
     }
 
     @PostMapping
-    public ResponseEntity<AdminTokenDto> createToken(@RequestBody AdminTokenDto adminTokenDto) {
-        return ResponseEntity.ok(adminTokenFacade.createToken(adminTokenDto));
+    public ResponseEntity<AdminTokenDto> createToken() {
+        return ResponseEntity.ok(adminTokenFacade.createToken());
     }
 }

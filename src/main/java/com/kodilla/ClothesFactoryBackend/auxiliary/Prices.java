@@ -1,7 +1,10 @@
 package com.kodilla.ClothesFactoryBackend.auxiliary;
 
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 
+@Component
 public class Prices {
     public final BigDecimal findPrice(final Fashion fashion){
         switch (fashion){

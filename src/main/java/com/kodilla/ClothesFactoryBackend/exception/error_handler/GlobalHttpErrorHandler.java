@@ -20,6 +20,11 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>("User with given id doesn't exist or can't be found.", HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UserEmailNotFoundException.class)
+    public ResponseEntity<Object> handleUserEmailNotFoundException() {
+        return new ResponseEntity<>("User with given email does not exist.", HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(OrderNotFoundException.class)
     public ResponseEntity<Object> handleOrderNotFoundException() {
         return new ResponseEntity<>("Order with given id doesn't exist or can't be found.", HttpStatus.NOT_FOUND);
@@ -48,6 +53,11 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(OrderAlreadyPaidException.class)
     public ResponseEntity<Object> handleOrderAlreadyPaidException() {
         return new ResponseEntity<>("Order has already been paid.", HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    @ExceptionHandler(OrderAlreadySentException.class)
+    public ResponseEntity<Object> handleOrderAlreadySentException() {
+        return new ResponseEntity<>("Order has already been sent.", HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler(EmptyCartException.class)

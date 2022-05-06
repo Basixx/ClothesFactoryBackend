@@ -40,7 +40,7 @@ public class OrderController {
     }
 
     @PutMapping(value = "/sent/{id}")
-    public ResponseEntity<OrderDto> setOrderToSent(@PathVariable Long id) throws OrderNotFoundException, OrderNotPaidException {
+    public ResponseEntity<OrderDto> setOrderToSent(@PathVariable Long id) throws OrderNotFoundException, OrderNotPaidException, OrderAlreadySentException {
         return ResponseEntity.ok(orderFacade.setOrderToSent(id));
     }
 }

@@ -5,16 +5,14 @@ import com.kodilla.ClothesFactoryBackend.domain.UserDto;
 import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserMapper {
-    @Autowired
     private final CartRepository cartRepository;
     private final OrderMapper orderMapper;
 

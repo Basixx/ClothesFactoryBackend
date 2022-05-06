@@ -37,7 +37,7 @@ public class OrderFacade {
         return orderMapper.mapToOrderDto(orderService.setOrderPaid(id));
     }
 
-    public OrderDto setOrderToSent(Long id) throws OrderNotFoundException, OrderNotPaidException {
+    public OrderDto setOrderToSent(Long id) throws OrderNotFoundException, OrderNotPaidException, OrderAlreadySentException {
         return orderMapper.mapToOrderDto(orderService.setOrderSent(id));
     }
 }

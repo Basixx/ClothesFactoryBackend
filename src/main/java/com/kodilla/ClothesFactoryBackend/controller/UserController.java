@@ -2,6 +2,7 @@ package com.kodilla.ClothesFactoryBackend.controller;
 
 import com.kodilla.ClothesFactoryBackend.domain.UserDto;
 import com.kodilla.ClothesFactoryBackend.exception.*;
+import com.kodilla.ClothesFactoryBackend.exception.UserEmailNotFoundException;
 import com.kodilla.ClothesFactoryBackend.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{email}/{password}")
-    public ResponseEntity<UserDto> authenticateUser(@PathVariable String email, @PathVariable String password) throws UserNotFoundException, WrongPasswordException {
+    public ResponseEntity<UserDto> authenticateUser(@PathVariable String email, @PathVariable String password) throws UserEmailNotFoundException, WrongPasswordException {
         return ResponseEntity.ok(userFacade.authenticateUser(email, password));
     }
 }

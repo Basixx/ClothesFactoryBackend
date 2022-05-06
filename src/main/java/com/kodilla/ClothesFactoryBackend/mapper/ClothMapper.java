@@ -5,8 +5,7 @@ import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
 import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,11 +13,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ClothMapper {
-    @Autowired
     private final ClothRepository clothRepository;
-    private final Prices prices = new Prices();
+    private final Prices prices;
 
     public Cloth mapToCloth(final ClothDto clothDto) {
 

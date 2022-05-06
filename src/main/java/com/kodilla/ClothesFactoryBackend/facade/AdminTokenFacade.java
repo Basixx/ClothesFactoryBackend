@@ -16,7 +16,7 @@ public class AdminTokenFacade {
         return adminTokenService.existsByToken(token);
     }
 
-    public AdminTokenDto createToken(AdminTokenDto adminTokenDto) {
-        return adminTokenMapper.mapToAdminTokenDto(adminTokenService.saveToken(adminTokenMapper.mapToAdminToken(adminTokenDto)));
+    public AdminTokenDto createToken() {
+        return adminTokenMapper.mapToAdminTokenDto(adminTokenService.saveToken());
     }
 }

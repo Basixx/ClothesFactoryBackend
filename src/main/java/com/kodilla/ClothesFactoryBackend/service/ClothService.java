@@ -26,7 +26,7 @@ public class ClothService {
     private final UserRepository userRepository;
 
     private final OrderRepository orderRepository;
-    private final Prices prices = new Prices();
+    private final Prices prices;
 
     public List<Cloth> getAllClothes() {
         return clothRepository.findAll();

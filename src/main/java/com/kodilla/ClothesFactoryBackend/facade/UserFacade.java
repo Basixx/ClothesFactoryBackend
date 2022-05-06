@@ -2,6 +2,7 @@ package com.kodilla.ClothesFactoryBackend.facade;
 
 import com.kodilla.ClothesFactoryBackend.domain.UserDto;
 import com.kodilla.ClothesFactoryBackend.exception.*;
+import com.kodilla.ClothesFactoryBackend.exception.UserEmailNotFoundException;
 import com.kodilla.ClothesFactoryBackend.mapper.UserMapper;
 import com.kodilla.ClothesFactoryBackend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,7 @@ public class UserFacade {
         userService.deleteUser(id);
     }
 
-    public UserDto authenticateUser(String email, String password) throws UserNotFoundException, WrongPasswordException {
+    public UserDto authenticateUser(String email, String password) throws UserEmailNotFoundException, WrongPasswordException {
         return userMapper.mapToUserDto(userService.authenticateUser(email, password));
     }
 }

@@ -7,14 +7,14 @@ import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class OrderMapper {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
@@ -52,8 +52,8 @@ public class OrderMapper {
     public List<Order> mapToOrdersFromIds(final List<Long> ordersIds) throws OrderNotFoundException {
         List<Order> orders = new ArrayList<>();
 
-        if(ordersIds.size() > 0) {
-            for (Long orderId : ordersIds){
+        if (ordersIds.size() > 0) {
+            for (Long orderId : ordersIds) {
                 orders.add(orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new));
             }
         }

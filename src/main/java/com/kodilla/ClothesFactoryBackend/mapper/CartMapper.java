@@ -3,13 +3,13 @@ package com.kodilla.ClothesFactoryBackend.mapper;
 import com.kodilla.ClothesFactoryBackend.domain.Cart;
 import com.kodilla.ClothesFactoryBackend.domain.CartDto;
 import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CartMapper {
     private final ClothMapper clothMapper;
 

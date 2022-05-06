@@ -75,10 +75,12 @@ public class OrderService {
         return orderFromDb;
     }
 
-    public Order setOrderSent(final Long id) throws OrderNotFoundException, OrderNotPaidException {
+    public Order setOrderSent(final Long id) throws OrderNotFoundException, OrderNotPaidException, OrderAlreadySentException {
         Order orderFromDb = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
         if (!orderFromDb.isPaid()) {
             throw new OrderNotPaidException();
+        } else if (orderFromDb.isSent()) {
+            throw new OrderAlreadySentException();
         }
         orderFromDb.setSent(true);
         return orderFromDb;

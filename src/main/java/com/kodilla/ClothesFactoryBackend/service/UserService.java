@@ -5,6 +5,7 @@ import com.kodilla.ClothesFactoryBackend.domain.User;
 import com.kodilla.ClothesFactoryBackend.exception.UserAlreadyExistsException;
 import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.WrongPasswordException;
+import com.kodilla.ClothesFactoryBackend.exception.UserEmailNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -61,8 +62,8 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User authenticateUser(final String email, final String password) throws UserNotFoundException, WrongPasswordException {
-        User userFromDb = userRepository.findByEmailAddress(email).orElseThrow(UserNotFoundException::new);
+    public User authenticateUser(final String email, final String password) throws UserEmailNotFoundException, WrongPasswordException {
+        User userFromDb = userRepository.findByEmailAddress(email).orElseThrow(UserEmailNotFoundException::new);
 
         if(password.equals(userFromDb.getPassword())) {
             return userFromDb;
