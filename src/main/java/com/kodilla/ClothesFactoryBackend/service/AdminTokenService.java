@@ -24,4 +24,8 @@ public class AdminTokenService {
         AdminToken adminToken = AdminToken.builder().token(tokenString).build();
         return adminTokenRepository.save(adminToken);
     }
+
+    public void deleteAllTokens() {
+        adminTokenRepository.deleteAll();
+    }
 }

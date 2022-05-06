@@ -19,4 +19,8 @@ public class AdminTokenFacade {
     public AdminTokenDto createToken() {
         return adminTokenMapper.mapToAdminTokenDto(adminTokenService.saveToken());
     }
+
+    public void deleteAllTokens() {
+        adminTokenService.deleteAllTokens();
+    }
 }

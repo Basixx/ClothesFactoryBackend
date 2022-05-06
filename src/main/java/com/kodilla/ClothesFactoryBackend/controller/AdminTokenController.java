@@ -22,4 +22,10 @@ public class AdminTokenController {
     public ResponseEntity<AdminTokenDto> createToken() {
         return ResponseEntity.ok(adminTokenFacade.createToken());
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteTokens() {
+        adminTokenFacade.deleteAllTokens();
+        return ResponseEntity.ok().build();
+    }
 }
