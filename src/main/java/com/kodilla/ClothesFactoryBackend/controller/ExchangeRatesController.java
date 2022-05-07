@@ -21,12 +21,13 @@ public class ExchangeRatesController {
 
     private  final ExchangeRateFacade exchangeRateFacade;
     @GetMapping(value = "/simpleRate")
-    public void getSimpleExchangeRate(@RequestParam java.lang.String to, @RequestParam java.lang.String from, @RequestParam BigDecimal amount) {
+    public ResponseEntity<Void> getSimpleExchangeRate(@RequestParam java.lang.String to, @RequestParam java.lang.String from, @RequestParam BigDecimal amount) {
         ExchangeRatesClientDto exchangeRatesClientDto = exchangeRatesClient.getConversion(
                 to,
                 from,
                 amount
         );
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping

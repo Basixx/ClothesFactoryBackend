@@ -3,6 +3,7 @@ package com.kodilla.ClothesFactoryBackend.controller;
 import com.kodilla.ClothesFactoryBackend.domain.AdminTokenDto;
 import com.kodilla.ClothesFactoryBackend.facade.AdminTokenFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +21,12 @@ public class AdminTokenController {
 
     @PostMapping
     public ResponseEntity<AdminTokenDto> createToken() {
-        return ResponseEntity.ok(adminTokenFacade.createToken());
+        return ResponseEntity.status(HttpStatus.CREATED).body(adminTokenFacade.createToken());
     }
 
     @DeleteMapping
     public ResponseEntity<Void> deleteTokens() {
         adminTokenFacade.deleteAllTokens();
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

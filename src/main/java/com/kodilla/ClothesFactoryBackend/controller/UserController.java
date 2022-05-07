@@ -5,6 +5,7 @@ import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.exception.UserEmailNotFoundException;
 import com.kodilla.ClothesFactoryBackend.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -28,7 +29,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) throws CartNotFoundException, OrderNotFoundException, UserAlreadyExistsException {
-        return ResponseEntity.ok(userFacade.createUser(userDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userFacade.createUser(userDto));
     }
 
     @PutMapping("/{id}")
@@ -39,7 +40,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userFacade.deleteUser(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping(value = "/{email}/{password}")

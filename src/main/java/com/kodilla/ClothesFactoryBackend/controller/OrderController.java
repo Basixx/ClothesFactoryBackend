@@ -4,6 +4,7 @@ import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
 import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.facade.OrderFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -31,7 +32,7 @@ public class OrderController {
 
     @PostMapping(value = "/{userId}")
     public ResponseEntity<OrderDto> createOrder(@PathVariable Long userId) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
-        return ResponseEntity.ok(orderFacade.createOrder(userId));
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderFacade.createOrder(userId));
     }
 
     @PutMapping(value = "/paid/{id}")
