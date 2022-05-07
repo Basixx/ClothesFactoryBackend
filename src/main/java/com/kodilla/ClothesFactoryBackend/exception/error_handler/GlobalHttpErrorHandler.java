@@ -64,4 +64,14 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleEmptyCartException() {
         return new ResponseEntity<>("You cannot create an order from an empty cart.", HttpStatus.METHOD_NOT_ALLOWED);
     }
+
+    @ExceptionHandler(CurrencyExchangeFailedException.class)
+    public ResponseEntity<Object> handleCurrencyExchangeFailedException() {
+        return new ResponseEntity<>("Currency exchange failed, try again later.", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ProfanityCheckFailedException.class)
+    public ResponseEntity<Object> handleProfanityCheckFailedException() {
+        return new ResponseEntity<>("Profanity check failed, try again later.", HttpStatus.BAD_REQUEST);
+    }
 }

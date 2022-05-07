@@ -1,7 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.auxiliary;
 
 import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
 
 @Component

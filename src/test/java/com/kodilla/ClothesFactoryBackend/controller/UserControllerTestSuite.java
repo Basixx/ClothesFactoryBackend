@@ -88,7 +88,7 @@ class UserControllerTestSuite {
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
-                .andExpect(MockMvcResultMatchers.status().is(200));
+                .andExpect(MockMvcResultMatchers.status().is(201));
     }
 
     @Test
@@ -120,7 +120,7 @@ class UserControllerTestSuite {
                         .delete("/v1/users/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8"))
-                .andExpect(MockMvcResultMatchers.status().is(200));
+                .andExpect(MockMvcResultMatchers.status().is(204));
     }
 
     private UserDto createUserDto() {

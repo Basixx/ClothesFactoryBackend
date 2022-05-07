@@ -1,6 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.client.exchange_rates_api;
 
 import com.kodilla.ClothesFactoryBackend.domain.ExchangeRatesClientDto;
+import com.kodilla.ClothesFactoryBackend.exception.CurrencyExchangeFailedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -12,23 +13,23 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class ExchangeRatesClient {
+public class ExchangeRatesApiClient {
 
     private final RestTemplate restTemplate;
 
     @Value("${exchange.rates.api.endpoint:defaultValue}")
     private String exchangeRateEndpoint;
 
-    @Value("${exchange.rates.api.key:defaultValue}")
-    private String getExchangeRateKey;
+    @Value("${api.layer.key:defaultValue}")
+    private String exchangeRateKey;
 
-    public ExchangeRatesClientDto getConversion(String to, String from, BigDecimal amount) {
+    public ExchangeRatesClientDto getConversion(String to, String from, BigDecimal amount) throws CurrencyExchangeFailedException {
         URI url = UriComponentsBuilder.fromHttpUrl(
                 exchangeRateEndpoint)
                 .queryParam("to", to)
                 .queryParam("from", from)
                 .queryParam("amount", amount)
-                .queryParam("apikey", getExchangeRateKey)
+                .queryParam("apikey", exchangeRateKey)
                 .build()
                 .encode()
                 .toUri();
@@ -37,6 +38,6 @@ public class ExchangeRatesClient {
                 url,
                 ExchangeRatesClientDto.class
         );
-        return Optional.ofNullable(rateResponse).orElse(new ExchangeRatesClientDto());
+        return Optional.ofNullable(rateResponse).orElseThrow(CurrencyExchangeFailedException::new);
     }
 }

@@ -1,6 +1,5 @@
 package com.kodilla.ClothesFactoryBackend.domain;
 
-
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

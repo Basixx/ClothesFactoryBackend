@@ -33,6 +33,7 @@ dependencies {
 
 	testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.12.4'
 
+	compileOnly('com.google.code.gson:gson')
 	testImplementation('com.google.code.gson:gson')
 }
 
