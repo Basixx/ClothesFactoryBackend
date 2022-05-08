@@ -20,12 +20,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClothService {
     private final ClothRepository clothRepository;
-
     private final UserRepository userRepository;
-
     private final OrderRepository orderRepository;
     private final BadWordsService badWordsService;
-    private final Prices prices;
 
     public List<Cloth> getAllClothes() {
         return clothRepository.findAll();
@@ -56,7 +53,7 @@ public class ClothService {
 
     public Cloth editCloth (final Long id, final Cloth cloth) throws ClothNotFoundException, ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
         Cloth clothFromDb = clothRepository.findById(id).orElseThrow(ClothNotFoundException::new);
-        boolean containsBadWords = badWordsService.containsBadWords(clothFromDb.getPrint());
+        boolean containsBadWords = badWordsService.containsBadWords(cloth.getPrint());
 
         if(!containsBadWords){
             clothFromDb.setFashion(cloth.getFashion());
@@ -66,9 +63,9 @@ public class ClothService {
             clothFromDb.setPrintColor(cloth.getPrintColor());
             clothFromDb.setSize(cloth.getSize());
             clothFromDb.setQuantity(cloth.getQuantity());
-            clothFromDb.setPrice(prices.findPrice(clothFromDb.getFashion()).multiply(BigDecimal.valueOf(clothFromDb.getQuantity())));
-            BigDecimal price = clothFromDb.getCart().getClothesList().stream().map(Cloth::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
-            clothFromDb.getCart().setTotalPrice(price);
+            clothFromDb.setPrice(Prices.findPrice(clothFromDb.getFashion()).multiply(BigDecimal.valueOf(clothFromDb.getQuantity())));
+            BigDecimal cartPrice = clothFromDb.getCart().getClothesList().stream().map(Cloth::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+            clothFromDb.getCart().setTotalPrice(cartPrice);
             return clothFromDb;
         } else {
             throw new ClothPrintContainsBadWordsException();
