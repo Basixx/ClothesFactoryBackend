@@ -1,9 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.facade;
 
 import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
-import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.mapper.ClothMapper;
 import com.kodilla.ClothesFactoryBackend.service.ClothService;
 import lombok.RequiredArgsConstructor;
@@ -28,11 +26,11 @@ public class ClothFacade {
         return clothMapper.mapToClothDtoList(clothService.getAllClothesFromOrder(orderId));
     }
 
-    public ClothDto createCloth(ClothDto clothDto) {
+    public ClothDto createCloth(ClothDto clothDto) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
         return clothMapper.mapToClothDto(clothService.createCloth(clothMapper.mapToCloth(clothDto)));
     }
 
-    public ClothDto updateCloth(Long id, ClothDto clothDto) throws ClothNotFoundException {
+    public ClothDto updateCloth(Long id, ClothDto clothDto) throws ClothNotFoundException, ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
         return clothMapper.mapToClothDto(clothService.editCloth(id, clothMapper.mapToCloth(clothDto)));
     }
 }

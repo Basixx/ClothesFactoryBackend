@@ -11,6 +11,6 @@ public class BadWordsFacade {
     private final BadWordsService badWordsService;
 
     public boolean getProfanityCheck(String text) throws ProfanityCheckFailedException {
-        return badWordsService.getBadWordsCount(text);
+        return badWordsService.containsBadWords(text);
     }
 }

@@ -5,9 +5,7 @@ import com.kodilla.ClothesFactoryBackend.domain.Cart;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.User;
-import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
@@ -26,6 +24,7 @@ public class ClothService {
     private final UserRepository userRepository;
 
     private final OrderRepository orderRepository;
+    private final BadWordsService badWordsService;
     private final Prices prices;
 
     public List<Cloth> getAllClothes() {
@@ -44,22 +43,35 @@ public class ClothService {
         return orderFromDb.getClothesList();
     }
 
-    public Cloth createCloth (final Cloth cloth) {
-        return clothRepository.save(cloth);
+    public Cloth createCloth (final Cloth cloth) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
+
+        boolean containsBadWords = badWordsService.containsBadWords(cloth.getPrint());
+        if(!containsBadWords){
+            return clothRepository.save(cloth);
+        } else {
+            throw new ClothPrintContainsBadWordsException();
+        }
+
     }
 
-    public Cloth editCloth (final Long id, final Cloth cloth) throws ClothNotFoundException {
+    public Cloth editCloth (final Long id, final Cloth cloth) throws ClothNotFoundException, ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
         Cloth clothFromDb = clothRepository.findById(id).orElseThrow(ClothNotFoundException::new);
-        clothFromDb.setFashion(cloth.getFashion());
-        clothFromDb.setColor(cloth.getColor());
-        clothFromDb.setPrint(cloth.getPrint());
-        clothFromDb.setFont(cloth.getFont());
-        clothFromDb.setPrintColor(cloth.getPrintColor());
-        clothFromDb.setSize(cloth.getSize());
-        clothFromDb.setQuantity(cloth.getQuantity());
-        clothFromDb.setPrice(prices.findPrice(clothFromDb.getFashion()).multiply(BigDecimal.valueOf(clothFromDb.getQuantity())));
-        BigDecimal price = clothFromDb.getCart().getClothesList().stream().map(Cloth::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
-        clothFromDb.getCart().setTotalPrice(price);
-        return clothFromDb;
+        boolean containsBadWords = badWordsService.containsBadWords(clothFromDb.getPrint());
+
+        if(!containsBadWords){
+            clothFromDb.setFashion(cloth.getFashion());
+            clothFromDb.setColor(cloth.getColor());
+            clothFromDb.setPrint(cloth.getPrint());
+            clothFromDb.setFont(cloth.getFont());
+            clothFromDb.setPrintColor(cloth.getPrintColor());
+            clothFromDb.setSize(cloth.getSize());
+            clothFromDb.setQuantity(cloth.getQuantity());
+            clothFromDb.setPrice(prices.findPrice(clothFromDb.getFashion()).multiply(BigDecimal.valueOf(clothFromDb.getQuantity())));
+            BigDecimal price = clothFromDb.getCart().getClothesList().stream().map(Cloth::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+            clothFromDb.getCart().setTotalPrice(price);
+            return clothFromDb;
+        } else {
+            throw new ClothPrintContainsBadWordsException();
+        }
     }
 }

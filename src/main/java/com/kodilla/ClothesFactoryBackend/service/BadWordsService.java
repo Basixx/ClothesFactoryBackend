@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BadWordsService {
     private final BadWordsApiClient badWordsClient;
 
-    public boolean getBadWordsCount(String text) throws ProfanityCheckFailedException {
+    public boolean containsBadWords(String text) throws ProfanityCheckFailedException {
         BadWordsClientDto badWordsClientDto = badWordsClient.checkProfanity(text);
         int badWordsCount = badWordsClientDto.getBadWordsTotal();
 

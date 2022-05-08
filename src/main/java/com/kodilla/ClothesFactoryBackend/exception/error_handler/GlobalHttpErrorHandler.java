@@ -74,4 +74,9 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleProfanityCheckFailedException() {
         return new ResponseEntity<>("Profanity check failed, try again later.", HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ClothPrintContainsBadWordsException.class)
+    public ResponseEntity<Object> handleClothPrintContainsBadWordsException() {
+        return new ResponseEntity<>("Cloth print cannot contain any bad words, please change your choice.", HttpStatus.METHOD_NOT_ALLOWED);
+    }
 }
