@@ -18,8 +18,8 @@ public class ClothController {
     private final ClothFacade clothFacade;
 
     @GetMapping
-    public ResponseEntity<List<ClothDto>> getClothes() {
-        return ResponseEntity.ok(clothFacade.getClothes());
+    public ResponseEntity<List<ClothDto>> getAllClothes() {
+        return ResponseEntity.ok(clothFacade.getAllClothes());
     }
 
     @GetMapping(value = "/fromUserCart/{userId}")

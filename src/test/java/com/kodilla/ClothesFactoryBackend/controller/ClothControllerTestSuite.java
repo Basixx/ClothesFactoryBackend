@@ -38,7 +38,7 @@ class ClothControllerTestSuite {
         // Given
         List<ClothDto> clothesDto = createClothDtoList();
 
-        when(clothFacade.getClothes()).thenReturn(clothesDto);
+        when(clothFacade.getAllClothes()).thenReturn(clothesDto);
 
         //When & Then
         mockMvc

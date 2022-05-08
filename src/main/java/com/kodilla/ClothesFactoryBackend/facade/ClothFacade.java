@@ -16,7 +16,7 @@ public class ClothFacade {
     private final ClothMapper clothMapper;
     private final ClothService clothService;
 
-    public List<ClothDto> getClothes(){
+    public List<ClothDto> getAllClothes(){
         return clothMapper.mapToClothDtoList(clothService.getAllClothes());
     }
 
