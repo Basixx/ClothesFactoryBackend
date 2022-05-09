@@ -35,6 +35,18 @@ public class User {
     @NotNull
     private String password;
 
+    @NotNull
+    private String street;
+
+    @NotNull
+    private String streetAndApartmentNumber;
+
+    @NotNull
+    private String city;
+
+    @NotNull
+    private String postCode;
+
     @OneToOne
     @JoinColumn(name = "ID_CART")
     private Cart cart;

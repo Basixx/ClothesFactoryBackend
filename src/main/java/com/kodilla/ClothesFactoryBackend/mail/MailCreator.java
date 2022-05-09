@@ -52,4 +52,11 @@ public class MailCreator {
         String message = "Your order " + order.getId() + " has been sent, you will receive it in a few days.";
         return new Mail(userEmail, subject, message);
     }
+
+    public Mail createTokenMail(String token) {
+        String adminMail = adminConfig.getAdminMail();
+        String subject = "New Admin Token generated.";
+        String message = "Admin token has been generated, enter below code to log in as admin: \n" + token;
+        return new Mail(adminMail, subject, message);
+    }
 }

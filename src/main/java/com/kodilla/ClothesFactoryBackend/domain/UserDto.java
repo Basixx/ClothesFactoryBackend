@@ -14,6 +14,10 @@ public class UserDto {
     private String phoneNumber;
     private String emailAddress;
     private String password;
+    private String street;
+    private String streetAndApartmentNumber;
+    private String city;
+    private String postCode;
     private Long cartId;
     private List<Long> ordersIdList;
 }

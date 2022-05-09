@@ -24,6 +24,10 @@ public class UserMapper {
                 .phoneNumber(userDto.getPhoneNumber())
                 .emailAddress(userDto.getEmailAddress())
                 .password(userDto.getPassword())
+                .street(userDto.getStreet())
+                .streetAndApartmentNumber(userDto.getStreetAndApartmentNumber())
+                .city(userDto.getCity())
+                .postCode(userDto.getPostCode())
                 .cart(userDto.getCartId() == null ? null : cartRepository.findById(userDto.getCartId()).orElseThrow(CartNotFoundException::new))
                 .ordersList(userDto.getOrdersIdList() == null ? null : orderMapper.mapToOrdersFromIds(userDto.getOrdersIdList()))
                 .build();
@@ -37,6 +41,10 @@ public class UserMapper {
                 .phoneNumber(user.getPhoneNumber())
                 .emailAddress(user.getEmailAddress())
                 .password(user.getPassword())
+                .street(user.getStreet())
+                .streetAndApartmentNumber(user.getStreetAndApartmentNumber())
+                .city(user.getCity())
+                .postCode(user.getPostCode())
                 .cartId(user.getCart().getId())
                 .ordersIdList(orderMapper.mapToOrdersIdsFromOrders(user.getOrdersList()))
                 .build();
