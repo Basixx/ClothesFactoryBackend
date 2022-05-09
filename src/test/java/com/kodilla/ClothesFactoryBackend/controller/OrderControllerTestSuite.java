@@ -1,5 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
+import com.kodilla.ClothesFactoryBackend.auxiliary.Shipment;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
 import com.kodilla.ClothesFactoryBackend.facade.OrderFacade;
 import org.hamcrest.Matchers;
@@ -16,6 +17,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -92,12 +95,13 @@ class OrderControllerTestSuite {
         //Given
         OrderDto orderDto = createOrderDto();
 
-        when(orderFacade.createOrder(anyLong())).thenReturn(orderDto);
+
+        when(orderFacade.createOrder(anyLong(), any(Shipment.class))).thenReturn(orderDto);
 
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/v1/orders/2")
+                        .post("/v1/orders/2/UPS")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8"))
                 .andExpect(MockMvcResultMatchers.status().is(201));

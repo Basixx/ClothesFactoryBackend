@@ -63,7 +63,7 @@ public class ClothService {
             clothFromDb.setPrintColor(cloth.getPrintColor());
             clothFromDb.setSize(cloth.getSize());
             clothFromDb.setQuantity(cloth.getQuantity());
-            clothFromDb.setPrice(Prices.findPrice(clothFromDb.getFashion()).multiply(BigDecimal.valueOf(clothFromDb.getQuantity())));
+            clothFromDb.setPrice(Prices.findClothPrice(clothFromDb.getFashion()).multiply(BigDecimal.valueOf(clothFromDb.getQuantity())));
             BigDecimal cartPrice = clothFromDb.getCart().getClothesList().stream().map(Cloth::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
             clothFromDb.getCart().setTotalPrice(cartPrice);
             return clothFromDb;

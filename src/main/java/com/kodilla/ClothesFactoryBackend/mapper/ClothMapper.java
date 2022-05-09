@@ -27,7 +27,7 @@ public class ClothMapper {
                 .printColor(clothDto.getPrintColor())
                 .size(clothDto.getSize())
                 .quantity(clothDto.getQuantity())
-                .price(Prices.findPrice(clothDto.getFashion()).multiply(BigDecimal.valueOf(clothDto.getQuantity())))
+                .price(Prices.findClothPrice(clothDto.getFashion()).multiply(BigDecimal.valueOf(clothDto.getQuantity())))
                 .build();
     }
 

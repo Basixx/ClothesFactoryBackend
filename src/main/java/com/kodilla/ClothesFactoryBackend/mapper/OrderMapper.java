@@ -1,5 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.mapper;
 
+import com.kodilla.ClothesFactoryBackend.auxiliary.Prices;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
 import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
@@ -26,6 +27,8 @@ public class OrderMapper {
                 .totalOrderPrice(orderDto.getTotalOrderPrice())
                 .paid(orderDto.isPaid())
                 .sent(orderDto.isSent())
+                .shipment(orderDto.getShipment())
+                .shippingPrice(Prices.findShippingPrice(orderDto.getShipment()))
                 .user(orderDto.getUserId() == null ? null : userRepository.findById(orderDto.getUserId()).orElseThrow(UserNotFoundException::new))
                 .clothesList(orderDto.getClothesIdList() == null ? null : clothMapper.mapToClothesFromIds(orderDto.getClothesIdList()))
                 .build();
@@ -38,6 +41,8 @@ public class OrderMapper {
                 .totalOrderPrice(order.getTotalOrderPrice())
                 .paid(order.isPaid())
                 .sent(order.isSent())
+                .shipment(order.getShipment())
+                .shippingPrice(order.getShippingPrice())
                 .userId(order.getUser().getId())
                 .clothesIdList(clothMapper.mapToClothesIdsFromClothes(order.getClothesList()))
                 .build();

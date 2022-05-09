@@ -31,4 +31,8 @@ public class ExchangeRatesService {
             return exchangeRatesRepository.save(exchangeRate);
         }
     }
+
+    public void deleteAllRates() {
+        exchangeRatesRepository.deleteAll();
+    }
 }

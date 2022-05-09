@@ -1,10 +1,10 @@
 package com.kodilla.ClothesFactoryBackend.service;
 
-import com.kodilla.ClothesFactoryBackend.domain.Cart;
-import com.kodilla.ClothesFactoryBackend.domain.Cloth;
-import com.kodilla.ClothesFactoryBackend.domain.Order;
-import com.kodilla.ClothesFactoryBackend.domain.User;
+import com.kodilla.ClothesFactoryBackend.auxiliary.Prices;
+import com.kodilla.ClothesFactoryBackend.auxiliary.Shipment;
+import com.kodilla.ClothesFactoryBackend.domain.*;
 import com.kodilla.ClothesFactoryBackend.exception.*;
+import com.kodilla.ClothesFactoryBackend.mail.MailCreator;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
 import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
@@ -23,6 +23,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
+    private final EmailService emailService;
+    private final MailCreator mailCreator;
 
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
@@ -37,10 +39,10 @@ public class OrderService {
         return orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
     }
 
-    public Order createOrder(final Long userId) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
+    public Order createOrder(final Long userId, final Shipment shipment) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
         User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Cart cartFromDb = cartRepository.findById(userFromDb.getCart().getId()).orElseThrow(CartNotFoundException::new);
-        BigDecimal shipping = new BigDecimal(10);
+        BigDecimal shippingPrice = Prices.findShippingPrice(shipment);
 
         if(cartFromDb.getClothesList().size() == 0) {
             throw new EmptyCartException();
@@ -50,7 +52,9 @@ public class OrderService {
                     .paid(false)
                     .sent(false)
                     .user(userFromDb)
-                    .totalOrderPrice(cartFromDb.getTotalPrice().add(shipping))
+                    .shipment(shipment)
+                    .shippingPrice(shippingPrice)
+                    .totalOrderPrice(cartFromDb.getTotalPrice().add(shippingPrice))
                     .clothesList(cartFromDb.getClothesList())
                     .build();
 
@@ -62,7 +66,12 @@ public class OrderService {
             cartFromDb.setTotalPrice(BigDecimal.ZERO);
             cartFromDb.setClothesList(new ArrayList<>());
             System.out.println(cartFromDb.getClothesList().size());
-            return orderRepository.save(order);
+
+            Order savedOrder = orderRepository.save(order);
+            emailService.send(mailCreator.createMailForAdmin(savedOrder));
+            emailService.send(mailCreator.createMailForUser(savedOrder));
+
+            return savedOrder;
         }
     }
 
@@ -72,6 +81,7 @@ public class OrderService {
             throw new OrderAlreadyPaidException();
         }
         orderFromDb.setPaid(true);
+        emailService.send(mailCreator.createMailOrderPaid(orderFromDb));
         return orderFromDb;
     }
 
@@ -83,6 +93,7 @@ public class OrderService {
             throw new OrderAlreadySentException();
         }
         orderFromDb.setSent(true);
+        emailService.send(mailCreator.createMailOrderSent(orderFromDb));
         return orderFromDb;
     }
 }

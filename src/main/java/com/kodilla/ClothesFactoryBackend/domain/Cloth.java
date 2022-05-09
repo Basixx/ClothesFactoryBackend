@@ -58,4 +58,19 @@ public class Cloth {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_ORDER")
     private Order order;
+
+
+    @Override
+    public String toString() {
+        return "Cloth: " +
+                "fashion: " + fashion +
+                ", color: " + color +
+                ", print: '" + print + '\'' +
+                ", font: " + font +
+                ", printColor: " + printColor +
+                ", size: " + size +
+                ", quantity: " + quantity +
+                ", price: " + price +
+                ".";
+    }
 }

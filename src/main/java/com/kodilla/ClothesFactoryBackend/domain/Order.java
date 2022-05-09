@@ -1,5 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.domain;
 
+import com.kodilla.ClothesFactoryBackend.auxiliary.Shipment;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,6 +32,13 @@ public class Order {
 
     @NotNull
     private boolean sent;
+
+    @NotNull
+    @Enumerated
+    private Shipment shipment;
+
+    @NotNull
+    private BigDecimal shippingPrice;
 
     @ManyToOne
     @JoinColumn(name = "ID_USER")
