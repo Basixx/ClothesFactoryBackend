@@ -79,4 +79,9 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleClothPrintContainsBadWordsException() {
         return new ResponseEntity<>("Cloth print cannot contain any bad words, please change your choice.", HttpStatus.METHOD_NOT_ALLOWED);
     }
+
+    @ExceptionHandler(QuoteNotFoundException.class)
+    public ResponseEntity<Object> handleQuoteNotFoundException() {
+        return new ResponseEntity<>("Quote could not be found, please try again later.", HttpStatus.NOT_FOUND);
+    }
 }
