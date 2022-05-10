@@ -3,6 +3,7 @@ package com.kodilla.ClothesFactoryBackend.mapper;
 import com.kodilla.ClothesFactoryBackend.auxiliary.Prices;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
+import com.kodilla.ClothesFactoryBackend.domain.User;
 import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
@@ -22,6 +23,10 @@ public class OrderMapper {
     private final ClothMapper clothMapper;
 
     public Order mapToOrder(final OrderDto orderDto) throws UserNotFoundException, ClothNotFoundException {
+        User userFromDb = userRepository.findById(orderDto.getUserId()).orElseThrow(UserNotFoundException::new);
+
+        String address = userFromDb.getStreet() + ", " + userFromDb.getStreetAndApartmentNumber() + ", " + userFromDb.getCity() + ", " + userFromDb.getPostCode();
+
         return Order.builder()
                 .orderDate(orderDto.getOrderDate())
                 .totalOrderPrice(orderDto.getTotalOrderPrice())
@@ -29,7 +34,8 @@ public class OrderMapper {
                 .sent(orderDto.isSent())
                 .shipment(orderDto.getShipment())
                 .shippingPrice(Prices.findShippingPrice(orderDto.getShipment()))
-                .user(orderDto.getUserId() == null ? null : userRepository.findById(orderDto.getUserId()).orElseThrow(UserNotFoundException::new))
+                .address(address)
+                .user(orderDto.getUserId() == null ? null : userFromDb)
                 .clothesList(orderDto.getClothesIdList() == null ? null : clothMapper.mapToClothesFromIds(orderDto.getClothesIdList()))
                 .build();
     }
@@ -43,6 +49,7 @@ public class OrderMapper {
                 .sent(order.isSent())
                 .shipment(order.getShipment())
                 .shippingPrice(order.getShippingPrice())
+                .address(order.getAddress())
                 .userId(order.getUser().getId())
                 .clothesIdList(clothMapper.mapToClothesIdsFromClothes(order.getClothesList()))
                 .build();

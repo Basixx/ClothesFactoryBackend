@@ -18,6 +18,7 @@ public class OrderDto {
     private boolean sent;
     private Shipment shipment;
     private BigDecimal shippingPrice;
+    private String address;
     private Long userId;
     private List<Long> clothesIdList;
 }

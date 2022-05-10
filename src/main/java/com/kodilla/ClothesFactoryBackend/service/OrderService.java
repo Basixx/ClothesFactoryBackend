@@ -43,6 +43,7 @@ public class OrderService {
         User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Cart cartFromDb = cartRepository.findById(userFromDb.getCart().getId()).orElseThrow(CartNotFoundException::new);
         BigDecimal shippingPrice = Prices.findShippingPrice(shipment);
+        String address = userFromDb.getStreet() + ", " + userFromDb.getStreetAndApartmentNumber() + ", " + userFromDb.getCity() + ", " + userFromDb.getPostCode();
 
         if(cartFromDb.getClothesList().size() == 0) {
             throw new EmptyCartException();
@@ -55,6 +56,7 @@ public class OrderService {
                     .shipment(shipment)
                     .shippingPrice(shippingPrice)
                     .totalOrderPrice(cartFromDb.getTotalPrice().add(shippingPrice))
+                    .address(address)
                     .clothesList(cartFromDb.getClothesList())
                     .build();
 

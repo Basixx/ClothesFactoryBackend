@@ -30,8 +30,8 @@ public class OrderFacade {
         return orderMapper.mapToOrderDtoList(orderService.getAllUsersOrder(userId));
     }
 
-    public OrderDto createOrder(Long userId, Shipment shshipment) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
-        return orderMapper.mapToOrderDto(orderService.createOrder(userId, shshipment));
+    public OrderDto createOrder(Long userId, Shipment shipment) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
+        return orderMapper.mapToOrderDto(orderService.createOrder(userId, shipment));
     }
 
     public OrderDto setOrderToPaid(Long id) throws OrderNotFoundException, OrderAlreadyPaidException {

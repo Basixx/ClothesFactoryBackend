@@ -40,6 +40,9 @@ public class Order {
     @NotNull
     private BigDecimal shippingPrice;
 
+    @NotNull
+    private String address;
+
     @ManyToOne
     @JoinColumn(name = "ID_USER")
     private User user;
