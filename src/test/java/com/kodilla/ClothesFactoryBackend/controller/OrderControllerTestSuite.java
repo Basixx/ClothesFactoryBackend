@@ -1,6 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.Shipment;
+import com.kodilla.ClothesFactoryBackend.auxiliary.ShipmentMethod;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
 import com.kodilla.ClothesFactoryBackend.facade.OrderFacade;
 import org.hamcrest.Matchers;
@@ -96,7 +96,7 @@ class OrderControllerTestSuite {
         OrderDto orderDto = createOrderDto();
 
 
-        when(orderFacade.createOrder(anyLong(), any(Shipment.class))).thenReturn(orderDto);
+        when(orderFacade.createOrder(anyLong(), any(ShipmentMethod.class))).thenReturn(orderDto);
 
         //When & Then
         mockMvc

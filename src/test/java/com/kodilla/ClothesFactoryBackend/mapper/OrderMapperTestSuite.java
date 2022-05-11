@@ -1,6 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.mapper;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.Shipment;
+import com.kodilla.ClothesFactoryBackend.auxiliary.ShipmentMethod;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
 import com.kodilla.ClothesFactoryBackend.domain.User;
@@ -49,7 +49,7 @@ public class OrderMapperTestSuite {
                 .totalOrderPrice(new BigDecimal(30))
                 .paid(true)
                 .sent(false)
-                .shipment(Shipment.FEDEX)
+                .shipmentMethod(ShipmentMethod.FEDEX)
                 .userId(3L)
                 .clothesIdList(new ArrayList<>())
                 .build();
@@ -62,7 +62,7 @@ public class OrderMapperTestSuite {
         assertEquals(new BigDecimal(30), order.getTotalOrderPrice());
         assertTrue(order.isPaid());
         assertFalse(order.isSent());
-        assertEquals(Shipment.FEDEX, order.getShipment());
+        assertEquals(ShipmentMethod.FEDEX, order.getShipmentMethod());
         assertEquals(new BigDecimal(10), order.getShippingPrice());
         assertEquals("Marszalkowska, 1/2, Warsaw, 00-111", order.getAddress());
         assertEquals("John", order.getUser().getName());
@@ -86,7 +86,7 @@ public class OrderMapperTestSuite {
         assertEquals(new BigDecimal(30), orderDto.getTotalOrderPrice());
         assertTrue(orderDto.isPaid());
         assertFalse(orderDto.isSent());
-        assertEquals(Shipment.FEDEX, orderDto.getShipment());
+        assertEquals(ShipmentMethod.FEDEX, orderDto.getShipmentMethod());
         assertEquals(new BigDecimal(20), orderDto.getShippingPrice());
         assertEquals("Marszalkowska, 1/2, Warsaw, 00-111", orderDto.getAddress());
         assertEquals(3L, orderDto.getUserId());
@@ -191,7 +191,7 @@ public class OrderMapperTestSuite {
                 .totalOrderPrice(price)
                 .paid(true)
                 .sent(false)
-                .shipment(Shipment.FEDEX)
+                .shipmentMethod(ShipmentMethod.FEDEX)
                 .shippingPrice(new BigDecimal(20))
                 .address(address)
                 .user(user)

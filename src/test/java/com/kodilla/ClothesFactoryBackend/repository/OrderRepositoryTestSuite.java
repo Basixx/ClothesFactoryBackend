@@ -51,7 +51,7 @@ public class OrderRepositoryTestSuite {
                 .totalOrderPrice(new BigDecimal(50))
                 .paid(true)
                 .sent(false)
-                .shipment(Shipment.FEDEX)
+                .shipmentMethod(ShipmentMethod.FEDEX)
                 .shippingPrice(new BigDecimal(20))
                 .address("address")
                 .build();

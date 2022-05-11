@@ -1,7 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.service;
 
 import com.kodilla.ClothesFactoryBackend.auxiliary.Prices;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Shipment;
+import com.kodilla.ClothesFactoryBackend.auxiliary.ShipmentMethod;
 import com.kodilla.ClothesFactoryBackend.domain.*;
 import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.mail.MailCreator;
@@ -40,10 +40,10 @@ public class OrderService {
         return orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
     }
 
-    public Order createOrder(final Long userId, final Shipment shipment) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
+    public Order createOrder(final Long userId, final ShipmentMethod shipmentMethod) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
         User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Cart cartFromDb = cartRepository.findById(userFromDb.getCart().getId()).orElseThrow(CartNotFoundException::new);
-        BigDecimal shippingPrice = prices.findShippingPrice(shipment);
+        BigDecimal shippingPrice = prices.findShippingPrice(shipmentMethod);
         String address = userFromDb.getStreet() + ", " + userFromDb.getStreetAndApartmentNumber() + ", " + userFromDb.getCity() + ", " + userFromDb.getPostCode();
 
         if(cartFromDb.getClothesList().size() == 0) {
@@ -54,7 +54,7 @@ public class OrderService {
                     .paid(false)
                     .sent(false)
                     .user(userFromDb)
-                    .shipment(shipment)
+                    .shipmentMethod(shipmentMethod)
                     .shippingPrice(shippingPrice)
                     .totalOrderPrice(cartFromDb.getTotalPrice().add(shippingPrice))
                     .address(address)

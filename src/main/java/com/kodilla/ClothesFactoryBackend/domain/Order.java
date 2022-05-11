@@ -1,6 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.domain;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.Shipment;
+import com.kodilla.ClothesFactoryBackend.auxiliary.ShipmentMethod;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -35,7 +35,7 @@ public class Order {
 
     @NotNull
     @Enumerated
-    private Shipment shipment;
+    private ShipmentMethod shipmentMethod;
 
     @NotNull
     private BigDecimal shippingPrice;

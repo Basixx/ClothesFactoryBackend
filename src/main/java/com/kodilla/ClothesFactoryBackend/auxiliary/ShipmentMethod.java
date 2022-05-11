@@ -1,5 +1,5 @@
 package com.kodilla.ClothesFactoryBackend.auxiliary;
 
-public enum Shipment {
+public enum ShipmentMethod {
     FEDEX, DHL, UPS, IN_POST
 }

@@ -18,8 +18,8 @@ public class Prices {
         }
     }
 
-    public  BigDecimal findShippingPrice(final Shipment shipment) {
-        switch (shipment) {
+    public  BigDecimal findShippingPrice(final ShipmentMethod shipmentMethod) {
+        switch (shipmentMethod) {
             case FEDEX:
                 return new BigDecimal(10);
             case DHL:

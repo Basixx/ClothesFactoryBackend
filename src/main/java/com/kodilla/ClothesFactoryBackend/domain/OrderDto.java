@@ -1,6 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.domain;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.Shipment;
+import com.kodilla.ClothesFactoryBackend.auxiliary.ShipmentMethod;
 import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,7 +16,7 @@ public class OrderDto {
     private BigDecimal totalOrderPrice;
     private boolean paid;
     private boolean sent;
-    private Shipment shipment;
+    private ShipmentMethod shipmentMethod;
     private BigDecimal shippingPrice;
     private String address;
     private Long userId;
