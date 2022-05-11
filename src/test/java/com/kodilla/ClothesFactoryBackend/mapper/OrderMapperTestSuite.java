@@ -1,5 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.mapper;
 
+import com.kodilla.ClothesFactoryBackend.auxiliary.Shipment;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
 import com.kodilla.ClothesFactoryBackend.domain.User;
@@ -9,10 +10,10 @@ import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,8 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@SpringBootTest
-@Transactional
+@ExtendWith(MockitoExtension.class)
 public class OrderMapperTestSuite {
     @InjectMocks
     private OrderMapper orderMapper;
@@ -49,6 +49,7 @@ public class OrderMapperTestSuite {
                 .totalOrderPrice(new BigDecimal(30))
                 .paid(true)
                 .sent(false)
+                .shipment(Shipment.FEDEX)
                 .userId(3L)
                 .clothesIdList(new ArrayList<>())
                 .build();
@@ -61,6 +62,9 @@ public class OrderMapperTestSuite {
         assertEquals(new BigDecimal(30), order.getTotalOrderPrice());
         assertTrue(order.isPaid());
         assertFalse(order.isSent());
+        assertEquals(Shipment.FEDEX, order.getShipment());
+        assertEquals(new BigDecimal(10), order.getShippingPrice());
+        assertEquals("Marszalkowska, 1/2, Warsaw, 00-111", order.getAddress());
         assertEquals("John", order.getUser().getName());
         assertEquals(0, order.getClothesList().size());
     }
@@ -82,6 +86,9 @@ public class OrderMapperTestSuite {
         assertEquals(new BigDecimal(30), orderDto.getTotalOrderPrice());
         assertTrue(orderDto.isPaid());
         assertFalse(orderDto.isSent());
+        assertEquals(Shipment.FEDEX, orderDto.getShipment());
+        assertEquals(new BigDecimal(20), orderDto.getShippingPrice());
+        assertEquals("Marszalkowska, 1/2, Warsaw, 00-111", orderDto.getAddress());
         assertEquals(3L, orderDto.getUserId());
         assertEquals(0, orderDto.getClothesIdList().size());
     }
@@ -167,16 +174,26 @@ public class OrderMapperTestSuite {
                 .phoneNumber("111111111")
                 .emailAddress("john@smith.com")
                 .password("password1")
+                .street("Marszalkowska")
+                .streetAndApartmentNumber("1/2")
+                .city("Warsaw")
+                .postCode("00-111")
                 .build();
     }
 
     private Order createOrder(Long id, User user, BigDecimal price) {
+
+        String address = user.toString();
+
         return Order.builder()
                 .id(id)
                 .orderDate(LocalDate.of(2022, 4, 22))
                 .totalOrderPrice(price)
                 .paid(true)
                 .sent(false)
+                .shipment(Shipment.FEDEX)
+                .shippingPrice(new BigDecimal(20))
+                .address(address)
                 .user(user)
                 .clothesList(new ArrayList<>())
                 .build();

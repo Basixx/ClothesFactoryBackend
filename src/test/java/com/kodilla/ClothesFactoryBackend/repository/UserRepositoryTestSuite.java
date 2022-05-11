@@ -35,16 +35,14 @@ public class UserRepositoryTestSuite {
         User user2 = createUser2();
         userRepository.save(user1);
         userRepository.save(user2);
-        int sizeBefore = userRepository.findAll().size();
         Long id = user2.getId();
 
         //When
         userRepository.deleteById(id);
-        int sizeAfter = userRepository.findAll().size();
+        int userCount = userRepository.findAll().size();
 
         //Then
-        assertEquals(2, sizeBefore);
-        assertEquals(1, sizeAfter);
+        assertEquals(1, userCount);
     }
 
     private User createUser1() {
@@ -54,6 +52,10 @@ public class UserRepositoryTestSuite {
                 .phoneNumber("111111111")
                 .emailAddress("john@smith.com")
                 .password("password1")
+                .street("Marszalkowska")
+                .streetAndApartmentNumber("1/2")
+                .city("Warsaw")
+                .postCode("00-111")
                 .build();
     }
     private User createUser2() {
@@ -63,6 +65,10 @@ public class UserRepositoryTestSuite {
                 .phoneNumber("222222222")
                 .emailAddress("mike@wazowski.com")
                 .password("password2")
+                .street("Marszalkowska")
+                .streetAndApartmentNumber("1/2")
+                .city("Warsaw")
+                .postCode("00-111")
                 .build();
     }
 }

@@ -44,16 +44,13 @@ public class ClothRepositoryTestSuite {
         clothRepository.save(cloth2);
         Long id = cloth2.getId();
 
-        int sizeBefore = clothRepository.findAll().size();
-
         //When
         clothRepository.deleteById(id);
 
-        int sizeAfter = clothRepository.findAll().size();
+        int clothesCount = clothRepository.findAll().size();
 
         //Then
-        assertEquals(2, sizeBefore);
-        assertEquals(1, sizeAfter);
+        assertEquals(1, clothesCount);
     }
 
     private Cloth createCloth1() {

@@ -25,6 +25,7 @@ public class OrderService {
     private final CartRepository cartRepository;
     private final EmailService emailService;
     private final MailCreator mailCreator;
+    private final Prices prices;
 
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
@@ -42,7 +43,7 @@ public class OrderService {
     public Order createOrder(final Long userId, final Shipment shipment) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
         User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Cart cartFromDb = cartRepository.findById(userFromDb.getCart().getId()).orElseThrow(CartNotFoundException::new);
-        BigDecimal shippingPrice = Prices.findShippingPrice(shipment);
+        BigDecimal shippingPrice = prices.findShippingPrice(shipment);
         String address = userFromDb.getStreet() + ", " + userFromDb.getStreetAndApartmentNumber() + ", " + userFromDb.getCity() + ", " + userFromDb.getPostCode();
 
         if(cartFromDb.getClothesList().size() == 0) {

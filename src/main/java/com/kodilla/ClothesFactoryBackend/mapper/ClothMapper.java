@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ClothMapper {
     private final ClothRepository clothRepository;
+    private final Prices prices = new Prices();
 
     public Cloth mapToCloth(final ClothDto clothDto) {
 
@@ -27,7 +28,7 @@ public class ClothMapper {
                 .printColor(clothDto.getPrintColor())
                 .size(clothDto.getSize())
                 .quantity(clothDto.getQuantity())
-                .price(Prices.findClothPrice(clothDto.getFashion()).multiply(BigDecimal.valueOf(clothDto.getQuantity())))
+                .price(prices.findClothPrice(clothDto.getFashion()).multiply(BigDecimal.valueOf(clothDto.getQuantity())))
                 .build();
     }
 

@@ -6,11 +6,10 @@ import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
 import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
@@ -18,18 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@SpringBootTest
-@Transactional
+@ExtendWith(MockitoExtension.class)
 public class ClothMapperTestSuite {
 
     @Mock
     private ClothRepository clothRepository;
     @InjectMocks
     private  ClothMapper clothMapper;
-
-    @Autowired
-    private Prices prices;
-
 
     @Test
     public void testMapToCloth() {

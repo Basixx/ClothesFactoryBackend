@@ -36,6 +36,10 @@ public class CartRepositoryTestSuite {
                 .phoneNumber("111111111")
                 .emailAddress("john@smith.com")
                 .password("password")
+                .street("Marszalkowska")
+                .streetAndApartmentNumber("1/2")
+                .city("Warsaw")
+                .postCode("00-111")
                 .build();
         Cart cart = Cart.builder()
                 .clothesList(new ArrayList<>())

@@ -4,17 +4,22 @@ import com.kodilla.ClothesFactoryBackend.domain.Cart;
 import com.kodilla.ClothesFactoryBackend.domain.CartDto;
 import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class CartMapperTestSuite {
-    @Autowired
+    @InjectMocks
     private CartMapper cartMapper;
+
+    @Mock
+    private ClothMapper clothMapper;
 
     @Test
     public void testMapToCart() throws ClothNotFoundException {

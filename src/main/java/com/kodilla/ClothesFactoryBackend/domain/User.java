@@ -56,4 +56,10 @@ public class User {
             mappedBy = "user"
     )
     private List<Order> ordersList;
+
+
+    @Override
+    public String toString() {
+        return street + ", " + streetAndApartmentNumber + ", " + city + ", " + postCode;
+    }
 }

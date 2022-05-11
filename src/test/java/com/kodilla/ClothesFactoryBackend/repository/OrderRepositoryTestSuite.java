@@ -1,9 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.repository;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.Color;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Fashion;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Font;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Size;
+import com.kodilla.ClothesFactoryBackend.auxiliary.*;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import org.junit.jupiter.api.Test;
@@ -54,6 +51,9 @@ public class OrderRepositoryTestSuite {
                 .totalOrderPrice(new BigDecimal(50))
                 .paid(true)
                 .sent(false)
+                .shipment(Shipment.FEDEX)
+                .shippingPrice(new BigDecimal(20))
+                .address("address")
                 .build();
         order.getClothesList().add(cloth1);
         order.getClothesList().add(cloth2);

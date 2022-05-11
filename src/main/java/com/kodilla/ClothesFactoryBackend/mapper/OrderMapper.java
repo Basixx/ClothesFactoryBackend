@@ -21,11 +21,10 @@ public class OrderMapper {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final ClothMapper clothMapper;
+    private final Prices prices = new Prices();
 
     public Order mapToOrder(final OrderDto orderDto) throws UserNotFoundException, ClothNotFoundException {
         User userFromDb = userRepository.findById(orderDto.getUserId()).orElseThrow(UserNotFoundException::new);
-
-        String address = userFromDb.getStreet() + ", " + userFromDb.getStreetAndApartmentNumber() + ", " + userFromDb.getCity() + ", " + userFromDb.getPostCode();
 
         return Order.builder()
                 .orderDate(orderDto.getOrderDate())
@@ -33,8 +32,8 @@ public class OrderMapper {
                 .paid(orderDto.isPaid())
                 .sent(orderDto.isSent())
                 .shipment(orderDto.getShipment())
-                .shippingPrice(Prices.findShippingPrice(orderDto.getShipment()))
-                .address(address)
+                .shippingPrice(prices.findShippingPrice(orderDto.getShipment()))
+                .address(userFromDb.toString())
                 .user(orderDto.getUserId() == null ? null : userFromDb)
                 .clothesList(orderDto.getClothesIdList() == null ? null : clothMapper.mapToClothesFromIds(orderDto.getClothesIdList()))
                 .build();

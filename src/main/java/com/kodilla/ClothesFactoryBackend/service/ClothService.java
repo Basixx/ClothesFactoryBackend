@@ -24,6 +24,8 @@ public class ClothService {
     private final OrderRepository orderRepository;
     private final BadWordsService badWordsService;
 
+    private final Prices prices;
+
     public List<Cloth> getAllClothes() {
         return clothRepository.findAll();
     }
@@ -63,7 +65,7 @@ public class ClothService {
             clothFromDb.setPrintColor(cloth.getPrintColor());
             clothFromDb.setSize(cloth.getSize());
             clothFromDb.setQuantity(cloth.getQuantity());
-            clothFromDb.setPrice(Prices.findClothPrice(clothFromDb.getFashion()).multiply(BigDecimal.valueOf(clothFromDb.getQuantity())));
+            clothFromDb.setPrice(prices.findClothPrice(clothFromDb.getFashion()).multiply(BigDecimal.valueOf(clothFromDb.getQuantity())));
             BigDecimal cartPrice = clothFromDb.getCart().getClothesList().stream().map(Cloth::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
             clothFromDb.getCart().setTotalPrice(cartPrice);
             return clothFromDb;
