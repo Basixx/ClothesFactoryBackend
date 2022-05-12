@@ -23,7 +23,8 @@ public class MailCreator {
         }
         String messagePrice = "\n" + "For total price of: " + order.getTotalOrderPrice();
         String messageAddress = "\n Address: \n" + order.getAddress();
-        return new Mail(adminMail, subject, message + messageClothes + messagePrice + messageAddress);
+        String messageShipment = "\n Shipment: " + order.getShipmentCompanyName();
+        return new Mail(adminMail, subject, message + messageClothes + messagePrice + messageAddress + messageShipment);
     }
 
     public Mail createMailForUser(Order order) {
@@ -38,7 +39,9 @@ public class MailCreator {
         String messagePrice = "\n" + "For total price of: " + order.getTotalOrderPrice() + "\n" + "Your order number: " + order.getId();
         String messageAddress = "\n Address: \n" + order.getAddress();
         String messagePayment = "\nPlease send payment for account number 00 1111 2222 33333 4444 5555 6666.";
-        return new Mail(userEmail, subject, message + messagePrice + messageAddress +  messagePayment);
+        String messageShipment = "\n Shipment: " + order.getShipmentCompanyName() + ", should be delivered in " + order.getDeliveryDays() + " days.";
+        String end = "\n Thank you for choosing CLOTHES FACTORY!";
+        return new Mail(userEmail, subject, message + messagePrice + messageAddress +  messagePayment + messageShipment + end);
     }
 
     public Mail createMailOrderPaid(Order order) {
