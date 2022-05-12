@@ -8,12 +8,14 @@ import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.mail.MailCreator;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
 import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
+import com.kodilla.ClothesFactoryBackend.repository.ShipmentHistoryRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
+    private final ShipmentHistoryRepository shipmentHistoryRepository;
     private final EmailService emailService;
     private final MailCreator mailCreator;
     private final CompanySetter companySetter;
@@ -102,6 +105,11 @@ public class OrderService {
         }
         orderFromDb.setSent(true);
         emailService.send(mailCreator.createMailOrderSent(orderFromDb));
+        shipmentHistoryRepository.save(ShipmentHistory.builder()
+                .shipmentTime(LocalDateTime.now())
+                .orderId(orderFromDb.getId())
+                .userMail(orderFromDb.getUser().getEmailAddress())
+                .build());
         return orderFromDb;
     }
 }

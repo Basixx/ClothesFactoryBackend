@@ -8,13 +8,14 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Entity(name = "LOGIN_HISTORY")
+@Entity(name = "SHIPMENT_HISTORY")
 @Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginHistory {
+public class ShipmentHistory {
+
     @Id
     @GeneratedValue
     @NotNull
@@ -22,12 +23,11 @@ public class LoginHistory {
     private Long id;
 
     @NotNull
-    private LocalDateTime loginTime;
+    private LocalDateTime shipmentTime;
+
+    @NotNull
+    private Long orderId;
 
     @NotNull
     private String userMail;
-
-
-    @NotNull
-    private boolean succeed;
 }

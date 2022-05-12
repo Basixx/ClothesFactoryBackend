@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 @Service
 public class LoginHistoryMapper {
 
-    public LoginHistoryDto mapToLoginHistoryDto (final LoginHistory loginHistory) {
+    public LoginHistoryDto mapToLoginHistoryDto(final LoginHistory loginHistory) {
         return LoginHistoryDto.builder()
                 .loginTime(loginHistory.getLoginTime())
                 .userMail(loginHistory.getUserMail())
