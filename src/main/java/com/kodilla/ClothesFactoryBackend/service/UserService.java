@@ -1,17 +1,20 @@
 package com.kodilla.ClothesFactoryBackend.service;
 
 import com.kodilla.ClothesFactoryBackend.domain.Cart;
+import com.kodilla.ClothesFactoryBackend.domain.LoginHistory;
 import com.kodilla.ClothesFactoryBackend.domain.User;
 import com.kodilla.ClothesFactoryBackend.exception.UserAlreadyExistsException;
 import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.WrongPasswordException;
 import com.kodilla.ClothesFactoryBackend.exception.UserEmailNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
+import com.kodilla.ClothesFactoryBackend.repository.LoginHistoryRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
+    private final LoginHistoryRepository loginHistoryRepository;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -66,8 +70,10 @@ public class UserService {
         User userFromDb = userRepository.findByEmailAddress(email).orElseThrow(UserEmailNotFoundException::new);
 
         if(password.equals(userFromDb.getPassword())) {
+            loginHistoryRepository.save(LoginHistory.builder().loginTime(LocalDateTime.now()).userMail(userFromDb.getEmailAddress()).succeed(true).build());
             return userFromDb;
         } else {
+            loginHistoryRepository.save(LoginHistory.builder().loginTime(LocalDateTime.now()).userMail(userFromDb.getEmailAddress()).succeed(false).build());
             throw new WrongPasswordException();
         }
 
