@@ -1,6 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.mapper;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.ShipmentMethod;
+import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentCompany;
+import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.companies.Fedex;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
 import com.kodilla.ClothesFactoryBackend.domain.User;
@@ -38,8 +39,8 @@ public class OrderMapperTestSuite {
     @Test
     public void testMapToOrder() throws UserNotFoundException, ClothNotFoundException {
         //Given
-
         User user = createUser();
+        ShipmentCompany fedex = new Fedex();
 
         when(userRepository.findById(3L)).thenReturn(Optional.of(user));
         when(clothMapper.mapToClothesFromIds(anyList())).thenReturn(new ArrayList<>());
@@ -49,7 +50,7 @@ public class OrderMapperTestSuite {
                 .totalOrderPrice(new BigDecimal(30))
                 .paid(true)
                 .sent(false)
-                .shipmentMethod(ShipmentMethod.FEDEX)
+                .shipmentCompany(fedex)
                 .userId(3L)
                 .clothesIdList(new ArrayList<>())
                 .build();
@@ -62,8 +63,10 @@ public class OrderMapperTestSuite {
         assertEquals(new BigDecimal(30), order.getTotalOrderPrice());
         assertTrue(order.isPaid());
         assertFalse(order.isSent());
-        assertEquals(ShipmentMethod.FEDEX, order.getShipmentMethod());
+        assertEquals(fedex, order.getShipmentCompany());
+        assertEquals("FEDEX", order.getShipmentCompanyName());
         assertEquals(new BigDecimal(10), order.getShippingPrice());
+        assertEquals(4, order.getDeliveryDays());
         assertEquals("Marszalkowska, 1/2, Warsaw, 00-111", order.getAddress());
         assertEquals("John", order.getUser().getName());
         assertEquals(0, order.getClothesList().size());
@@ -86,7 +89,7 @@ public class OrderMapperTestSuite {
         assertEquals(new BigDecimal(30), orderDto.getTotalOrderPrice());
         assertTrue(orderDto.isPaid());
         assertFalse(orderDto.isSent());
-        assertEquals(ShipmentMethod.FEDEX, orderDto.getShipmentMethod());
+        assertEquals(order.getShipmentCompany(), orderDto.getShipmentCompany());
         assertEquals(new BigDecimal(20), orderDto.getShippingPrice());
         assertEquals("Marszalkowska, 1/2, Warsaw, 00-111", orderDto.getAddress());
         assertEquals(3L, orderDto.getUserId());
@@ -184,6 +187,7 @@ public class OrderMapperTestSuite {
     private Order createOrder(Long id, User user, BigDecimal price) {
 
         String address = user.toString();
+        ShipmentCompany fedex = new Fedex();
 
         return Order.builder()
                 .id(id)
@@ -191,7 +195,7 @@ public class OrderMapperTestSuite {
                 .totalOrderPrice(price)
                 .paid(true)
                 .sent(false)
-                .shipmentMethod(ShipmentMethod.FEDEX)
+                .shipmentCompany(fedex)
                 .shippingPrice(new BigDecimal(20))
                 .address(address)
                 .user(user)

@@ -1,6 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.ShipmentMethod;
+import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentMethod;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
 import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.facade.OrderFacade;

@@ -1,6 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.domain;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.ShipmentMethod;
+import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentCompany;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -33,12 +33,18 @@ public class Order {
     @NotNull
     private boolean sent;
 
+    @Transient
     @NotNull
-    @Enumerated
-    private ShipmentMethod shipmentMethod;
+    private ShipmentCompany shipmentCompany;
+
+    @NotNull
+    private String shipmentCompanyName;
 
     @NotNull
     private BigDecimal shippingPrice;
+
+    @NotNull
+    private int deliveryDays;
 
     @NotNull
     private String address;

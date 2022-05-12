@@ -1,7 +1,8 @@
 package com.kodilla.ClothesFactoryBackend.service;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.Prices;
-import com.kodilla.ClothesFactoryBackend.auxiliary.ShipmentMethod;
+import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.CompanySetter;
+import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentCompany;
+import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentMethod;
 import com.kodilla.ClothesFactoryBackend.domain.*;
 import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.mail.MailCreator;
@@ -25,7 +26,7 @@ public class OrderService {
     private final CartRepository cartRepository;
     private final EmailService emailService;
     private final MailCreator mailCreator;
-    private final Prices prices;
+    private final CompanySetter companySetter;
 
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
@@ -40,10 +41,12 @@ public class OrderService {
         return orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
     }
 
-    public Order createOrder(final Long userId, final ShipmentMethod shipmentMethod) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
+    public Order createOrder(final Long userId, final ShipmentMethod company) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
         User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Cart cartFromDb = cartRepository.findById(userFromDb.getCart().getId()).orElseThrow(CartNotFoundException::new);
-        BigDecimal shippingPrice = prices.findShippingPrice(shipmentMethod);
+
+        ShipmentCompany shipmentCompany = companySetter.setCompany(company);
+
         String address = userFromDb.getStreet() + ", " + userFromDb.getStreetAndApartmentNumber() + ", " + userFromDb.getCity() + ", " + userFromDb.getPostCode();
 
         if(cartFromDb.getClothesList().size() == 0) {
@@ -54,9 +57,11 @@ public class OrderService {
                     .paid(false)
                     .sent(false)
                     .user(userFromDb)
-                    .shipmentMethod(shipmentMethod)
-                    .shippingPrice(shippingPrice)
-                    .totalOrderPrice(cartFromDb.getTotalPrice().add(shippingPrice))
+                    .shipmentCompany(shipmentCompany)
+                    .shipmentCompanyName(shipmentCompany.getName())
+                    .shippingPrice(shipmentCompany.getPrice())
+                    .deliveryDays(shipmentCompany.getDeliveryDays())
+                    .totalOrderPrice(cartFromDb.getTotalPrice().add(shipmentCompany.getPrice()))
                     .address(address)
                     .clothesList(cartFromDb.getClothesList())
                     .build();

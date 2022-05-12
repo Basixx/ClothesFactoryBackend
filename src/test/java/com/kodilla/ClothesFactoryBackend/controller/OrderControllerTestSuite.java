@@ -1,6 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.ShipmentMethod;
+import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentMethod;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
 import com.kodilla.ClothesFactoryBackend.facade.OrderFacade;
 import org.hamcrest.Matchers;
@@ -17,9 +17,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @SpringJUnitWebConfig

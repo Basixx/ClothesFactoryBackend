@@ -1,6 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.mapper;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.Prices;
+import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentCompany;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
 import com.kodilla.ClothesFactoryBackend.domain.User;
@@ -21,18 +21,21 @@ public class OrderMapper {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final ClothMapper clothMapper;
-    private final Prices prices = new Prices();
 
     public Order mapToOrder(final OrderDto orderDto) throws UserNotFoundException, ClothNotFoundException {
         User userFromDb = userRepository.findById(orderDto.getUserId()).orElseThrow(UserNotFoundException::new);
+
+        ShipmentCompany shipmentCompany = orderDto.getShipmentCompany();
 
         return Order.builder()
                 .orderDate(orderDto.getOrderDate())
                 .totalOrderPrice(orderDto.getTotalOrderPrice())
                 .paid(orderDto.isPaid())
                 .sent(orderDto.isSent())
-                .shipmentMethod(orderDto.getShipmentMethod())
-                .shippingPrice(prices.findShippingPrice(orderDto.getShipmentMethod()))
+                .shipmentCompany(orderDto.getShipmentCompany())
+                .shipmentCompanyName(shipmentCompany.getName())
+                .shippingPrice(shipmentCompany.getPrice())
+                .deliveryDays(shipmentCompany.getDeliveryDays())
                 .address(userFromDb.toString())
                 .user(orderDto.getUserId() == null ? null : userFromDb)
                 .clothesList(orderDto.getClothesIdList() == null ? null : clothMapper.mapToClothesFromIds(orderDto.getClothesIdList()))
@@ -46,8 +49,10 @@ public class OrderMapper {
                 .totalOrderPrice(order.getTotalOrderPrice())
                 .paid(order.isPaid())
                 .sent(order.isSent())
-                .shipmentMethod(order.getShipmentMethod())
+                .shipmentCompany(order.getShipmentCompany())
+                .shipmentCompanyName(order.getShipmentCompanyName())
                 .shippingPrice(order.getShippingPrice())
+                .deliveryDays(order.getDeliveryDays())
                 .address(order.getAddress())
                 .userId(order.getUser().getId())
                 .clothesIdList(clothMapper.mapToClothesIdsFromClothes(order.getClothesList()))

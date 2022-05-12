@@ -1,6 +1,8 @@
 package com.kodilla.ClothesFactoryBackend.repository;
 
 import com.kodilla.ClothesFactoryBackend.auxiliary.*;
+import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentCompany;
+import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.companies.Fedex;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,7 @@ public class OrderRepositoryTestSuite {
     private OrderRepository orderRepository;
     @Autowired
     private ClothRepository clothRepository;
+
 
     @Test
     public void testSaveOrderWithClothes() {
@@ -45,14 +48,18 @@ public class OrderRepositoryTestSuite {
                 .price(new BigDecimal(150))
                 .build();
 
+        ShipmentCompany fedex = new Fedex();
+
         Order order = Order.builder()
                 .orderDate(LocalDate.of(2022, 4, 23))
                 .clothesList(new ArrayList<>())
                 .totalOrderPrice(new BigDecimal(50))
                 .paid(true)
                 .sent(false)
-                .shipmentMethod(ShipmentMethod.FEDEX)
+                .shipmentCompany(fedex)
+                .shipmentCompanyName(fedex.getName())
                 .shippingPrice(new BigDecimal(20))
+                .deliveryDays(fedex.getShipmentSetting().getDeliveryDays())
                 .address("address")
                 .build();
         order.getClothesList().add(cloth1);

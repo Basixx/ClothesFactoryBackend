@@ -17,19 +17,4 @@ public class Prices {
                 return BigDecimal.ZERO;
         }
     }
-
-    public  BigDecimal findShippingPrice(final ShipmentMethod shipmentMethod) {
-        switch (shipmentMethod) {
-            case FEDEX:
-                return new BigDecimal(10);
-            case DHL:
-                return new BigDecimal(15);
-            case UPS:
-                return new BigDecimal(20);
-            case IN_POST:
-                return new BigDecimal(12);
-            default:
-                return BigDecimal.ZERO;
-        }
-    }
 }
