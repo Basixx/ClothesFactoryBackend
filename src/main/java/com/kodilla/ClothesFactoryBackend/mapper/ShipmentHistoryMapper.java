@@ -14,6 +14,7 @@ public class ShipmentHistoryMapper {
                 .shipmentTime(shipmentHistory.getShipmentTime())
                 .orderId(shipmentHistory.getOrderId())
                 .userMail(shipmentHistory.getUserMail())
+                .shippingCompany(shipmentHistory.getShippingCompany())
                 .build();
     }
 

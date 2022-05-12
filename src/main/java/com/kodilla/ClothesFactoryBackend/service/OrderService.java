@@ -109,6 +109,7 @@ public class OrderService {
                 .shipmentTime(LocalDateTime.now())
                 .orderId(orderFromDb.getId())
                 .userMail(orderFromDb.getUser().getEmailAddress())
+                .shippingCompany(orderFromDb.getShipmentCompanyName())
                 .build());
         return orderFromDb;
     }

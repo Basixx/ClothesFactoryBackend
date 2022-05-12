@@ -6,16 +6,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity(name = "SHIPMENT_HISTORY")
+@Entity(name = "PAYMENT_HISTORY")
 @Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShipmentHistory {
-
+public class PaymentHistory {
     @Id
     @GeneratedValue
     @NotNull
@@ -23,7 +23,7 @@ public class ShipmentHistory {
     private Long id;
 
     @NotNull
-    private LocalDateTime shipmentTime;
+    private LocalDateTime paymentTime;
 
     @NotNull
     private Long orderId;
@@ -32,5 +32,5 @@ public class ShipmentHistory {
     private String userMail;
 
     @NotNull
-    private String shippingCompany;
+    private BigDecimal price;
 }
