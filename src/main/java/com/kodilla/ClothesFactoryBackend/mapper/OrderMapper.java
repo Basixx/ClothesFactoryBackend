@@ -22,26 +22,6 @@ public class OrderMapper {
     private final UserRepository userRepository;
     private final ClothMapper clothMapper;
 
-    public Order mapToOrder(final OrderDto orderDto) throws UserNotFoundException, ClothNotFoundException {
-        User userFromDb = userRepository.findById(orderDto.getUserId()).orElseThrow(UserNotFoundException::new);
-
-        ShipmentCompany shipmentCompany = orderDto.getShipmentCompany();
-
-        return Order.builder()
-                .orderDate(orderDto.getOrderDate())
-                .totalOrderPrice(orderDto.getTotalOrderPrice())
-                .paid(orderDto.isPaid())
-                .sent(orderDto.isSent())
-                .shipmentCompany(orderDto.getShipmentCompany())
-                .shipmentCompanyName(shipmentCompany.getName())
-                .shippingPrice(shipmentCompany.getPrice())
-                .deliveryDays(shipmentCompany.getDeliveryDays())
-                .address(userFromDb.toString())
-                .user(orderDto.getUserId() == null ? null : userFromDb)
-                .clothesList(orderDto.getClothesIdList() == null ? null : clothMapper.mapToClothesFromIds(orderDto.getClothesIdList()))
-                .build();
-    }
-
     public OrderDto mapToOrderDto(final Order order) {
         return OrderDto.builder()
                 .id(order.getId())

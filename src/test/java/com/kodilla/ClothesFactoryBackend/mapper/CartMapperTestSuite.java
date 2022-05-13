@@ -22,23 +22,6 @@ public class CartMapperTestSuite {
     private ClothMapper clothMapper;
 
     @Test
-    public void testMapToCart() throws ClothNotFoundException {
-        //Given
-        CartDto cartDto = CartDto.builder()
-                .totalPrice(new BigDecimal(150))
-                .clothesIdList(new ArrayList<>())
-                .build();
-
-        //When
-        Cart cart = cartMapper
-                .mapToCart(cartDto);
-
-        //Then
-        assertEquals(new BigDecimal(150), cart.getTotalPrice());
-        assertEquals(0, cart.getClothesList().size());
-    }
-
-    @Test
     public void testMapToCartDto() {
         //Given
         Cart cart = createCart(new BigDecimal(300));

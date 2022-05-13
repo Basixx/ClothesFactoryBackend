@@ -8,11 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class AdminTokenMapper {
-    public AdminToken mapToAdminToken(final AdminTokenDto adminTokenDto) {
-        return AdminToken.builder()
-                .token(adminTokenDto.getToken())
-                .build();
-    }
 
     public AdminTokenDto mapToAdminTokenDto(final AdminToken adminToken) {
         return AdminTokenDto.builder()

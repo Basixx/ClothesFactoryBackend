@@ -13,13 +13,6 @@ import java.util.stream.Collectors;
 public class CartMapper {
     private final ClothMapper clothMapper;
 
-    public Cart mapToCart(final CartDto cartDto) throws ClothNotFoundException {
-        return Cart.builder()
-                .totalPrice(cartDto.getTotalPrice())
-                .clothesList(cartDto.getClothesIdList() == null ? null : clothMapper.mapToClothesFromIds(cartDto.getClothesIdList()))
-                .build();
-    }
-
     public CartDto mapToCartDto(final Cart cart) {
         return CartDto.builder()
                 .id(cart.getId())

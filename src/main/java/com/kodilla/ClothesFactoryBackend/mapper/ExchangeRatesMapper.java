@@ -9,14 +9,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ExchangeRatesMapper {
 
-    public ExchangeRate mapToExchangeRate(final ExchangeRateDto exchangeRateDto) {
-        return ExchangeRate.builder()
-                .fromCurrency(exchangeRateDto.getFromCurrency())
-                .toCurrency(exchangeRateDto.getToCurrency())
-                .currencyRate(exchangeRateDto.getCurrencyRate())
-                .build();
-    }
-
     public ExchangeRateDto mapToExchangeRateDto(final ExchangeRate exchangeRate) {
         return ExchangeRateDto.builder()
                 .id(exchangeRate.getId())

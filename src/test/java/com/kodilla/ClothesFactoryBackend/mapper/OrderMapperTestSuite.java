@@ -37,42 +37,6 @@ public class OrderMapperTestSuite {
     private OrderRepository orderRepository;
 
     @Test
-    public void testMapToOrder() throws UserNotFoundException, ClothNotFoundException {
-        //Given
-        User user = createUser();
-        ShipmentCompany fedex = new Fedex();
-
-        when(userRepository.findById(3L)).thenReturn(Optional.of(user));
-        when(clothMapper.mapToClothesFromIds(anyList())).thenReturn(new ArrayList<>());
-
-        OrderDto orderDto = OrderDto.builder()
-                .orderDate(LocalDate.of(2022, 4, 22))
-                .totalOrderPrice(new BigDecimal(30))
-                .paid(true)
-                .sent(false)
-                .shipmentCompany(fedex)
-                .userId(3L)
-                .clothesIdList(new ArrayList<>())
-                .build();
-
-        //When
-        Order order = orderMapper.mapToOrder(orderDto);
-
-        //Then
-        assertEquals(LocalDate.of(2022, 4, 22), order.getOrderDate());
-        assertEquals(new BigDecimal(30), order.getTotalOrderPrice());
-        assertTrue(order.isPaid());
-        assertFalse(order.isSent());
-        assertEquals(fedex, order.getShipmentCompany());
-        assertEquals("FEDEX", order.getShipmentCompanyName());
-        assertEquals(new BigDecimal(10), order.getShippingPrice());
-        assertEquals(4, order.getDeliveryDays());
-        assertEquals("Marszalkowska, 1/2, Warsaw, 00-111", order.getAddress());
-        assertEquals("John", order.getUser().getName());
-        assertEquals(0, order.getClothesList().size());
-    }
-
-    @Test
     public void testMapToOrderDto() {
         //Given
         User user = createUser();
