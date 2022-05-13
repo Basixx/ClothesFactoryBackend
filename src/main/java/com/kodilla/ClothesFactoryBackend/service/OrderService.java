@@ -6,10 +6,7 @@ import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentMet
 import com.kodilla.ClothesFactoryBackend.domain.*;
 import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.mail.MailCreator;
-import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
-import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
-import com.kodilla.ClothesFactoryBackend.repository.ShipmentHistoryRepository;
-import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
+import com.kodilla.ClothesFactoryBackend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +24,7 @@ public class OrderService {
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
     private final ShipmentHistoryRepository shipmentHistoryRepository;
+    private final PaymentHistoryRepository paymentHistoryRepository;
     private final EmailService emailService;
     private final MailCreator mailCreator;
     private final CompanySetter companySetter;
@@ -93,6 +91,12 @@ public class OrderService {
         }
         orderFromDb.setPaid(true);
         emailService.send(mailCreator.createMailOrderPaid(orderFromDb));
+        paymentHistoryRepository.save(PaymentHistory.builder()
+                .paymentTime(LocalDateTime.now())
+                .orderId(orderFromDb.getId())
+                .userMail(orderFromDb.getUser().getEmailAddress())
+                .price(orderFromDb.getTotalOrderPrice())
+                .build());
         return orderFromDb;
     }
 
