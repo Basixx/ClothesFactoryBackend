@@ -23,7 +23,7 @@ public class UserFacade {
         return userMapper.mapToUserDto(userService.getUser(id));
     }
 
-    public UserDto createUser(UserDto userDto) throws CartNotFoundException, OrderNotFoundException, UserAlreadyExistsException {
+    public UserDto createUser(UserDto userDto) throws CartNotFoundException, OrderNotFoundException, UserAlreadyExistsException, EmailVerificationFailedException, EmailAddressDoesNotExistException {
         return userMapper.mapToUserDto(userService.createUser(userMapper.mapToUser(userDto)));
     }
 

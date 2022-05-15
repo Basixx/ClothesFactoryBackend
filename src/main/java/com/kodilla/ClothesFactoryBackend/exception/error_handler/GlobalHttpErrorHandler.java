@@ -84,4 +84,14 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleQuoteNotFoundException() {
         return new ResponseEntity<>("Quote could not be found, please try again later.", HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(EmailVerificationFailedException.class)
+    public ResponseEntity<Object> handleEmailCheckFailedException() {
+        return new ResponseEntity<>("Email verification failed, please try again later.", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmailAddressDoesNotExistException.class)
+    public ResponseEntity<Object> handleEmailAddressDoesNotExistException() {
+        return new ResponseEntity<>("This email address does not exist, please provide a different one.", HttpStatus.BAD_REQUEST);
+    }
 }

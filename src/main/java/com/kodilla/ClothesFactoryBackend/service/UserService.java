@@ -3,10 +3,7 @@ package com.kodilla.ClothesFactoryBackend.service;
 import com.kodilla.ClothesFactoryBackend.domain.Cart;
 import com.kodilla.ClothesFactoryBackend.domain.LoginHistory;
 import com.kodilla.ClothesFactoryBackend.domain.User;
-import com.kodilla.ClothesFactoryBackend.exception.UserAlreadyExistsException;
-import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.WrongPasswordException;
-import com.kodilla.ClothesFactoryBackend.exception.UserEmailNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
 import com.kodilla.ClothesFactoryBackend.repository.LoginHistoryRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
@@ -26,6 +23,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
     private final LoginHistoryRepository loginHistoryRepository;
+    private final EmailVerificationService emailVerificationService;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -35,18 +33,22 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
-    public User createUser(final User user) throws UserAlreadyExistsException {
+    public User createUser(final User user) throws UserAlreadyExistsException, EmailVerificationFailedException, EmailAddressDoesNotExistException {
         if(userRepository.existsUserByEmailAddress(user.getEmailAddress())) {
             throw new UserAlreadyExistsException();
         } else {
-            Cart userCart = Cart.builder()
-                    .totalPrice(BigDecimal.ZERO)
-                    .clothesList(new ArrayList<>())
-                    .build();
-            user.setCart(userCart);
-            user.setOrdersList(new ArrayList<>());
-            cartRepository.save(userCart);
-            return userRepository.save(user);
+            if(!emailVerificationService.emailExists(user.getEmailAddress())) {
+                throw new EmailAddressDoesNotExistException();
+            } else {
+                Cart userCart = Cart.builder()
+                        .totalPrice(BigDecimal.ZERO)
+                        .clothesList(new ArrayList<>())
+                        .build();
+                user.setCart(userCart);
+                user.setOrdersList(new ArrayList<>());
+                cartRepository.save(userCart);
+                return userRepository.save(user);
+            }
         }
     }
 
