@@ -1,8 +1,12 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
 import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentMethod;
+import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
+import com.kodilla.ClothesFactoryBackend.exception.OrderAlreadyPaidException;
 import com.kodilla.ClothesFactoryBackend.facade.OrderFacade;
+import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
+import com.kodilla.ClothesFactoryBackend.service.OrderService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
@@ -28,6 +34,12 @@ class OrderControllerTestSuite {
     private MockMvc mockMvc;
     @MockBean
     private OrderFacade orderFacade;
+
+    @MockBean
+    private OrderService orderService;
+
+    @MockBean
+    private OrderRepository orderRepository;
 
     @Test
     void testGetOrder() throws Exception {
@@ -147,5 +159,20 @@ class OrderControllerTestSuite {
                 .userId(2L)
                 .clothesIdList(new ArrayList<>())
                 .build();
+    }
+
+    @Test
+    void testSetPaidOrderToPaid() throws Exception{
+        //Given
+        when(orderFacade.setOrderToPaid(anyLong())).thenThrow(new OrderAlreadyPaidException());
+
+
+        //When & Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .put("/v1/orders/paid/3")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8"))
+                .andExpect(MockMvcResultMatchers.status().is(405));
     }
 }
