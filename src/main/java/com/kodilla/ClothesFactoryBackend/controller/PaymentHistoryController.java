@@ -16,7 +16,7 @@ public class PaymentHistoryController {
     private final PaymentHistoryFacade paymentHistoryFacade;
 
     @GetMapping
-    public ResponseEntity<List<PaymentHistoryDto>> getAllShipmentHistory() {
+    public ResponseEntity<List<PaymentHistoryDto>> getAllPaymentHistory() {
         return ResponseEntity.ok(paymentHistoryFacade.getAllPaymentHistory());
     }
 }

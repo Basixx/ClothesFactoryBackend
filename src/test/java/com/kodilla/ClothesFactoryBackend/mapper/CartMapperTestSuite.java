@@ -2,7 +2,6 @@ package com.kodilla.ClothesFactoryBackend.mapper;
 
 import com.kodilla.ClothesFactoryBackend.domain.Cart;
 import com.kodilla.ClothesFactoryBackend.domain.CartDto;
-import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

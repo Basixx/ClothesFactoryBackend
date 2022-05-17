@@ -53,7 +53,6 @@ public class OrderMapperTestSuite {
         assertEquals(new BigDecimal(30), orderDto.getTotalOrderPrice());
         assertTrue(orderDto.isPaid());
         assertFalse(orderDto.isSent());
-        assertEquals(order.getShipmentCompany(), orderDto.getShipmentCompany());
         assertEquals(new BigDecimal(20), orderDto.getShippingPrice());
         assertEquals("Marszalkowska, 1/2, Warsaw, 00-111", orderDto.getAddress());
         assertEquals(3L, orderDto.getUserId());

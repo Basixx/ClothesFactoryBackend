@@ -29,7 +29,6 @@ public class OrderMapper {
                 .totalOrderPrice(order.getTotalOrderPrice())
                 .paid(order.isPaid())
                 .sent(order.isSent())
-                .shipmentCompany(order.getShipmentCompany())
                 .shipmentCompanyName(order.getShipmentCompanyName())
                 .shippingPrice(order.getShippingPrice())
                 .deliveryDays(order.getDeliveryDays())

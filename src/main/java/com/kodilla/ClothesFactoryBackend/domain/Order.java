@@ -34,7 +34,6 @@ public class Order {
     private boolean sent;
 
     @Transient
-    @NotNull
     private ShipmentCompany shipmentCompany;
 
     @NotNull

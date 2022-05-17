@@ -11,6 +11,7 @@ public class LoginHistoryMapper {
 
     public LoginHistoryDto mapToLoginHistoryDto(final LoginHistory loginHistory) {
         return LoginHistoryDto.builder()
+                .id(loginHistory.getId())
                 .loginTime(loginHistory.getLoginTime())
                 .userMail(loginHistory.getUserMail())
                 .succeed(loginHistory.isSucceed())

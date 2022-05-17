@@ -11,9 +11,10 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringJUnitWebConfig
 @WebMvcTest(AdminTokenController.class)
@@ -35,20 +36,23 @@ public class AdminTokenControllerTestSuite {
                 .perform(MockMvcRequestBuilders
                         .get("/v1/token/ABCDEFG")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().is(200));
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(jsonPath("$", is(true)));
     }
 
     @Test
     public void testCreateAdminToken() throws Exception {
         //Given
-        AdminTokenDto adminTokenDto = createAdminTokenDto();
+        AdminTokenDto adminTokenDto = AdminTokenDto.builder().id(5L).token("ABCDEFG").build();
         when(adminTokenFacade.createToken()).thenReturn(adminTokenDto);
 
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/v1/token"))
-                .andExpect(MockMvcResultMatchers.status().is(201));
+                .andExpect(MockMvcResultMatchers.status().is(201))
+                .andExpect(jsonPath("$.id", is(5)))
+                .andExpect(jsonPath("$.token", is("ABCDEFG")));
     }
 
     @Test
@@ -60,9 +64,5 @@ public class AdminTokenControllerTestSuite {
         mockMvc.perform(MockMvcRequestBuilders
                         .delete("/v1/token"))
                 .andExpect(MockMvcResultMatchers.status().is(204));
-    }
-
-    private AdminTokenDto createAdminTokenDto() {
-        return AdminTokenDto.builder().id(5L).token("ABCDEFG").build();
     }
 }

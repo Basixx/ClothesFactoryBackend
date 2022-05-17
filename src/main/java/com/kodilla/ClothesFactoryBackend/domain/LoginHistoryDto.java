@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginHistoryDto {
+    private Long id;
     private LocalDateTime loginTime;
     private String userMail;
     private boolean succeed;

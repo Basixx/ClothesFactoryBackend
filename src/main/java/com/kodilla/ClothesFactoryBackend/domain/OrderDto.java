@@ -16,7 +16,6 @@ public class OrderDto {
     private BigDecimal totalOrderPrice;
     private boolean paid;
     private boolean sent;
-    private ShipmentCompany shipmentCompany;
     private String shipmentCompanyName;
     private BigDecimal shippingPrice;
     private int deliveryDays;
