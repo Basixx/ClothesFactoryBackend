@@ -29,7 +29,7 @@ public class LoginHistoryControllerTestSuite {
     private LoginHistoryFacade loginHistoryFacade;
 
     @Test
-    public void testGetLoginHistory() throws Exception {
+    void testGetLoginHistory() throws Exception {
         //Given
         List<LoginHistoryDto> loginHistoryDtoList = new ArrayList<>();
 

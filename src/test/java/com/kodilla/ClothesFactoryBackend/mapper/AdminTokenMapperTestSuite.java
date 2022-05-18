@@ -15,7 +15,7 @@ public class AdminTokenMapperTestSuite {
     private AdminTokenMapper adminTokenMapper;
 
     @Test
-    public void testMapToAdminTokenDto() {
+    void testMapToAdminTokenDto() {
         //Given
         AdminToken adminToken = AdminToken.builder()
                 .token("123456ABCDEFG")

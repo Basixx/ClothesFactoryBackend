@@ -29,7 +29,7 @@ public class ExchangeRatesControllerTestSuite {
     private ExchangeRateFacade exchangeRateFacade;
 
     @Test
-    public void testGetExchangeRate() throws Exception {
+    void testGetExchangeRate() throws Exception {
         //Given
         ExchangeRateDto exchangeRateDto = ExchangeRateDto.builder()
                 .id(1L)
@@ -53,7 +53,7 @@ public class ExchangeRatesControllerTestSuite {
     }
 
     @Test
-    public void testFailedExchangeRate() throws Exception {
+    void testFailedExchangeRate() throws Exception {
         //Given
         when(exchangeRateFacade.getExchange(anyString(), anyString())).thenThrow(new CurrencyExchangeFailedException());
 

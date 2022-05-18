@@ -29,7 +29,7 @@ public class ShipmentHistoryControllerTestSuite {
     private ShipmentHistoryFacade shipmentHistoryFacade;
 
     @Test
-    public void testGetAllShipmentHistory() throws Exception {
+    void testGetAllShipmentHistory() throws Exception {
         //Given
         List<ShipmentHistoryDto> shipmentHistoryDtoList = new ArrayList<>();
 

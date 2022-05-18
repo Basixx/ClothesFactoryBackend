@@ -30,7 +30,7 @@ public class PaymentHistoryControllerTestSuite {
     private PaymentHistoryFacade paymentHistoryFacade;
 
     @Test
-    public void testGetAllPaymentHistory() throws Exception {
+    void testGetAllPaymentHistory() throws Exception {
         //Given
         List<PaymentHistoryDto> paymentHistoryDtoList = new ArrayList<>();
 

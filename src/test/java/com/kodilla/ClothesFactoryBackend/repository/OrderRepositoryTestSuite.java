@@ -1,10 +1,10 @@
 package com.kodilla.ClothesFactoryBackend.repository;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.*;
 import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentCompany;
 import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.companies.Fedex;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
+import com.kodilla.ClothesFactoryBackend.object_mother.ClothMother;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,31 +22,14 @@ public class OrderRepositoryTestSuite {
     @Autowired
     private ClothRepository clothRepository;
 
-
     @Test
     public void testSaveOrderWithClothes() {
         //Given
-        Cloth cloth1 = Cloth.builder()
-                .fashion(Fashion.HOODIE)
-                .color(Color.RED)
-                .print("hello")
-                .font(Font.ARIAL)
-                .printColor(Color.BLACK)
-                .size(Size.M)
-                .quantity(2)
-                .price(new BigDecimal(200))
-                .build();
+        Cloth cloth1 = ClothMother.createCloth1();
+        cloth1.setId(null);
 
-        Cloth cloth2 = Cloth.builder()
-                .fashion(Fashion.T_SHIRT)
-                .color(Color.BLACK)
-                .print("drama")
-                .font(Font.COMIC_SANS)
-                .printColor(Color.WHITE)
-                .size(Size.XXL)
-                .quantity(3)
-                .price(new BigDecimal(150))
-                .build();
+        Cloth cloth2 = ClothMother.createCloth2();
+        cloth2.setId(null);
 
         ShipmentCompany fedex = new Fedex();
 

@@ -19,7 +19,7 @@ public class PaymentHistoryMapperTestSuite {
     private PaymentHistoryMapper paymentHistoryMapper;
 
     @Test
-    public void testMapToPaymentHistoryDto() {
+    void testMapToPaymentHistoryDto() {
         //Given
         PaymentHistory paymentHistory = createPaymentHistory1();
 
@@ -33,8 +33,7 @@ public class PaymentHistoryMapperTestSuite {
         assertEquals(new BigDecimal(500), paymentHistoryDto.getPrice());
     }
 
-    @Test
-    public void testMapToPaymentHistoryDtoList() {
+    @Test void testMapToPaymentHistoryDtoList() {
         //Given
         List<PaymentHistory> paymentHistoryList = new ArrayList<>();
         PaymentHistory paymentHistory1 = createPaymentHistory1();

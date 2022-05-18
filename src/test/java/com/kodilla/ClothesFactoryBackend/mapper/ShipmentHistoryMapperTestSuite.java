@@ -18,7 +18,7 @@ public class ShipmentHistoryMapperTestSuite {
     private ShipmentHistoryMapper shipmentHistoryMapper;
 
     @Test
-    public void testMapToShipmentHistoryDto() {
+    void testMapToShipmentHistoryDto() {
         //Given
         ShipmentHistory shipmentHistory = createShipmentHistory1();
 
@@ -33,7 +33,7 @@ public class ShipmentHistoryMapperTestSuite {
     }
 
     @Test
-    public void testMapToShipmentHistoryDtoList() {
+    void testMapToShipmentHistoryDtoList() {
         //Given
         List<ShipmentHistory> shipmentHistoryList = new ArrayList<>();
         ShipmentHistory shipmentHistory1 = createShipmentHistory1();

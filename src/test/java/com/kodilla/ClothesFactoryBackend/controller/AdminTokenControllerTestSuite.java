@@ -41,7 +41,7 @@ public class AdminTokenControllerTestSuite {
     }
 
     @Test
-    public void testCreateAdminToken() throws Exception {
+    void testCreateAdminToken() throws Exception {
         //Given
         AdminTokenDto adminTokenDto = AdminTokenDto.builder().id(5L).token("ABCDEFG").build();
         when(adminTokenFacade.createToken()).thenReturn(adminTokenDto);
@@ -56,7 +56,7 @@ public class AdminTokenControllerTestSuite {
     }
 
     @Test
-    public void testDeleteTokens() throws Exception {
+    void testDeleteTokens() throws Exception {
         //Given
         doNothing().when(adminTokenFacade).deleteAllTokens();
 

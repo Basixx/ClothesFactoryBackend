@@ -1,16 +1,15 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
 import com.kodilla.ClothesFactoryBackend.domain.UserDto;
 import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.facade.UserFacade;
+import com.kodilla.ClothesFactoryBackend.object_mother.UserMother;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.web.JsonPath;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,9 +36,9 @@ class UserControllerTestSuite {
     void testGetUsers() throws Exception {
         //Given
         List<UserDto> usersDto = new ArrayList<>();
-        for (Long i = 0L; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             usersDto.add(UserDto.builder()
-                    .id(i + 1)
+                    .id(i + 1L)
                     .name("John")
                     .surname("Smith")
                     .phoneNumber("111222333")
@@ -62,13 +61,12 @@ class UserControllerTestSuite {
         matchResult(resultActions, "$[0]", 1);
         matchResult(resultActions, "$[1]", 2);
         matchResult(resultActions, "$[2]", 3);
-
     }
 
     @Test
     void testGetUser() throws Exception {
         //Given
-        UserDto userDto = createUserDto();
+        UserDto userDto = UserMother.createUserDto();
 
         when(userFacade.getUser(anyLong())).thenReturn(userDto);
 
@@ -84,7 +82,7 @@ class UserControllerTestSuite {
     @Test
     void testCreateUser() throws Exception {
         //Given
-        UserDto userDto = createUserDto();
+        UserDto userDto = UserMother.createUserDto();
 
         when(userFacade.createUser(any(UserDto.class))).thenReturn(userDto);
 
@@ -105,7 +103,7 @@ class UserControllerTestSuite {
     @Test
     void testUpdateUser() throws Exception {
         //Given
-        UserDto userDto = createUserDto();
+        UserDto userDto = UserMother.createUserDto();
 
         when(userFacade.updateUser(anyLong(), any(UserDto.class))).thenReturn(userDto);
         Gson gson = new Gson();
@@ -138,7 +136,7 @@ class UserControllerTestSuite {
     @Test
     void testAuthenticateUser() throws Exception {
         //Given
-        UserDto userDto = createUserDto();
+        UserDto userDto = UserMother.createUserDto();
         when(userFacade.authenticateUser(anyString(), anyString())).thenReturn(userDto);
 
         //When & Then
@@ -195,7 +193,7 @@ class UserControllerTestSuite {
     @Test
     void testCreateUserWithAlreadyUsedEmail() throws Exception {
         //Given
-        UserDto userDto = createUserDto();
+        UserDto userDto = UserMother.createUserDto();
 
         when(userFacade.createUser(any(UserDto.class))).thenThrow(new UserAlreadyExistsException());
 
@@ -216,7 +214,7 @@ class UserControllerTestSuite {
     @Test
     void testCreateUserWithNonExistingEmail() throws Exception {
         //Given
-        UserDto userDto = createUserDto();
+        UserDto userDto = UserMother.createUserDto();
 
         when(userFacade.createUser(any(UserDto.class))).thenThrow(new EmailAddressDoesNotExistException());
 
@@ -237,7 +235,7 @@ class UserControllerTestSuite {
     @Test
     void testCreateUserEmailVerificationFailed() throws Exception {
         //Given
-        UserDto userDto = createUserDto();
+        UserDto userDto = UserMother.createUserDto();
 
         when(userFacade.createUser(any(UserDto.class))).thenThrow(new EmailVerificationFailedException());
 
@@ -253,19 +251,6 @@ class UserControllerTestSuite {
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(400))
                 .andExpect(jsonPath("$", Matchers.is("Email verification failed, please try again later.")));
-    }
-
-    private UserDto createUserDto() {
-        return UserDto.builder()
-                .id(1L)
-                .name("John")
-                .surname("Smith")
-                .phoneNumber("111222333")
-                .emailAddress("john@smith.com")
-                .password("password")
-                .ordersIdList(new ArrayList<>())
-                .cartId(2L)
-                .build();
     }
 
     private void matchResult(ResultActions resultActions, String expression, int id) throws Exception {

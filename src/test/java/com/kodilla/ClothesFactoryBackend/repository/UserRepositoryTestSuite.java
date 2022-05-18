@@ -1,6 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.repository;
 
 import com.kodilla.ClothesFactoryBackend.domain.User;
+import com.kodilla.ClothesFactoryBackend.object_mother.UserMother;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,10 +16,10 @@ public class UserRepositoryTestSuite {
     private UserRepository userRepository;
 
     @Test
-    public void testSaveUser() {
+    void testSaveUser() {
         //Given
-        User user1 = createUser1();
-        User user2 = createUser2();
+        User user1 = UserMother.createUser1();
+        User user2 = UserMother.createUser2();
 
         //When
         userRepository.save(user1);
@@ -29,10 +30,11 @@ public class UserRepositoryTestSuite {
     }
 
     @Test
-    public void testDeleteUser() {
+    void testDeleteUser() {
         //Given
-        User user1 = createUser1();
-        User user2 = createUser2();
+        User user1 = UserMother.createUser1();
+        User user2 = UserMother.createUser2();
+        user2.setId(null);
         userRepository.save(user1);
         userRepository.save(user2);
         Long id = user2.getId();
@@ -43,32 +45,5 @@ public class UserRepositoryTestSuite {
 
         //Then
         assertEquals(1, userCount);
-    }
-
-    private User createUser1() {
-        return User.builder()
-                .name("John")
-                .surname("Smith")
-                .phoneNumber("111111111")
-                .emailAddress("john@smith.com")
-                .password("password1")
-                .street("Marszalkowska")
-                .streetAndApartmentNumber("1/2")
-                .city("Warsaw")
-                .postCode("00-111")
-                .build();
-    }
-    private User createUser2() {
-        return User.builder()
-                .name("Mike")
-                .surname("Wazowski")
-                .phoneNumber("222222222")
-                .emailAddress("mike@wazowski.com")
-                .password("password2")
-                .street("Marszalkowska")
-                .streetAndApartmentNumber("1/2")
-                .city("Warsaw")
-                .postCode("00-111")
-                .build();
     }
 }

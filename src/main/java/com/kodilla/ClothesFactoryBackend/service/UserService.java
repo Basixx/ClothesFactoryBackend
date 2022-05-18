@@ -78,7 +78,5 @@ public class UserService {
             loginHistoryRepository.save(LoginHistory.builder().loginTime(LocalDateTime.now()).userMail(userFromDb.getEmailAddress()).succeed(false).build());
             throw new WrongPasswordException();
         }
-
-
     }
 }

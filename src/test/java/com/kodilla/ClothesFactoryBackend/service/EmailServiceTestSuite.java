@@ -20,7 +20,7 @@ public class EmailServiceTestSuite {
     private JavaMailSender javaMailSender;
 
     @Test
-    public void shouldSendEmail() {
+    void shouldSendEmail() {
         //Given
         Mail mail = new Mail("test@test.com", "Test", "Test Message");
 

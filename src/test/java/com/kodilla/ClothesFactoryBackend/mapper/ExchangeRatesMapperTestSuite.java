@@ -16,7 +16,7 @@ public class ExchangeRatesMapperTestSuite {
     private ExchangeRatesMapper exchangeRatesMapper;
 
     @Test
-    public void testMapToExchangeRateDto() {
+    void testMapToExchangeRateDto() {
         //Given
         ExchangeRate exchangeRate = ExchangeRate.builder()
                 .fromCurrency("PLN")

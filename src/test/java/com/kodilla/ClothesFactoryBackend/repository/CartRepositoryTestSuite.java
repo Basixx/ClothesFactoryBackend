@@ -1,12 +1,11 @@
 package com.kodilla.ClothesFactoryBackend.repository;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.Color;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Fashion;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Font;
-import com.kodilla.ClothesFactoryBackend.auxiliary.Size;
 import com.kodilla.ClothesFactoryBackend.domain.Cart;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.User;
+import com.kodilla.ClothesFactoryBackend.object_mother.CartMother;
+import com.kodilla.ClothesFactoryBackend.object_mother.ClothMother;
+import com.kodilla.ClothesFactoryBackend.object_mother.UserMother;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,25 +27,13 @@ public class CartRepositoryTestSuite {
 
 
     @Test
-    public void testSaveCartWithUser() {
+    void testSaveCartWithUser() {
         //Given
-        User user = User.builder()
-                .name("John")
-                .surname("Smith")
-                .phoneNumber("111111111")
-                .emailAddress("john@smith.com")
-                .password("password")
-                .street("Marszalkowska")
-                .streetAndApartmentNumber("1/2")
-                .city("Warsaw")
-                .postCode("00-111")
-                .build();
-        Cart cart = Cart.builder()
-                .clothesList(new ArrayList<>())
-                .totalPrice(new BigDecimal(50))
-                .build();
+        User user = UserMother.createUser1();
+        user.setId(null);
+        Cart cart = CartMother.createCart(new BigDecimal(50));
+        cart.setId(null);
         user.setCart(cart);
-
 
         //When
         userRepository.save(user);
@@ -61,31 +48,15 @@ public class CartRepositoryTestSuite {
     }
 
     @Test
-    public void testCartHasClothes() {
+    void testCartHasClothes() {
         //Given
         Cart cart = Cart.builder().clothesList(new ArrayList<>()).totalPrice(new BigDecimal(50)).build();
 
-        Cloth cloth1 = Cloth.builder()
-                .fashion(Fashion.HOODIE)
-                .color(Color.RED)
-                .print("hello")
-                .font(Font.ARIAL)
-                .printColor(Color.BLACK)
-                .size(Size.M)
-                .quantity(2)
-                .price(new BigDecimal(200))
-                .build();
+        Cloth cloth1 = ClothMother.createCloth1();
+        cloth1.setId(null);
 
-        Cloth cloth2 = Cloth.builder()
-                .fashion(Fashion.T_SHIRT)
-                .color(Color.BLACK)
-                .print("drama")
-                .font(Font.COMIC_SANS)
-                .printColor(Color.WHITE)
-                .size(Size.XXL)
-                .quantity(3)
-                .price(new BigDecimal(150))
-                .build();
+        Cloth cloth2 = ClothMother.createCloth2();
+        cloth2.setId(null);
 
         cart.getClothesList().add(cloth1);
         cart.getClothesList().add(cloth2);

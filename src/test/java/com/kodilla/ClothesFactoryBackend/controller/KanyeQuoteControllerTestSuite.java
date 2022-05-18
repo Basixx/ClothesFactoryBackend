@@ -1,6 +1,5 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
-
 import com.kodilla.ClothesFactoryBackend.client.kanye_west_quotes_api.KanyeWestApiClient;
 import com.kodilla.ClothesFactoryBackend.domain.KanyeQuoteDto;
 import com.kodilla.ClothesFactoryBackend.exception.QuoteNotFoundException;
@@ -27,7 +26,7 @@ public class KanyeQuoteControllerTestSuite {
     private KanyeWestApiClient kanyeWestApiClient;
 
     @Test
-    public void testGetQuote() throws Exception {
+    void testGetQuote() throws Exception {
         //Given
         KanyeQuoteDto kanyeQuoteDto = KanyeQuoteDto.builder().quote("quote").build();
 
@@ -43,7 +42,7 @@ public class KanyeQuoteControllerTestSuite {
     }
 
     @Test
-    public void testQuoteNotFount() throws Exception {
+    void testQuoteNotFount() throws Exception {
         when(kanyeWestApiClient.getQuote()).thenThrow(new QuoteNotFoundException());
 
         //When & Then

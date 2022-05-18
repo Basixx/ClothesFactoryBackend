@@ -18,7 +18,7 @@ public class LoginHistoryMapperTestSuite {
     private LoginHistoryMapper loginHistoryMapper;
 
     @Test
-    public void testMapToLoginHistoryDto() {
+    void testMapToLoginHistoryDto() {
         //Given
         LoginHistory loginHistory = createLogin1();
 
@@ -32,7 +32,7 @@ public class LoginHistoryMapperTestSuite {
     }
 
     @Test
-    public void testMapToLoginHistoryDtoList() {
+    void testMapToLoginHistoryDtoList() {
         //Given
         List<LoginHistory> loginHistoryList = new ArrayList<>();
         LoginHistory loginHistory1 = createLogin1();

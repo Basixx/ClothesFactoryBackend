@@ -74,7 +74,6 @@ public class OrderService {
             }
             cartFromDb.setTotalPrice(BigDecimal.ZERO);
             cartFromDb.setClothesList(new ArrayList<>());
-            System.out.println(cartFromDb.getClothesList().size());
 
             Order savedOrder = orderRepository.save(order);
             emailService.send(mailCreator.createMailForAdmin(savedOrder));

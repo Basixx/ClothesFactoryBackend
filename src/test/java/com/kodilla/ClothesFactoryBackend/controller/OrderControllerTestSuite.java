@@ -4,6 +4,7 @@ import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentMet
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
 import com.kodilla.ClothesFactoryBackend.exception.*;
 import com.kodilla.ClothesFactoryBackend.facade.OrderFacade;
+import com.kodilla.ClothesFactoryBackend.object_mother.OrderMother;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ class OrderControllerTestSuite {
     @Test
     void testGetOrder() throws Exception {
         //Given
-        OrderDto orderDto = createOrderDto();
+        OrderDto orderDto = OrderMother.createOrderDto();
 
         when(orderFacade.getOrder(anyLong())).thenReturn(orderDto);
 
@@ -53,7 +54,7 @@ class OrderControllerTestSuite {
     void testGetAllOrders() throws Exception {
         //Given
         List<OrderDto> ordersDto = new ArrayList<>();
-        for (Long i = 0L; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             ordersDto.add(OrderDto.builder()
                     .id(i + 1L)
                     .orderDate(LocalDate.of(2022, 4, 26))
@@ -85,7 +86,7 @@ class OrderControllerTestSuite {
     void testGetOrdersByUser() throws Exception {
         //Given
         List<OrderDto> orderDtoList = new ArrayList<>();
-        OrderDto orderDto = createOrderDto();
+        OrderDto orderDto = OrderMother.createOrderDto();
         orderDtoList.add(orderDto);
 
         when(orderFacade.getOrdersByUser(anyLong())).thenReturn(orderDtoList);
@@ -103,7 +104,7 @@ class OrderControllerTestSuite {
     @Test
     void testCreateOrder() throws Exception {
         //Given
-        OrderDto orderDto = createOrderDto();
+        OrderDto orderDto = OrderMother.createOrderDto();
 
 
         when(orderFacade.createOrder(anyLong(), any(ShipmentMethod.class))).thenReturn(orderDto);
@@ -176,22 +177,6 @@ class OrderControllerTestSuite {
         matchResult(resultActions, "$", 1, true, true, 2);
     }
 
-    private OrderDto createOrderDto() {
-        return OrderDto.builder()
-                .id(1L)
-                .orderDate(LocalDate.of(2022, 4, 26))
-                .totalOrderPrice(new BigDecimal(100))
-                .paid(false)
-                .sent(false)
-                .shipmentCompanyName("InPost")
-                .shippingPrice(new BigDecimal(20))
-                .deliveryDays(3)
-                .address("Wilcza, 5/6, Warsaw, 02-234")
-                .userId(2L)
-                .clothesIdList(new ArrayList<>())
-                .build();
-    }
-
     @Test
     void testGetNotExistingOrder() throws Exception {
         //Given
@@ -211,7 +196,6 @@ class OrderControllerTestSuite {
         //Given
         when(orderFacade.setOrderToPaid(anyLong())).thenThrow(new OrderAlreadyPaidException());
 
-
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
@@ -227,7 +211,6 @@ class OrderControllerTestSuite {
         //Given
         when(orderFacade.setOrderToSent(anyLong())).thenThrow(new OrderNotPaidException());
 
-
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
@@ -242,7 +225,6 @@ class OrderControllerTestSuite {
     void testSetSentOrderToSent() throws Exception{
         //Given
         when(orderFacade.setOrderToSent(anyLong())).thenThrow(new OrderAlreadySentException());
-
 
         //When & Then
         mockMvc
@@ -260,7 +242,7 @@ class OrderControllerTestSuite {
         when(orderFacade.createOrder(anyLong(), any(ShipmentMethod.class))).thenThrow(new EmptyCartException());
 
         //When & Then
-        ResultActions resultActions = mockMvc
+        mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/v1/orders/2/UPS")
                         .contentType(MediaType.APPLICATION_JSON)

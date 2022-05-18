@@ -23,7 +23,6 @@ public class ClothService {
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
     private final BadWordsService badWordsService;
-
     private final Prices prices;
 
     public List<Cloth> getAllClothes() {

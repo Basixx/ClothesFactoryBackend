@@ -1,10 +1,10 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
-
 import com.kodilla.ClothesFactoryBackend.domain.CartDto;
 import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
 import com.kodilla.ClothesFactoryBackend.facade.CartFacade;
+import com.kodilla.ClothesFactoryBackend.object_mother.CartMother;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,8 +14,6 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -35,7 +33,7 @@ class CartControllerTestSuite {
     @Test
     void getUserCart() throws Exception {
         //Given
-        CartDto cartDto = createCartDto();
+        CartDto cartDto = CartMother.createCartDto();
 
         when(cartFacade.getUserCart(anyLong())).thenReturn(cartDto);
 
@@ -51,7 +49,7 @@ class CartControllerTestSuite {
     @Test
     void addClothToCart() throws Exception {
         //Given
-        CartDto cartDto = createCartDto();
+        CartDto cartDto = CartMother.createCartDto();
         cartDto.getClothesIdList().add(376L);
 
         when(cartFacade.addClothToCart(anyLong(), anyLong())).thenReturn(cartDto);
@@ -70,7 +68,7 @@ class CartControllerTestSuite {
     @Test
     void deleteClothFromCart() throws Exception {
         //Given
-        CartDto cartDto = createCartDto();
+        CartDto cartDto = CartMother.createCartDto();
 
         when(cartFacade.deleteClothFromCart(anyLong(), anyLong())).thenReturn(cartDto);
 
@@ -87,7 +85,7 @@ class CartControllerTestSuite {
     @Test
     void testAddNonExistingClothToCart() throws Exception {
         //Given
-        CartDto cartDto = createCartDto();
+        CartDto cartDto = CartMother.createCartDto();
         cartDto.getClothesIdList().add(376L);
 
         when(cartFacade.addClothToCart(anyLong(), anyLong())).thenThrow(new ClothNotFoundException());
@@ -115,14 +113,6 @@ class CartControllerTestSuite {
                         .characterEncoding("UTF-8"))
                 .andExpect(status().is(404))
                 .andExpect(jsonPath("$", is("Cart with given id doesn't exist or can't be found.")));
-    }
-
-    private CartDto createCartDto() {
-        return CartDto.builder()
-                .id(1L)
-                .totalPrice(new BigDecimal(100))
-                .clothesIdList(new ArrayList<>())
-                .build();
     }
 
     private void matchResult(ResultActions resultActions, int size) throws Exception {

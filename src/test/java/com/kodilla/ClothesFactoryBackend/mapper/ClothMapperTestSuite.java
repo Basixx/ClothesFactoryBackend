@@ -4,6 +4,7 @@ import com.kodilla.ClothesFactoryBackend.auxiliary.*;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
 import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
+import com.kodilla.ClothesFactoryBackend.object_mother.ClothMother;
 import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,36 +27,28 @@ public class ClothMapperTestSuite {
     private  ClothMapper clothMapper;
 
     @Test
-    public void testMapToCloth() {
+    void testMapToCloth() {
         //Given
-        ClothDto clothDto = ClothDto.builder()
-                .fashion(Fashion.HOODIE)
-                .color(Color.RED)
-                .print("hello")
-                .font(Font.ARIAL)
-                .printColor(Color.BLACK)
-                .size(Size.M)
-                .quantity(2)
-                .build();
+        ClothDto clothDto = ClothMother.createClothDto();
 
         //When
         Cloth cloth = clothMapper.mapToCloth(clothDto);
 
         //Then
-        assertEquals(Fashion.HOODIE, cloth.getFashion());
+        assertEquals(Fashion.LONGSLEEVE, cloth.getFashion());
         assertEquals(Color.RED, cloth.getColor());
-        assertEquals("hello", cloth.getPrint());
+        assertEquals("MyPrint", cloth.getPrint());
         assertEquals(Font.ARIAL, cloth.getFont());
-        assertEquals(Color.BLACK, cloth.getPrintColor());
+        assertEquals(Color.WHITE, cloth.getPrintColor());
         assertEquals(Size.M, cloth.getSize());
-        assertEquals(2, cloth.getQuantity());
-        assertEquals(new BigDecimal(200), cloth.getPrice());
+        assertEquals(1, cloth.getQuantity());
+        assertEquals(new BigDecimal(70), cloth.getPrice());
     }
 
     @Test
-    public void testMapToClothDto() {
+    void testMapToClothDto() {
         //Given
-        Cloth cloth = createCloth1();
+        Cloth cloth = ClothMother.createCloth1();
 
         //When
         ClothDto clothDto = clothMapper.mapToClothDto(cloth);
@@ -73,10 +66,10 @@ public class ClothMapperTestSuite {
     }
 
     @Test
-    public void testMapToClothDtoList() {
+    void testMapToClothDtoList() {
         //Given
-        Cloth cloth1 = createCloth1();
-        Cloth cloth2 = createCloth2();
+        Cloth cloth1 = ClothMother.createCloth1();
+        Cloth cloth2 = ClothMother.createCloth2();
 
         List<Cloth> clothes = new ArrayList<>();
         clothes.add(cloth1);
@@ -110,14 +103,14 @@ public class ClothMapperTestSuite {
     }
 
     @Test
-    public void testMapToClothesFromIds() throws ClothNotFoundException {
+    void testMapToClothesFromIds() throws ClothNotFoundException {
         //Given
         List<Long> clothesIds = new ArrayList<>();
         clothesIds.add(1L);
         clothesIds.add(2L);
 
-        Cloth cloth1 = createCloth1();
-        Cloth cloth2 = createCloth2();
+        Cloth cloth1 = ClothMother.createCloth1();
+        Cloth cloth2 = ClothMother.createCloth2();
         when(clothRepository.findById(1L)).thenReturn(Optional.of(cloth1));
         when(clothRepository.findById(2L)).thenReturn(Optional.of(cloth2));
 
@@ -131,10 +124,10 @@ public class ClothMapperTestSuite {
     }
 
     @Test
-    public void mapToClothesIdsFromClothes() {
+    void mapToClothesIdsFromClothes() {
         //Given
-        Cloth cloth1 = createCloth1();
-        Cloth cloth2 = createCloth2();
+        Cloth cloth1 = ClothMother.createCloth1();
+        Cloth cloth2 = ClothMother.createCloth2();
 
         List<Cloth> clothes = new ArrayList<>();
         clothes.add(cloth1);
@@ -148,33 +141,5 @@ public class ClothMapperTestSuite {
 
         assertEquals(1L, ids.get(0));
         assertEquals(2L, ids.get(1));
-    }
-
-    private Cloth createCloth1(){
-        return Cloth.builder()
-                .id(1L)
-                .fashion(Fashion.HOODIE)
-                .color(Color.RED)
-                .print("hello")
-                .font(Font.ARIAL)
-                .printColor(Color.BLACK)
-                .size(Size.M)
-                .quantity(2)
-                .price(new BigDecimal(200))
-                .build();
-    }
-
-    private Cloth createCloth2(){
-        return Cloth.builder()
-                .id(2L)
-                .fashion(Fashion.T_SHIRT)
-                .color(Color.BLACK)
-                .print("drama")
-                .font(Font.COMIC_SANS)
-                .printColor(Color.WHITE)
-                .size(Size.XXL)
-                .quantity(3)
-                .price(new BigDecimal(150))
-                .build();
     }
 }

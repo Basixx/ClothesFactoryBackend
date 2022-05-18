@@ -22,7 +22,7 @@ public class AdminTokenService {
     }
 
     public AdminToken saveToken() {
-        adminTokenRepository.deleteAll();
+        deleteAllTokens();
         String tokenString = UUID.randomUUID().toString();
         AdminToken adminToken = AdminToken.builder().token(tokenString).build();
         emailService.send(mailCreator.createTokenMail(tokenString));

@@ -1,15 +1,16 @@
 package com.kodilla.ClothesFactoryBackend.mapper;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentCompany;
+import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.companies.Dhl;
 import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.companies.Fedex;
+import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.companies.InPost;
+import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.companies.Ups;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
 import com.kodilla.ClothesFactoryBackend.domain.User;
-import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
 import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
+import com.kodilla.ClothesFactoryBackend.object_mother.OrderMother;
+import com.kodilla.ClothesFactoryBackend.object_mother.UserMother;
 import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
-import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,19 +30,17 @@ public class OrderMapperTestSuite {
     @InjectMocks
     private OrderMapper orderMapper;
     @Mock
-    private UserRepository userRepository;
-    @Mock
     private ClothMapper clothMapper;
 
     @Mock
     private OrderRepository orderRepository;
 
     @Test
-    public void testMapToOrderDto() {
+    void testMapToOrderDto() {
         //Given
-        User user = createUser();
+        User user = UserMother.createUser1();
 
-        Order order = createOrder(1L, user, new BigDecimal(30));
+        Order order = OrderMother.createOrder(1L, user, new BigDecimal(30), new Dhl());
         when(clothMapper.mapToClothesIdsFromClothes(anyList())).thenReturn(new ArrayList<>());
 
         //When
@@ -55,16 +54,16 @@ public class OrderMapperTestSuite {
         assertFalse(orderDto.isSent());
         assertEquals(new BigDecimal(20), orderDto.getShippingPrice());
         assertEquals("Marszalkowska, 1/2, Warsaw, 00-111", orderDto.getAddress());
-        assertEquals(3L, orderDto.getUserId());
+        assertEquals(6L, orderDto.getUserId());
         assertEquals(0, orderDto.getClothesIdList().size());
     }
 
     @Test
-    public void testMapToOrderDtoList() {
+    void testMapToOrderDtoList() {
         //Given
-        User user = createUser();
-        Order order1 = createOrder(2L, user, new BigDecimal(20));
-        Order order2 = createOrder(3L, user, new BigDecimal(50));
+        User user = UserMother.createUser1();
+        Order order1 = OrderMother.createOrder(2L, user, new BigDecimal(20), new Fedex());
+        Order order2 = OrderMother.createOrder(3L, user, new BigDecimal(50), new Ups());
 
         List<Order> orders = new ArrayList<>();
         orders.add(order1);
@@ -82,16 +81,16 @@ public class OrderMapperTestSuite {
     }
 
     @Test
-    public void testMapToOrdersFromIds() throws OrderNotFoundException {
+    void testMapToOrdersFromIds() throws OrderNotFoundException {
         //Given
         List<Long> ordersIds = new ArrayList<>();
         ordersIds.add(4L);
         ordersIds.add(5L);
 
-        User user = createUser();
+        User user = UserMother.createUser1();
 
-        Order order1 = createOrder(4L, user, new BigDecimal(30));
-        Order order2 = createOrder(5L, user, new BigDecimal(100));
+        Order order1 = OrderMother.createOrder(4L, user, new BigDecimal(30), new InPost());
+        Order order2 = OrderMother.createOrder(5L, user, new BigDecimal(100), new Ups());
 
         when(orderRepository.findById(4L)).thenReturn(Optional.of(order1));
         when(orderRepository.findById(5L)).thenReturn(Optional.of(order2));
@@ -108,13 +107,13 @@ public class OrderMapperTestSuite {
     }
 
     @Test
-    public void testMapToOrdersIdsFromOrders() {
+    void testMapToOrdersIdsFromOrders() {
         //Given
-        User user = createUser();
+        User user = UserMother.createUser1();
 
-        Order order1 = createOrder(5L, user, new BigDecimal(50));
-        Order order2 = createOrder(6L, user, new BigDecimal(200));
-        Order order3 = createOrder(7L, user, new BigDecimal(70));
+        Order order1 = OrderMother.createOrder(5L, user, new BigDecimal(50), new InPost());
+        Order order2 = OrderMother.createOrder(6L, user, new BigDecimal(200), new Dhl());
+        Order order3 = OrderMother.createOrder(7L, user, new BigDecimal(70), new Fedex());
 
         List<Order> orders = new ArrayList<>();
 
@@ -130,39 +129,5 @@ public class OrderMapperTestSuite {
         assertEquals(5L, ids.get(0));
         assertEquals(6L, ids.get(1));
         assertEquals(7L, ids.get(2));
-    }
-
-    private User createUser() {
-        return User.builder()
-                .id(3L)
-                .name("John")
-                .surname("Smith")
-                .phoneNumber("111111111")
-                .emailAddress("john@smith.com")
-                .password("password1")
-                .street("Marszalkowska")
-                .streetAndApartmentNumber("1/2")
-                .city("Warsaw")
-                .postCode("00-111")
-                .build();
-    }
-
-    private Order createOrder(Long id, User user, BigDecimal price) {
-
-        String address = user.toString();
-        ShipmentCompany fedex = new Fedex();
-
-        return Order.builder()
-                .id(id)
-                .orderDate(LocalDate.of(2022, 4, 22))
-                .totalOrderPrice(price)
-                .paid(true)
-                .sent(false)
-                .shipmentCompany(fedex)
-                .shippingPrice(new BigDecimal(20))
-                .address(address)
-                .user(user)
-                .clothesList(new ArrayList<>())
-                .build();
     }
 }

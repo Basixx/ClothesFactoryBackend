@@ -2,6 +2,7 @@ package com.kodilla.ClothesFactoryBackend.mapper;
 
 import com.kodilla.ClothesFactoryBackend.domain.Cart;
 import com.kodilla.ClothesFactoryBackend.domain.CartDto;
+import com.kodilla.ClothesFactoryBackend.object_mother.CartMother;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,23 +22,25 @@ public class CartMapperTestSuite {
     private ClothMapper clothMapper;
 
     @Test
-    public void testMapToCartDto() {
+    void testMapToCartDto() {
         //Given
-        Cart cart = createCart(new BigDecimal(300));
+        Cart cart = CartMother.createCart(new BigDecimal(300));
 
         //When
         CartDto cartDto = cartMapper.mapToCartDto(cart);
 
         //When
+        assertEquals(9L, cartDto.getId());
         assertEquals(new BigDecimal(300), cartDto.getTotalPrice());
         assertEquals(0, cartDto.getClothesIdList().size());
     }
 
     @Test
-    public void testMapToCartDtoList() {
-        Cart cart1 = createCart(new BigDecimal(300));
+    void testMapToCartDtoList() {
+        Cart cart1 = CartMother.createCart(new BigDecimal(300));
 
-        Cart cart2 = createCart(new BigDecimal(500));
+        Cart cart2 = CartMother.createCart(new BigDecimal(500));
+        cart2.setId(10L);
 
         List<Cart> carts = new ArrayList<>();
         carts.add(cart1);
@@ -48,14 +51,9 @@ public class CartMapperTestSuite {
 
         //Then
         assertEquals(2, cartDtoList.size());
+        assertEquals(9L, cartDtoList.get(0).getId());
+        assertEquals(10L, cartDtoList.get(1).getId());
         assertEquals(new BigDecimal(300), cartDtoList.get(0).getTotalPrice());
         assertEquals(new BigDecimal(500), cartDtoList.get(1).getTotalPrice());
-    }
-
-    private Cart createCart(BigDecimal price) {
-        return Cart.builder()
-                .totalPrice(price)
-                .clothesList(new ArrayList<>())
-                .build();
     }
 }
