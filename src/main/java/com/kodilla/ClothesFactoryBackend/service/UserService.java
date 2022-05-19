@@ -57,7 +57,7 @@ public class UserService {
         userFromDb.setName(user.getName());
         userFromDb.setSurname(user.getSurname());
         userFromDb.setPhoneNumber(user.getPhoneNumber());
-        userFromDb.setEmailAddress(user.getEmailAddress());
+       // userFromDb.setEmailAddress(user.getEmailAddress());
         userFromDb.setPassword(user.getPassword());
         return userFromDb;
     }

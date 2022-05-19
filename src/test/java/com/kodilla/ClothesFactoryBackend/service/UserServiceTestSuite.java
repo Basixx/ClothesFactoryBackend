@@ -114,7 +114,7 @@ public class UserServiceTestSuite {
         assertEquals("Mike", resultUser.getName());
         assertEquals("Wazowski", resultUser.getSurname());
         assertEquals("222222222", resultUser.getPhoneNumber());
-        assertEquals("mike@wazowski.com", resultUser.getEmailAddress());
+        assertEquals("john@smith.com", resultUser.getEmailAddress());
         assertEquals("password2", resultUser.getPassword());
         assertEquals("Marszalkowska", resultUser.getStreet());
         assertEquals("1/2", resultUser.getStreetAndApartmentNumber());
