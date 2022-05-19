@@ -25,7 +25,8 @@ public class EmailVerificationServiceTestSuite {
     void testEmailExists() throws EmailVerificationFailedException {
         //Given
         String email = "test@mail.com";
-        EmailVerificationDto emailVerificationDto = EmailVerificationDto.builder().emailExists(true).build();
+        EmailVerificationDto emailVerificationDto = new EmailVerificationDto();
+        emailVerificationDto.setEmailExists(true);
         when(emailVerificationApiClient.checkEmail(anyString())).thenReturn(emailVerificationDto);
 
         //When
