@@ -17,10 +17,10 @@ public class KanyeWestApiClient {
     private final RestTemplate restTemplate;
 
     @Value("${kanye.west.api.endpoint:defaultValue}")
-    private String exchangeRateEndpoint;
+    private String kanyeQuoteEndpoint;
 
     public KanyeQuoteDto getQuote() throws QuoteNotFoundException {
-        URI url = UriComponentsBuilder.fromHttpUrl(exchangeRateEndpoint)
+        URI url = UriComponentsBuilder.fromHttpUrl(kanyeQuoteEndpoint)
                 .build()
                 .encode()
                 .toUri();

@@ -1,10 +1,11 @@
 package com.kodilla.ClothesFactoryBackend.domain;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class KanyeQuoteDto {
     private String quote;
 }
