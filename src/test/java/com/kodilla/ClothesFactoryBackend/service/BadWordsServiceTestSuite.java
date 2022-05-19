@@ -22,7 +22,8 @@ public class BadWordsServiceTestSuite {
     @Test
     void testContainsBadWords() throws Exception {
         //Given
-        BadWordsClientDto badWordsClientDto2 = BadWordsClientDto.builder().badWordsTotal(3).build();
+        BadWordsClientDto badWordsClientDto2 = new BadWordsClientDto();
+        badWordsClientDto2.setBadWordsTotal(3);
         when(badWordsApiClient.checkProfanity("bad word")).thenReturn(badWordsClientDto2);
 
         //When
@@ -35,7 +36,8 @@ public class BadWordsServiceTestSuite {
     @Test
     void testContainsNoBadWords() throws Exception {
         //Given
-        BadWordsClientDto badWordsClientDto1 = BadWordsClientDto.builder().badWordsTotal(0).build();
+        BadWordsClientDto badWordsClientDto1 = new BadWordsClientDto();
+        badWordsClientDto1.setBadWordsTotal(0);
         when(badWordsApiClient.checkProfanity("nice word")).thenReturn(badWordsClientDto1);
 
         //When
