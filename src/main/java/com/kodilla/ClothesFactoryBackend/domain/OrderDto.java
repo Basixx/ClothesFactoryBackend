@@ -1,6 +1,5 @@
 package com.kodilla.ClothesFactoryBackend.domain;
 
-import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentCompany;
 import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,5 +20,6 @@ public class OrderDto {
     private int deliveryDays;
     private String address;
     private Long userId;
+    private String userMail;
     private List<Long> clothesIdList;
 }

@@ -55,6 +55,7 @@ public class OrderMapperTestSuite {
         assertEquals(new BigDecimal(20), orderDto.getShippingPrice());
         assertEquals("Marszalkowska, 1/2, Warsaw, 00-111", orderDto.getAddress());
         assertEquals(6L, orderDto.getUserId());
+        assertEquals("john@smith.com", orderDto.getUserMail());
         assertEquals(0, orderDto.getClothesIdList().size());
     }
 
@@ -74,10 +75,28 @@ public class OrderMapperTestSuite {
 
         //Then
         assertEquals(2, ordersDto.size());
+
         assertEquals(2L, ordersDto.get(0).getId());
-        assertEquals(3L, ordersDto.get(1).getId());
+        assertEquals(LocalDate.of(2022, 4, 22), ordersDto.get(0).getOrderDate());
         assertEquals(new BigDecimal(20), ordersDto.get(0).getTotalOrderPrice());
+        assertTrue(ordersDto.get(0).isPaid());
+        assertFalse(ordersDto.get(0).isSent());
+        assertEquals(new BigDecimal(20), ordersDto.get(0).getShippingPrice());
+        assertEquals("Marszalkowska, 1/2, Warsaw, 00-111", ordersDto.get(0).getAddress());
+        assertEquals(6L, ordersDto.get(0).getUserId());
+        assertEquals("john@smith.com", ordersDto.get(0).getUserMail());
+        assertEquals(0, ordersDto.get(0).getClothesIdList().size());
+
+        assertEquals(3L, ordersDto.get(1).getId());
+        assertEquals(LocalDate.of(2022, 4, 22), ordersDto.get(1).getOrderDate());
         assertEquals(new BigDecimal(50), ordersDto.get(1).getTotalOrderPrice());
+        assertTrue(ordersDto.get(1).isPaid());
+        assertFalse(ordersDto.get(1).isSent());
+        assertEquals(new BigDecimal(20), ordersDto.get(1).getShippingPrice());
+        assertEquals("Marszalkowska, 1/2, Warsaw, 00-111", ordersDto.get(1).getAddress());
+        assertEquals(6L, ordersDto.get(1).getUserId());
+        assertEquals("john@smith.com", ordersDto.get(1).getUserMail());
+        assertEquals(0, ordersDto.get(1).getClothesIdList().size());
     }
 
     @Test
