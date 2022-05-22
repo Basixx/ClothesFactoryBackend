@@ -5,7 +5,8 @@ import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentCom
 import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentMethod;
 import com.kodilla.ClothesFactoryBackend.domain.*;
 import com.kodilla.ClothesFactoryBackend.exception.*;
-import com.kodilla.ClothesFactoryBackend.mail.MailCreator;
+import com.kodilla.ClothesFactoryBackend.mail.AdminMailCreator;
+import com.kodilla.ClothesFactoryBackend.mail.UserMailCreator;
 import com.kodilla.ClothesFactoryBackend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,8 @@ public class OrderService {
     private final ShipmentHistoryRepository shipmentHistoryRepository;
     private final PaymentHistoryRepository paymentHistoryRepository;
     private final EmailService emailService;
-    private final MailCreator mailCreator;
+    private final UserMailCreator userMailCreator;
+    private final AdminMailCreator adminMailCreator;
     private final CompanySetter companySetter;
 
     public List<Order> getAllOrders() {
@@ -76,8 +78,8 @@ public class OrderService {
             cartFromDb.setClothesList(new ArrayList<>());
 
             Order savedOrder = orderRepository.save(order);
-            emailService.send(mailCreator.createMailForAdmin(savedOrder));
-            emailService.send(mailCreator.createMailForUser(savedOrder));
+            emailService.send(adminMailCreator.createMailForAdminOrderCreated(savedOrder));
+            emailService.send(userMailCreator.createMailForUserOrderCreated(savedOrder));
 
             return savedOrder;
         }
@@ -89,7 +91,7 @@ public class OrderService {
             throw new OrderAlreadyPaidException();
         }
         orderFromDb.setPaid(true);
-        emailService.send(mailCreator.createMailOrderPaid(orderFromDb));
+        emailService.send(userMailCreator.createMailOrderPaid(orderFromDb));
         paymentHistoryRepository.save(PaymentHistory.builder()
                 .paymentTime(LocalDateTime.now())
                 .orderId(orderFromDb.getId())
@@ -107,7 +109,7 @@ public class OrderService {
             throw new OrderAlreadySentException();
         }
         orderFromDb.setSent(true);
-        emailService.send(mailCreator.createMailOrderSent(orderFromDb));
+        emailService.send(userMailCreator.createMailOrderSent(orderFromDb));
         shipmentHistoryRepository.save(ShipmentHistory.builder()
                 .shipmentTime(LocalDateTime.now())
                 .orderId(orderFromDb.getId())

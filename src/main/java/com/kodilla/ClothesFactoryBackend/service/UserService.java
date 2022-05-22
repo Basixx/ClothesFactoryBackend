@@ -4,6 +4,7 @@ import com.kodilla.ClothesFactoryBackend.domain.Cart;
 import com.kodilla.ClothesFactoryBackend.domain.LoginHistory;
 import com.kodilla.ClothesFactoryBackend.domain.User;
 import com.kodilla.ClothesFactoryBackend.exception.*;
+import com.kodilla.ClothesFactoryBackend.mail.UserMailCreator;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
 import com.kodilla.ClothesFactoryBackend.repository.LoginHistoryRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
@@ -24,6 +25,8 @@ public class UserService {
     private final CartRepository cartRepository;
     private final LoginHistoryRepository loginHistoryRepository;
     private final EmailVerificationService emailVerificationService;
+    private final EmailService emailService;
+    private final UserMailCreator userMailCreator;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -47,6 +50,7 @@ public class UserService {
                 user.setCart(userCart);
                 user.setOrdersList(new ArrayList<>());
                 cartRepository.save(userCart);
+                emailService.send(userMailCreator.accountCreationMail(user));
                 return userRepository.save(user);
             }
         }
@@ -57,7 +61,6 @@ public class UserService {
         userFromDb.setName(user.getName());
         userFromDb.setSurname(user.getSurname());
         userFromDb.setPhoneNumber(user.getPhoneNumber());
-       // userFromDb.setEmailAddress(user.getEmailAddress());
         userFromDb.setPassword(user.getPassword());
         return userFromDb;
     }

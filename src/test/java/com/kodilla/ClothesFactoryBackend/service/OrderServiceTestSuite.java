@@ -12,7 +12,8 @@ import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.User;
 import com.kodilla.ClothesFactoryBackend.exception.*;
-import com.kodilla.ClothesFactoryBackend.mail.MailCreator;
+import com.kodilla.ClothesFactoryBackend.mail.AdminMailCreator;
+import com.kodilla.ClothesFactoryBackend.mail.UserMailCreator;
 import com.kodilla.ClothesFactoryBackend.object_mother.CartMother;
 import com.kodilla.ClothesFactoryBackend.object_mother.ClothMother;
 import com.kodilla.ClothesFactoryBackend.object_mother.OrderMother;
@@ -51,7 +52,9 @@ public class OrderServiceTestSuite {
     @Mock
     private EmailService emailService;
     @Mock
-    private MailCreator mailCreator;
+    private UserMailCreator userMailCreator;
+    @Mock
+    private AdminMailCreator adminMailCreator;
     @Mock
     private CompanySetter companySetter;
 

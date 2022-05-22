@@ -1,33 +1,16 @@
 package com.kodilla.ClothesFactoryBackend.mail;
 
-import com.kodilla.ClothesFactoryBackend.client.config.AdminConfig;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
+import com.kodilla.ClothesFactoryBackend.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MailCreator {
-    private final AdminConfig adminConfig;
+public class UserMailCreator {
 
-    public Mail createMailForAdmin(Order order) {
-        String adminMail = adminConfig.getAdminMail();
-        String subject = "New order created";
-        String message = "New order has been created by " + order.getUser().getName() + " " + order.getUser().getSurname() + ".";
-        String messageClothes = "\nOrder contains: ";
-        int i = 1;
-        for(Cloth cloth : order.getClothesList()) {
-            messageClothes += "\n" + i + ". "+ cloth.toString();
-            i++;
-        }
-        String messagePrice = "\n" + "For total price of: " + order.getTotalOrderPrice();
-        String messageAddress = "\n Address: \n" + order.getAddress();
-        String messageShipment = "\n Shipment: " + order.getShipmentCompanyName();
-        return new Mail(adminMail, subject, message + messageClothes + messagePrice + messageAddress + messageShipment);
-    }
-
-    public Mail createMailForUser(Order order) {
+    public Mail createMailForUserOrderCreated(Order order) {
         String userEmail = order.getUser().getEmailAddress();
         String subject = "New order in C L O H T E S   F A C T O R Y";
         String message = "\nYou have purchased new clothes: ";
@@ -58,10 +41,10 @@ public class MailCreator {
         return new Mail(userEmail, subject, message);
     }
 
-    public Mail createTokenMail(String token) {
-        String adminMail = adminConfig.getAdminMail();
-        String subject = "New Admin Token generated.";
-        String message = "Admin token has been generated, enter below code to log in as admin: \n" + token;
-        return new Mail(adminMail, subject, message);
+    public Mail accountCreationMail(User user) {
+        String userMail = user.getEmailAddress();
+        String subject = "Welcome";
+        String message = "Hello, thank you for creating an account in our shop, " +  user.getName() + " " + user.getSurname() + ". We hope you will enjoy your purchase!";
+        return new Mail(userMail, subject, message);
     }
 }

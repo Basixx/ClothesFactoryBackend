@@ -2,6 +2,7 @@ package com.kodilla.ClothesFactoryBackend.service;
 
 import com.kodilla.ClothesFactoryBackend.domain.User;
 import com.kodilla.ClothesFactoryBackend.exception.*;
+import com.kodilla.ClothesFactoryBackend.mail.UserMailCreator;
 import com.kodilla.ClothesFactoryBackend.object_mother.UserMother;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
 import com.kodilla.ClothesFactoryBackend.repository.LoginHistoryRepository;
@@ -31,6 +32,10 @@ public class UserServiceTestSuite {
     private LoginHistoryRepository loginHistoryRepository;
     @Mock
     private EmailVerificationService emailVerificationService;
+    @Mock
+    private EmailService emailService;
+    @Mock
+    private UserMailCreator userMailCreator;
 
     @Test
     void testGetAllUsers() {
