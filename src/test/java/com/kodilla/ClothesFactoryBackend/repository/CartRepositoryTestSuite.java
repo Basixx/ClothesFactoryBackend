@@ -3,6 +3,8 @@ package com.kodilla.ClothesFactoryBackend.repository;
 import com.kodilla.ClothesFactoryBackend.domain.Cart;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.User;
+import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.object_mother.CartMother;
 import com.kodilla.ClothesFactoryBackend.object_mother.ClothMother;
 import com.kodilla.ClothesFactoryBackend.object_mother.UserMother;
@@ -27,7 +29,7 @@ public class CartRepositoryTestSuite {
 
 
     @Test
-    void testSaveCartWithUser() {
+    void testSaveCartWithUser() throws UserNotFoundException {
         //Given
         User user = UserMother.createUser1();
         user.setId(null);
@@ -41,14 +43,16 @@ public class CartRepositoryTestSuite {
         cartRepository.save(cart);
         Long cartId = cart.getId();
 
+        User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+
         //Then
         assertEquals(1, cartRepository.findAll().size());
         assertEquals(1, userRepository.findAll().size());
-        assertEquals(cartId, userRepository.findById(userId).get().getCart().getId());
+        assertEquals(cartId, userFromDb.getCart().getId());
     }
 
     @Test
-    void testCartHasClothes() {
+    void testCartHasClothes() throws CartNotFoundException {
         //Given
         Cart cart = Cart.builder().clothesList(new ArrayList<>()).totalPrice(new BigDecimal(50)).build();
 
@@ -72,12 +76,14 @@ public class CartRepositoryTestSuite {
         List<Cart> carts = cartRepository.findAll();
         List<Cloth> clothes = clothRepository.findAll();
 
+        Cart cartFromDb = cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
+
         //Then
         assertEquals(1, carts.size());
         assertEquals(2, clothes.size());
-        assertEquals(2, cartRepository.findById(cartId).get().getClothesList().size());
+        assertEquals(2, cartFromDb.getClothesList().size());
 
-        assertTrue(cartRepository.findById(cartId).get().getClothesList().contains(cloth1));
-        assertTrue(cartRepository.findById(cartId).get().getClothesList().contains(cloth2));
+        assertTrue(cartFromDb.getClothesList().contains(cloth1));
+        assertTrue(cartFromDb.getClothesList().contains(cloth2));
     }
 }

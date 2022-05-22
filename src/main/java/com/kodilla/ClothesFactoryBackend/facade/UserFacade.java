@@ -31,7 +31,7 @@ public class UserFacade {
         return userMapper.mapToUserDto(userService.editUser(id, userMapper.mapToUser(userDto)));
     }
 
-    public void deleteUser(Long id) {
+    public void deleteUser(Long id) throws UserNotFoundException {
         userService.deleteUser(id);
     }
 

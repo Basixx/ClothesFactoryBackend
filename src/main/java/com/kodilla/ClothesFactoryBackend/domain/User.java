@@ -57,7 +57,6 @@ public class User {
     )
     private List<Order> ordersList;
 
-
     @Override
     public String toString() {
         return street + ", " + streetAndApartmentNumber + ", " + city + ", " + postCode;

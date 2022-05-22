@@ -28,5 +28,4 @@ public class Cart {
             mappedBy = "cart"
     )
     private List<Cloth> clothesList;
-
 }

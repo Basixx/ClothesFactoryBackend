@@ -4,6 +4,7 @@ import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentCom
 import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.companies.Fedex;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
+import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.object_mother.ClothMother;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class OrderRepositoryTestSuite {
     private ClothRepository clothRepository;
 
     @Test
-    public void testSaveOrderWithClothes() {
+    public void testSaveOrderWithClothes() throws OrderNotFoundException {
         //Given
         Cloth cloth1 = ClothMother.createCloth1();
         cloth1.setId(null);
@@ -54,10 +55,12 @@ public class OrderRepositoryTestSuite {
         clothRepository.save(cloth1);
         clothRepository.save(cloth2);
 
+        Order orderFromDb = orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new);
+
         //Then
         assertEquals(1, orderRepository.findAll().size());
         assertEquals(2, clothRepository.findAll().size());
-        assertTrue(orderRepository.findById(orderId).get().getClothesList().contains(cloth1));
-        assertTrue(orderRepository.findById(orderId).get().getClothesList().contains(cloth2));
+        assertTrue(orderFromDb.getClothesList().contains(cloth1));
+        assertTrue(orderFromDb.getClothesList().contains(cloth2));
     }
 }

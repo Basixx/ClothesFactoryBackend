@@ -65,8 +65,9 @@ public class UserService {
         return userFromDb;
     }
 
-    public void deleteUser(final Long id) {
-        Cart cartFromDb = userRepository.findById(id).get().getCart();
+    public void deleteUser(final Long id) throws UserNotFoundException {
+        User userFromDb = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        Cart cartFromDb = userFromDb.getCart();
         cartRepository.deleteById(cartFromDb.getId());
         userRepository.deleteById(id);
     }

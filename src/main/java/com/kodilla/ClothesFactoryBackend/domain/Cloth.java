@@ -59,7 +59,6 @@ public class Cloth {
     @JoinColumn(name = "ID_ORDER")
     private Order order;
 
-
     @Override
     public String toString() {
         return "Cloth: " +

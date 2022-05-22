@@ -1,6 +1,5 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
-import com.kodilla.ClothesFactoryBackend.client.kanye_west_quotes_api.KanyeWestApiClient;
 import com.kodilla.ClothesFactoryBackend.domain.KanyeQuoteDto;
 import com.kodilla.ClothesFactoryBackend.exception.QuoteNotFoundException;
 import com.kodilla.ClothesFactoryBackend.service.KanyeQuoteService;

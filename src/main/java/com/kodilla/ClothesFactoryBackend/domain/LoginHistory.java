@@ -27,7 +27,6 @@ public class LoginHistory {
     @NotNull
     private String userMail;
 
-
     @NotNull
     private boolean succeed;
 }

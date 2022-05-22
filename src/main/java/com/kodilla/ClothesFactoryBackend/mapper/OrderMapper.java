@@ -4,7 +4,6 @@ import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
 import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
-import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderMapper {
     private final OrderRepository orderRepository;
-    private final UserRepository userRepository;
     private final ClothMapper clothMapper;
 
     public OrderDto mapToOrderDto(final Order order) {

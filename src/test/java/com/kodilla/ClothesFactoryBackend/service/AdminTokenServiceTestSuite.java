@@ -2,7 +2,6 @@ package com.kodilla.ClothesFactoryBackend.service;
 
 import com.kodilla.ClothesFactoryBackend.domain.AdminToken;
 import com.kodilla.ClothesFactoryBackend.mail.AdminMailCreator;
-import com.kodilla.ClothesFactoryBackend.mail.UserMailCreator;
 import com.kodilla.ClothesFactoryBackend.repository.AdminTokenRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
