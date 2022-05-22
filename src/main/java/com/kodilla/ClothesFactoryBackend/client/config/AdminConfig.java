@@ -9,4 +9,7 @@ import org.springframework.stereotype.Component;
 public class AdminConfig {
     @Value("${admin.mail:defaultValue}")
     private String adminMail;
+
+    @Value("${spring.mail.username:defaultValue}")
+    private String shopEmail;
 }

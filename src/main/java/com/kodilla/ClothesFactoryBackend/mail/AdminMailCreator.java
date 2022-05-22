@@ -14,7 +14,7 @@ public class AdminMailCreator {
     public Mail createMailForAdminOrderCreated(Order order) {
         String adminMail = adminConfig.getAdminMail();
         String subject = "New order created";
-        String message = "New order has been created by " + order.getUser().getName() + " " + order.getUser().getSurname() + ".";
+        String message = "New order has been created by " + order.getUser().getName() + " " + order.getUser().getSurname() + " - " + order.getUser().getEmailAddress() + ".";
         String messageClothes = "\nOrder contains: ";
         int i = 1;
         for(Cloth cloth : order.getClothesList()) {
