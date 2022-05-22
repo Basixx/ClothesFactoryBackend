@@ -32,7 +32,7 @@ public class OrderController {
     }
 
     @PostMapping(value = "/{userId}/{shipmentMethod}")
-    public ResponseEntity<OrderDto> createOrder(@PathVariable Long userId, @PathVariable ShipmentMethod shipmentMethod) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
+    public ResponseEntity<OrderDto> createOrder(@PathVariable Long userId, @PathVariable ShipmentMethod shipmentMethod) throws UserNotFoundException, CartNotFoundException, EmptyCartException, CurrencyExchangeFailedException {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderFacade.createOrder(userId, shipmentMethod));
     }
 

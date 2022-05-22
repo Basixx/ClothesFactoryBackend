@@ -100,7 +100,7 @@ public class OrderServiceTestSuite {
     }
 
     @Test
-    void testCreateOrder() throws UserNotFoundException, EmptyCartException, CartNotFoundException {
+    void testCreateOrder() throws UserNotFoundException, EmptyCartException, CartNotFoundException, CurrencyExchangeFailedException {
         //Given
         User user = UserMother.createUser1();
         Cart cart = CartMother.createCart(new BigDecimal(100));

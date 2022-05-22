@@ -29,7 +29,7 @@ public class OrderFacade {
         return orderMapper.mapToOrderDtoList(orderService.getAllUsersOrder(userId));
     }
 
-    public OrderDto createOrder(Long userId, ShipmentMethod shipmentCompany) throws UserNotFoundException, CartNotFoundException, EmptyCartException {
+    public OrderDto createOrder(Long userId, ShipmentMethod shipmentCompany) throws UserNotFoundException, CartNotFoundException, EmptyCartException, CurrencyExchangeFailedException {
         return orderMapper.mapToOrderDto(orderService.createOrder(userId, shipmentCompany));
     }
 

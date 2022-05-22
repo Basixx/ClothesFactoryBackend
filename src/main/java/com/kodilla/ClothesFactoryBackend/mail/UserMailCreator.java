@@ -3,14 +3,22 @@ package com.kodilla.ClothesFactoryBackend.mail;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.User;
+import com.kodilla.ClothesFactoryBackend.exception.CurrencyExchangeFailedException;
+import com.kodilla.ClothesFactoryBackend.service.ExchangeRatesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Service
 @RequiredArgsConstructor
 public class UserMailCreator {
 
-    public Mail createMailForUserOrderCreated(Order order) {
+    private final ExchangeRatesService exchangeRatesService;
+
+    public Mail createMailForUserOrderCreated(Order order) throws CurrencyExchangeFailedException {
+        BigDecimal totalPrice = order.getTotalOrderPrice();
+
         String userEmail = order.getUser().getEmailAddress();
         String subject = "New order in C L O H T E S   F A C T O R Y";
         String message = "\nYou have purchased new clothes: ";
@@ -19,7 +27,12 @@ public class UserMailCreator {
             message += "\n" + i + ". "+ cloth.toString();
             i++;
         }
-        String messagePrice = "\n" + "For total price of: " + order.getTotalOrderPrice() + "\n" + "Your order number: " + order.getId();
+        String messagePrice = "\n" + "For total price of: " +
+                totalPrice + " PLN  //  " +
+                exchangeRatesService.getExchangeRate("EUR", "PLN").getCurrencyRate().multiply(totalPrice).setScale(2, RoundingMode.CEILING) + " EUR  //  " +
+                exchangeRatesService.getExchangeRate("USD", "PLN").getCurrencyRate().multiply(totalPrice).setScale(2, RoundingMode.CEILING) + " USD  //  " +
+                exchangeRatesService.getExchangeRate("GBP", "PLN").getCurrencyRate().multiply(totalPrice).setScale(2, RoundingMode.CEILING) + " GBP  //  " +
+                "\n" + "Your order number: " + order.getId();
         String messageAddress = "\n Address: \n" + order.getAddress();
         String messagePayment = "\nPlease send payment for account number 00 1111 2222 33333 4444 5555 6666.";
         String messageShipment = "\n Shipment: " + order.getShipmentCompanyName() + ", should be delivered in " + order.getDeliveryDays() + " days.";
