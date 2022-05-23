@@ -52,6 +52,8 @@ public class User {
     private Cart cart;
 
     @OneToMany(
+            cascade = CascadeType.REMOVE,
+            orphanRemoval = true,
             targetEntity = Order.class,
             mappedBy = "user"
     )
