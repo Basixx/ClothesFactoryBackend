@@ -94,4 +94,14 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleEmailAddressDoesNotExistException() {
         return new ResponseEntity<>("This email address does not exist, please provide a different one.", HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(EmptyClothDataException.class)
+    public ResponseEntity<Object> handleEmptyClothDataException() {
+        return new ResponseEntity<>("Please provide all data for cloth", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ClothWithQuantityZeroException.class)
+    public ResponseEntity<Object> handleClothWithQuantityZeroException() {
+        return new ResponseEntity<>("Quantity cannot be 0.", HttpStatus.BAD_REQUEST);
+    }
 }

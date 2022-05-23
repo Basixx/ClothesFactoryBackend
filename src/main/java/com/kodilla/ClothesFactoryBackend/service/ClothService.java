@@ -41,10 +41,13 @@ public class ClothService {
         return orderFromDb.getClothesList();
     }
 
-    public Cloth createCloth (final Cloth cloth) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
+    public Cloth createCloth (final Cloth cloth) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException, ClothWithQuantityZeroException {
 
         boolean containsBadWords = badWordsService.containsBadWords(cloth.getPrint());
-        if(!containsBadWords){
+        if(cloth.getQuantity() == 0) {
+            throw new ClothWithQuantityZeroException();
+        }
+        else if(!containsBadWords){
             return clothRepository.save(cloth);
         } else {
             throw new ClothPrintContainsBadWordsException();

@@ -31,7 +31,7 @@ public class ClothController {
     }
 
     @PostMapping
-    public ResponseEntity<ClothDto> createCloth(@RequestBody ClothDto clothDto) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
+    public ResponseEntity<ClothDto> createCloth(@RequestBody ClothDto clothDto) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException, EmptyClothDataException, ClothWithQuantityZeroException {
         return ResponseEntity.ok(clothFacade.createCloth(clothDto));
     }
 

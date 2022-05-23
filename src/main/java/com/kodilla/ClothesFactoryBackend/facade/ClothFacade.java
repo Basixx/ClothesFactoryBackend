@@ -6,6 +6,8 @@ import com.kodilla.ClothesFactoryBackend.mapper.ClothMapper;
 import com.kodilla.ClothesFactoryBackend.service.ClothService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 @Service
@@ -26,8 +28,13 @@ public class ClothFacade {
         return clothMapper.mapToClothDtoList(clothService.getAllClothesFromOrder(orderId));
     }
 
-    public ClothDto createCloth(ClothDto clothDto) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
-        return clothMapper.mapToClothDto(clothService.createCloth(clothMapper.mapToCloth(clothDto)));
+    public ClothDto createCloth(ClothDto clothDto) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException, EmptyClothDataException, ClothWithQuantityZeroException {
+        try {
+            return clothMapper.mapToClothDto(clothService.createCloth(clothMapper.mapToCloth(clothDto)));
+        } catch (NullPointerException | ConstraintViolationException e) {
+            throw new EmptyClothDataException();
+        }
+
     }
 
     public ClothDto updateCloth(Long id, ClothDto clothDto) throws ClothNotFoundException, ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
