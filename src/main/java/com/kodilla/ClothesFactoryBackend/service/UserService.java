@@ -51,6 +51,7 @@ public class UserService {
                 user.setOrdersList(new ArrayList<>());
                 cartRepository.save(userCart);
                 emailService.send(userMailCreator.accountCreationMail(user));
+                loginHistoryRepository.save(LoginHistory.builder().loginTime(LocalDateTime.now()).userMail(user.getEmailAddress()).succeed(true).build());
                 return userRepository.save(user);
             }
         }
