@@ -52,7 +52,6 @@ public class ClothService {
         } else {
             throw new ClothPrintContainsBadWordsException();
         }
-
     }
 
     public Cloth editCloth (final Long id, final Cloth cloth) throws ClothNotFoundException, ProfanityCheckFailedException, ClothPrintContainsBadWordsException {

@@ -63,6 +63,10 @@ public class UserService {
         userFromDb.setSurname(user.getSurname());
         userFromDb.setPhoneNumber(user.getPhoneNumber());
         userFromDb.setPassword(user.getPassword());
+        userFromDb.setStreet(user.getStreet());
+        userFromDb.setStreetAndApartmentNumber(user.getStreetAndApartmentNumber());
+        userFromDb.setCity(user.getCity());
+        userFromDb.setPostCode(user.getPostCode());
         return userFromDb;
     }
 

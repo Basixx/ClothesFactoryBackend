@@ -109,7 +109,7 @@ public class ClothServiceTestSuite {
     }
 
     @Test
-    void testCreateCloth() throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
+    void testCreateCloth() throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException, ClothWithQuantityZeroException {
         //Given
         Cloth cloth = ClothMother.createCloth1();
         cloth.setId(null);

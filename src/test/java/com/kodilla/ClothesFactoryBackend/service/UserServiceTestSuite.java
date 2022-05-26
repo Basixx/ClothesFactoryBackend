@@ -104,7 +104,7 @@ public class UserServiceTestSuite {
     }
 
     @Test
-    void testEditUser() throws UserNotFoundException {
+    void  testEditUser() throws UserNotFoundException {
         //Given
         User user = UserMother.createUser1();
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
@@ -121,10 +121,10 @@ public class UserServiceTestSuite {
         assertEquals("222222222", resultUser.getPhoneNumber());
         assertEquals("john@smith.com", resultUser.getEmailAddress());
         assertEquals("password2", resultUser.getPassword());
-        assertEquals("Marszalkowska", resultUser.getStreet());
-        assertEquals("1/2", resultUser.getStreetAndApartmentNumber());
-        assertEquals("Warsaw", resultUser.getCity());
-        assertEquals("00-111", resultUser.getPostCode());
+        assertEquals("Polinezyjska", resultUser.getStreet());
+        assertEquals("4/10", resultUser.getStreetAndApartmentNumber());
+        assertEquals("Cracow", resultUser.getCity());
+        assertEquals("00-222", resultUser.getPostCode());
         assertEquals(0, resultUser.getOrdersList().size());
     }
 
