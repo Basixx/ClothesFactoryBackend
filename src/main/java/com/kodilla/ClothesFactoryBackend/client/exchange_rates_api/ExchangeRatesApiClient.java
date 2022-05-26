@@ -1,7 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.client.exchange_rates_api;
 
 import com.kodilla.ClothesFactoryBackend.domain.ExchangeRatesClientDto;
-import com.kodilla.ClothesFactoryBackend.exception.CurrencyExchangeFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.api.CurrencyExchangeFailedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

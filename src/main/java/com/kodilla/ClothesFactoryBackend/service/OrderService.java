@@ -4,7 +4,14 @@ import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.CompanySett
 import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentCompany;
 import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentMethod;
 import com.kodilla.ClothesFactoryBackend.domain.*;
-import com.kodilla.ClothesFactoryBackend.exception.*;
+import com.kodilla.ClothesFactoryBackend.exception.api.CurrencyExchangeFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.cart.CartNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.cart.EmptyCartException;
+import com.kodilla.ClothesFactoryBackend.exception.order.OrderAlreadyPaidException;
+import com.kodilla.ClothesFactoryBackend.exception.order.OrderAlreadySentException;
+import com.kodilla.ClothesFactoryBackend.exception.order.OrderNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.order.OrderNotPaidException;
+import com.kodilla.ClothesFactoryBackend.exception.user.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.mail.AdminMailCreator;
 import com.kodilla.ClothesFactoryBackend.mail.UserMailCreator;
 import com.kodilla.ClothesFactoryBackend.repository.*;
@@ -40,7 +47,7 @@ public class OrderService {
         return userFromDb.getOrdersList();
     }
 
-    public Order getOrder (final Long id) throws OrderNotFoundException{
+    public Order getOrder (final Long id) throws OrderNotFoundException {
         return orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
     }
 

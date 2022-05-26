@@ -1,6 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
-import com.kodilla.ClothesFactoryBackend.exception.ProfanityCheckFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.api.ProfanityCheckFailedException;
 import com.kodilla.ClothesFactoryBackend.facade.BadWordsFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

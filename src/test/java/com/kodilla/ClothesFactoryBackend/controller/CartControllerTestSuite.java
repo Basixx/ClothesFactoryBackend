@@ -1,8 +1,8 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
 import com.kodilla.ClothesFactoryBackend.domain.CartDto;
-import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.cart.CartNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.cloth.ClothNotFoundException;
 import com.kodilla.ClothesFactoryBackend.facade.CartFacade;
 import com.kodilla.ClothesFactoryBackend.object_mother.CartMother;
 import org.junit.jupiter.api.Test;

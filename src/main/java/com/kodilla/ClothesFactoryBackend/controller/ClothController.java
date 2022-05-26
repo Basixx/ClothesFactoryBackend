@@ -1,7 +1,12 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
 import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
-import com.kodilla.ClothesFactoryBackend.exception.*;
+import com.kodilla.ClothesFactoryBackend.exception.api.ProfanityCheckFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.cloth.ClothNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.cloth.ClothPrintContainsBadWordsException;
+import com.kodilla.ClothesFactoryBackend.exception.cloth.ClothWithQuantityZeroException;
+import com.kodilla.ClothesFactoryBackend.exception.order.OrderNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.user.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.facade.ClothFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +36,7 @@ public class ClothController {
     }
 
     @PostMapping
-    public ResponseEntity<ClothDto> createCloth(@RequestBody ClothDto clothDto) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException, EmptyClothDataException, ClothWithQuantityZeroException {
+    public ResponseEntity<ClothDto> createCloth(@RequestBody ClothDto clothDto) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException, ClothWithQuantityZeroException {
         return ResponseEntity.ok(clothFacade.createCloth(clothDto));
     }
 

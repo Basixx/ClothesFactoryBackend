@@ -3,7 +3,7 @@ package com.kodilla.ClothesFactoryBackend.mapper;
 import com.kodilla.ClothesFactoryBackend.auxiliary.*;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
-import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.cloth.ClothNotFoundException;
 import com.kodilla.ClothesFactoryBackend.object_mother.ClothMother;
 import com.kodilla.ClothesFactoryBackend.repository.ClothRepository;
 import org.junit.jupiter.api.Test;

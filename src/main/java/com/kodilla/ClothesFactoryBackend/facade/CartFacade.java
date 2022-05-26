@@ -1,9 +1,9 @@
 package com.kodilla.ClothesFactoryBackend.facade;
 
 import com.kodilla.ClothesFactoryBackend.domain.CartDto;
-import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.ClothNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.UserNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.cart.CartNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.cloth.ClothNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.user.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.mapper.CartMapper;
 import com.kodilla.ClothesFactoryBackend.service.CartService;
 import lombok.RequiredArgsConstructor;

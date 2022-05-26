@@ -7,7 +7,7 @@ import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.companies.U
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.OrderDto;
 import com.kodilla.ClothesFactoryBackend.domain.User;
-import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.order.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.object_mother.OrderMother;
 import com.kodilla.ClothesFactoryBackend.object_mother.UserMother;
 import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;

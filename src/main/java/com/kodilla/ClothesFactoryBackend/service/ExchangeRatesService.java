@@ -3,7 +3,7 @@ package com.kodilla.ClothesFactoryBackend.service;
 import com.kodilla.ClothesFactoryBackend.client.exchange_rates_api.ExchangeRatesApiClient;
 import com.kodilla.ClothesFactoryBackend.domain.ExchangeRate;
 import com.kodilla.ClothesFactoryBackend.domain.ExchangeRatesClientDto;
-import com.kodilla.ClothesFactoryBackend.exception.CurrencyExchangeFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.api.CurrencyExchangeFailedException;
 import com.kodilla.ClothesFactoryBackend.repository.ExchangeRatesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

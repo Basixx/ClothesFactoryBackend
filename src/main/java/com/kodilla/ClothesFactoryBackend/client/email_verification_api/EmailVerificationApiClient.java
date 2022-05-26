@@ -1,7 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.client.email_verification_api;
 
 import com.kodilla.ClothesFactoryBackend.domain.EmailVerificationDto;
-import com.kodilla.ClothesFactoryBackend.exception.EmailVerificationFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.email.EmailVerificationFailedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

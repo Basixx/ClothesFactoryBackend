@@ -2,8 +2,8 @@ package com.kodilla.ClothesFactoryBackend.mapper;
 
 import com.kodilla.ClothesFactoryBackend.domain.User;
 import com.kodilla.ClothesFactoryBackend.domain.UserDto;
-import com.kodilla.ClothesFactoryBackend.exception.CartNotFoundException;
-import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.cart.CartNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.order.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -2,7 +2,7 @@ package com.kodilla.ClothesFactoryBackend.controller;
 
 import com.google.gson.Gson;
 import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
-import com.kodilla.ClothesFactoryBackend.exception.ClothPrintContainsBadWordsException;
+import com.kodilla.ClothesFactoryBackend.exception.cloth.ClothPrintContainsBadWordsException;
 import com.kodilla.ClothesFactoryBackend.facade.ClothFacade;
 import com.kodilla.ClothesFactoryBackend.object_mother.ClothMother;
 import org.junit.jupiter.api.Test;

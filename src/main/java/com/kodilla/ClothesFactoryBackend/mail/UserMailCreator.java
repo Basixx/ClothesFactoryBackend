@@ -3,7 +3,7 @@ package com.kodilla.ClothesFactoryBackend.mail;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import com.kodilla.ClothesFactoryBackend.domain.User;
-import com.kodilla.ClothesFactoryBackend.exception.CurrencyExchangeFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.api.CurrencyExchangeFailedException;
 import com.kodilla.ClothesFactoryBackend.service.ExchangeRatesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

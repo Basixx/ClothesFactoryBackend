@@ -1,7 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.client.kanye_west_quotes_api;
 
 import com.kodilla.ClothesFactoryBackend.domain.KanyeQuoteDto;
-import com.kodilla.ClothesFactoryBackend.exception.QuoteNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.api.QuoteNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

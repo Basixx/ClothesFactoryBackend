@@ -1,7 +1,12 @@
 package com.kodilla.ClothesFactoryBackend.service;
 
 import com.kodilla.ClothesFactoryBackend.domain.User;
-import com.kodilla.ClothesFactoryBackend.exception.*;
+import com.kodilla.ClothesFactoryBackend.exception.email.EmailAddressDoesNotExistException;
+import com.kodilla.ClothesFactoryBackend.exception.email.EmailVerificationFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.user.UserAlreadyExistsException;
+import com.kodilla.ClothesFactoryBackend.exception.user.UserEmailNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.user.UserNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.user.WrongPasswordException;
 import com.kodilla.ClothesFactoryBackend.mail.UserMailCreator;
 import com.kodilla.ClothesFactoryBackend.object_mother.UserMother;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;

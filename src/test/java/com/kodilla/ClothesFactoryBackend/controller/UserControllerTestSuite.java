@@ -2,7 +2,12 @@ package com.kodilla.ClothesFactoryBackend.controller;
 
 import com.google.gson.Gson;
 import com.kodilla.ClothesFactoryBackend.domain.UserDto;
-import com.kodilla.ClothesFactoryBackend.exception.*;
+import com.kodilla.ClothesFactoryBackend.exception.email.EmailAddressDoesNotExistException;
+import com.kodilla.ClothesFactoryBackend.exception.email.EmailVerificationFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.user.UserAlreadyExistsException;
+import com.kodilla.ClothesFactoryBackend.exception.user.UserEmailNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.user.UserNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.user.WrongPasswordException;
 import com.kodilla.ClothesFactoryBackend.facade.UserFacade;
 import com.kodilla.ClothesFactoryBackend.object_mother.UserMother;
 import org.hamcrest.Matchers;

@@ -1,4 +1,4 @@
-package com.kodilla.ClothesFactoryBackend.exception;
+package com.kodilla.ClothesFactoryBackend.exception.api;
 
 public class CurrencyExchangeFailedException extends Exception{
 }

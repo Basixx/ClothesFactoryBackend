@@ -1,7 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
 import com.kodilla.ClothesFactoryBackend.domain.KanyeQuoteDto;
-import com.kodilla.ClothesFactoryBackend.exception.QuoteNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.api.QuoteNotFoundException;
 import com.kodilla.ClothesFactoryBackend.service.KanyeQuoteService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

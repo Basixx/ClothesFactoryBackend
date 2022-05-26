@@ -1,8 +1,14 @@
 package com.kodilla.ClothesFactoryBackend.facade;
 
 import com.kodilla.ClothesFactoryBackend.domain.UserDto;
-import com.kodilla.ClothesFactoryBackend.exception.*;
-import com.kodilla.ClothesFactoryBackend.exception.UserEmailNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.cart.CartNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.email.EmailAddressDoesNotExistException;
+import com.kodilla.ClothesFactoryBackend.exception.email.EmailVerificationFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.order.OrderNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.user.UserAlreadyExistsException;
+import com.kodilla.ClothesFactoryBackend.exception.user.UserEmailNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.user.UserNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.user.WrongPasswordException;
 import com.kodilla.ClothesFactoryBackend.mapper.UserMapper;
 import com.kodilla.ClothesFactoryBackend.service.UserService;
 import lombok.RequiredArgsConstructor;

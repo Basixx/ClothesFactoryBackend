@@ -2,7 +2,7 @@ package com.kodilla.ClothesFactoryBackend.service;
 
 import com.kodilla.ClothesFactoryBackend.client.email_verification_api.EmailVerificationApiClient;
 import com.kodilla.ClothesFactoryBackend.domain.EmailVerificationDto;
-import com.kodilla.ClothesFactoryBackend.exception.EmailVerificationFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.email.EmailVerificationFailedException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

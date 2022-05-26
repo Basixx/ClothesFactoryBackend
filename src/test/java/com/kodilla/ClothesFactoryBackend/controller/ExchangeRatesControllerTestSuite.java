@@ -1,7 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
 import com.kodilla.ClothesFactoryBackend.domain.ExchangeRateDto;
-import com.kodilla.ClothesFactoryBackend.exception.CurrencyExchangeFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.api.CurrencyExchangeFailedException;
 import com.kodilla.ClothesFactoryBackend.facade.ExchangeRateFacade;
 import static org.hamcrest.Matchers.*;
 import org.junit.jupiter.api.Test;

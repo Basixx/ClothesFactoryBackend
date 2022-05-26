@@ -1,13 +1,16 @@
 package com.kodilla.ClothesFactoryBackend.facade;
 
 import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
-import com.kodilla.ClothesFactoryBackend.exception.*;
+import com.kodilla.ClothesFactoryBackend.exception.api.ProfanityCheckFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.cloth.ClothNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.cloth.ClothPrintContainsBadWordsException;
+import com.kodilla.ClothesFactoryBackend.exception.cloth.ClothWithQuantityZeroException;
+import com.kodilla.ClothesFactoryBackend.exception.order.OrderNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.user.UserNotFoundException;
 import com.kodilla.ClothesFactoryBackend.mapper.ClothMapper;
 import com.kodilla.ClothesFactoryBackend.service.ClothService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 @Service
@@ -28,13 +31,8 @@ public class ClothFacade {
         return clothMapper.mapToClothDtoList(clothService.getAllClothesFromOrder(orderId));
     }
 
-    public ClothDto createCloth(ClothDto clothDto) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException, EmptyClothDataException, ClothWithQuantityZeroException {
-        try {
+    public ClothDto createCloth(ClothDto clothDto) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException, ClothWithQuantityZeroException {
             return clothMapper.mapToClothDto(clothService.createCloth(clothMapper.mapToCloth(clothDto)));
-        } catch (NullPointerException | ConstraintViolationException e) {
-            throw new EmptyClothDataException();
-        }
-
     }
 
     public ClothDto updateCloth(Long id, ClothDto clothDto) throws ClothNotFoundException, ProfanityCheckFailedException, ClothPrintContainsBadWordsException {

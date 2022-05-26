@@ -2,7 +2,7 @@ package com.kodilla.ClothesFactoryBackend.service;
 
 import com.kodilla.ClothesFactoryBackend.client.bad_words_api.BadWordsApiClient;
 import com.kodilla.ClothesFactoryBackend.domain.BadWordsClientDto;
-import com.kodilla.ClothesFactoryBackend.exception.ProfanityCheckFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.api.ProfanityCheckFailedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

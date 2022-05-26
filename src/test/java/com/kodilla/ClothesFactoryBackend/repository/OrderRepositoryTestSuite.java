@@ -4,7 +4,7 @@ import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentCom
 import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.companies.Fedex;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
-import com.kodilla.ClothesFactoryBackend.exception.OrderNotFoundException;
+import com.kodilla.ClothesFactoryBackend.exception.order.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.object_mother.ClothMother;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.controller;
 
 import com.google.gson.Gson;
-import com.kodilla.ClothesFactoryBackend.exception.ProfanityCheckFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.api.ProfanityCheckFailedException;
 import com.kodilla.ClothesFactoryBackend.facade.BadWordsFacade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

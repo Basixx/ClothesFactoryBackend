@@ -1,7 +1,7 @@
 package com.kodilla.ClothesFactoryBackend.facade;
 
 import com.kodilla.ClothesFactoryBackend.domain.ExchangeRateDto;
-import com.kodilla.ClothesFactoryBackend.exception.CurrencyExchangeFailedException;
+import com.kodilla.ClothesFactoryBackend.exception.api.CurrencyExchangeFailedException;
 import com.kodilla.ClothesFactoryBackend.mapper.ExchangeRatesMapper;
 import com.kodilla.ClothesFactoryBackend.service.ExchangeRatesService;
 import lombok.RequiredArgsConstructor;
