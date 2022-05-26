@@ -21,10 +21,10 @@ public class UserMailCreator {
 
         String userEmail = order.getUser().getEmailAddress();
         String subject = "New order in C L O H T E S   F A C T O R Y";
-        String message = "\nYou have purchased new clothes: ";
+        StringBuilder message = new StringBuilder("\nYou have purchased new clothes: ");
         int i = 1;
         for(Cloth cloth : order.getClothesList()) {
-            message += "\n" + i + ". "+ cloth.toString();
+            message.append("\n").append(i).append(". ").append(cloth.toString());
             i++;
         }
         String messagePrice = "\n" + "For total price of: " +

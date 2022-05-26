@@ -19,7 +19,6 @@ public class ClothMapper {
     private final Prices prices = new Prices();
 
     public Cloth mapToCloth(final ClothDto clothDto) {
-
         return Cloth.builder()
                 .fashion(clothDto.getFashion())
                 .color(clothDto.getColor())

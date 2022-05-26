@@ -15,10 +15,10 @@ public class AdminMailCreator {
         String adminMail = adminConfig.getAdminMail();
         String subject = "New order created";
         String message = "New order has been created by " + order.getUser().getName() + " " + order.getUser().getSurname() + " - " + order.getUser().getEmailAddress() + ".";
-        String messageClothes = "\nOrder contains: ";
+        StringBuilder messageClothes = new StringBuilder("\nOrder contains: ");
         int i = 1;
         for(Cloth cloth : order.getClothesList()) {
-            messageClothes += "\n" + i + ". "+ cloth.toString();
+            messageClothes.append("\n").append(i).append(". ").append(cloth.toString());
             i++;
         }
         String messagePrice = "\n" + "For total price of: " + order.getTotalOrderPrice();
