@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "exchange.rates.api.endpoint.prod",
-      "type": "java.lang.String",
-      "description": "Description for exchange.rates.api.endpoint.prod."
-  }
-] }
