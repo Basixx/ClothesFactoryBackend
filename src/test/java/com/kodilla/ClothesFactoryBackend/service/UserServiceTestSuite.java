@@ -11,6 +11,7 @@ import com.kodilla.ClothesFactoryBackend.mail.UserMailCreator;
 import com.kodilla.ClothesFactoryBackend.object_mother.UserMother;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
 import com.kodilla.ClothesFactoryBackend.repository.LoginHistoryRepository;
+import com.kodilla.ClothesFactoryBackend.repository.SignInHistoryRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,6 +36,8 @@ public class UserServiceTestSuite {
     private CartRepository cartRepository;
     @Mock
     private LoginHistoryRepository loginHistoryRepository;
+    @Mock
+    private SignInHistoryRepository signInHistoryRepository;
     @Mock
     private EmailVerificationService emailVerificationService;
     @Mock

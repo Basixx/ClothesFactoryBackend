@@ -2,6 +2,7 @@ package com.kodilla.ClothesFactoryBackend.service;
 
 import com.kodilla.ClothesFactoryBackend.domain.Cart;
 import com.kodilla.ClothesFactoryBackend.domain.LoginHistory;
+import com.kodilla.ClothesFactoryBackend.domain.SignInHistory;
 import com.kodilla.ClothesFactoryBackend.domain.User;
 import com.kodilla.ClothesFactoryBackend.exception.email.EmailAddressDoesNotExistException;
 import com.kodilla.ClothesFactoryBackend.exception.email.EmailVerificationFailedException;
@@ -12,6 +13,7 @@ import com.kodilla.ClothesFactoryBackend.exception.user.WrongPasswordException;
 import com.kodilla.ClothesFactoryBackend.mail.UserMailCreator;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
 import com.kodilla.ClothesFactoryBackend.repository.LoginHistoryRepository;
+import com.kodilla.ClothesFactoryBackend.repository.SignInHistoryRepository;
 import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
     private final LoginHistoryRepository loginHistoryRepository;
+    private final SignInHistoryRepository signInHistoryRepository;
     private final EmailVerificationService emailVerificationService;
     private final EmailService emailService;
     private final UserMailCreator userMailCreator;
@@ -56,7 +59,7 @@ public class UserService {
                 user.setOrdersList(new ArrayList<>());
                 cartRepository.save(userCart);
                 emailService.send(userMailCreator.accountCreationMail(user));
-                loginHistoryRepository.save(LoginHistory.builder().loginTime(LocalDateTime.now()).userMail(user.getEmailAddress()).succeed(true).build());
+                signInHistoryRepository.save(SignInHistory.builder().signInTime(LocalDateTime.now()).userMail(user.getEmailAddress()).userNumber(user.getPhoneNumber()).build());
                 return userRepository.save(user);
             }
         }
