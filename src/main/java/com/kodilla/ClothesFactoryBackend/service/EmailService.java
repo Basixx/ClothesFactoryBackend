@@ -1,6 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.service;
 
-import com.kodilla.ClothesFactoryBackend.client.config.AdminConfig;
+import com.kodilla.ClothesFactoryBackend.config.AdminConfig;
 import com.kodilla.ClothesFactoryBackend.mail.Mail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

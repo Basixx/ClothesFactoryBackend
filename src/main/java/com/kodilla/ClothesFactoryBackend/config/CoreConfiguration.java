@@ -1,4 +1,4 @@
-package com.kodilla.ClothesFactoryBackend.client.config;
+package com.kodilla.ClothesFactoryBackend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

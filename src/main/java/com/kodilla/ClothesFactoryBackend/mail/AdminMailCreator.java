@@ -1,6 +1,6 @@
 package com.kodilla.ClothesFactoryBackend.mail;
 
-import com.kodilla.ClothesFactoryBackend.client.config.AdminConfig;
+import com.kodilla.ClothesFactoryBackend.config.AdminConfig;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.Order;
 import lombok.RequiredArgsConstructor;
