@@ -6,6 +6,7 @@ Cześć! To moja pierwsza samodzielnie wykonana aplikacja oparta na REST API. Pr
 Pozwala na utworzenie konta użytkownika, logowanie, tworzenie ubrania, dodawanie go do koszyka i składanie zamówienia. Użytkownik ma dostęp do złożonych zamówień oraz możliwość zmiany swoich danych.
 Na aplikację można również zalogować się z pozycji admina, w tym celu generowany jest jednorazowy token umożliwiający dostęp do wszystkich użytkowników, ubrań, historii zamówień, historii logowania i więcej.
 Zachęcam do przetestowania aplikacji wraz z warstwą frontendową, dla uzyskania pełnej funkcjonalności. (link na samej górze pliku).
+Aplikacja działa na lokalnym porcie 8080.
 
 By zapewnić prawidłowe działanie aplikacji należy wykonać poniższe czynności:
 
@@ -44,6 +45,7 @@ Hi! This is my first self made REST API based application. It is a simple shop w
 This app lets you create an user account, log in, creating a cloth, add it to your cart and create an order. User has access to previous orders or ability to change account credentials.
 You can also log in as admin. To do so, a special one-time admin token is generated which gives access to all users, clothes, orders, login history and more.
 I recommend testing this app with frontend, link given at the top of this document.
+This app runs on local server 8080
 
 To start using this application a few steps need to be done:
 
