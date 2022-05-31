@@ -2,6 +2,13 @@ FRONTEND: https://github.com/Basixx/ClothesFactoryFronted.git
 
 *English Below*
 
+Cześć! To moja pierwsza samodzielnie wykonana aplikacja oparta na REST API. Przedstawia prosty sklep internetowy, w której użytkownicy projektują customizowane ubrania z nadrukiem.
+Pozwala na utworzenie konta użytkownika, logowanie, tworzenie ubrania, dodawanie go do koszyka i składanie zamówienia. Użytkownik ma dostęp do złożonych zamówień oraz możliwość zmiany swoich danych.
+Na aplikację można również zalogować się z pozycji admina, w tym celu generowany jest jednorazowy token umożliwiający dostęp do wszystkich użytkowników, ubrań, historii zamówień, historii logowania i więcej.
+Zachęcam do przetestowania aplikacji wraz z warstwą frontendową, dla uzyskania pełnej funkcjonalności. (link na samej górze pliku).
+
+By zapewnić prawidłowe działanie aplikacji należy wykonać poniższe czynności:
+
 1. Należy utworzyć bazę danych MySQL clothes_factory oraz użytkownika z poniższymi danymi oraz utworzyć zmienne środowiskowe:
 
 SQL_USERNAME = clothes_factory_admin
@@ -32,6 +39,11 @@ W sumie 7 zmiennych środowiskowych.
 ___________________________________________________
 
 English:
+
+Hi! This is my first self made REST API based application. It is a simple shop where clients can order customized clothes with prints.
+This app lets you create an user account, log in, creating a cloth, add it to your cart and create an order. User has access to previous orders or ability to change account credentials.
+You can also log in as admin. To do so, a special one-time admin token is generated which gives access to all users, clothes, orders, login history and more.
+I recommend testing this app with frontend, link given at the top of this document.
 
 To start using this application a few steps need to be done:
 
