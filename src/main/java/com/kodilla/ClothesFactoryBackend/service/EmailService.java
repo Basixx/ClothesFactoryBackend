@@ -2,14 +2,15 @@ package com.kodilla.ClothesFactoryBackend.service;
 
 import com.kodilla.ClothesFactoryBackend.config.AdminConfig;
 import com.kodilla.ClothesFactoryBackend.mail.Mail;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+
 
 @Slf4j
 @Service
@@ -27,16 +28,16 @@ public class EmailService {
             MimeMessageHelper helper;
             helper = new MimeMessageHelper(message, true);
 
-                helper.setFrom(adminConfig.getShopEmail());
+            helper.setFrom(adminConfig.getShopEmail());
 
-                helper.setSubject(mail.getSubject());
-                helper.setTo(mail.getMailTo());
-                helper.setText(mail.getMessage(), false);
-                javaMailSender.send(message);
+            helper.setSubject(mail.getSubject());
+            helper.setTo(mail.getMailTo());
+            helper.setText(mail.getMessage(), false);
+            javaMailSender.send(message);
             log.info("Email has been sent.");
 
         } catch (MailException e) {
-            log.error("Failed to process email sending: " + e.getMessage(), e);
+            log.error("Failed to process email sending: {}", e.getMessage());
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }

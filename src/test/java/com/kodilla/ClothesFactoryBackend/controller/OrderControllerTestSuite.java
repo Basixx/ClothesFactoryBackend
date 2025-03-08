@@ -13,18 +13,21 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,7 +38,7 @@ class OrderControllerTestSuite {
 
     @Autowired
     private MockMvc mockMvc;
-    @MockBean
+    @MockitoBean
     private OrderFacade orderFacade;
 
     @Test
@@ -51,7 +54,7 @@ class OrderControllerTestSuite {
                         .get("/v1/orders/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200));
-        matchResult(resultActions, "$", 1,false, false, 2);
+        matchResult(resultActions, "$", 1, false, false, 2);
     }
 
     @Test
@@ -226,7 +229,7 @@ class OrderControllerTestSuite {
     }
 
     @Test
-    void testSetSentOrderToSent() throws Exception{
+    void testSetSentOrderToSent() throws Exception {
         //Given
         when(orderFacade.setOrderToSent(anyLong())).thenThrow(new OrderAlreadySentException());
 

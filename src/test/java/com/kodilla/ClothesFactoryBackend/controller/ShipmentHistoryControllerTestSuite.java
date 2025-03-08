@@ -5,14 +5,16 @@ import com.kodilla.ClothesFactoryBackend.facade.ShipmentHistoryFacade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
@@ -25,7 +27,7 @@ public class ShipmentHistoryControllerTestSuite {
 
     @Autowired
     private MockMvc mockMvc;
-    @MockBean
+    @MockitoBean
     private ShipmentHistoryFacade shipmentHistoryFacade;
 
     @Test
@@ -59,7 +61,7 @@ public class ShipmentHistoryControllerTestSuite {
                         .get("/v1/shipmentHistory")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
-                .andExpect(jsonPath( "$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].shipmentTime", is("2022-05-12T12:00:00")))
                 .andExpect(jsonPath("$[0].orderId", is(2)))

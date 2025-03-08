@@ -1,8 +1,9 @@
 package com.kodilla.ClothesFactoryBackend.domain;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 import java.util.List;
 

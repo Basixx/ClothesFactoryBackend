@@ -6,13 +6,14 @@ import com.kodilla.ClothesFactoryBackend.auxiliary.Font;
 import com.kodilla.ClothesFactoryBackend.auxiliary.Size;
 import com.kodilla.ClothesFactoryBackend.domain.Cloth;
 import com.kodilla.ClothesFactoryBackend.domain.ClothDto;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClothMother {
 
-    public static Cloth createCloth1(){
+    public static Cloth createCloth1() {
         return Cloth.builder()
                 .id(1L)
                 .fashion(Fashion.HOODIE)
@@ -26,7 +27,7 @@ public class ClothMother {
                 .build();
     }
 
-    public static Cloth createCloth2(){
+    public static Cloth createCloth2() {
         return Cloth.builder()
                 .id(2L)
                 .fashion(Fashion.T_SHIRT)
@@ -72,4 +73,5 @@ public class ClothMother {
         }
         return clothesDto;
     }
+
 }

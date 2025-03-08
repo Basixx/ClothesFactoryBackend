@@ -1,9 +1,10 @@
 package com.kodilla.ClothesFactoryBackend.domain;
 
 import com.kodilla.ClothesFactoryBackend.auxiliary.shipment.strategy.ShipmentCompany;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;

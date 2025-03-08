@@ -4,12 +4,13 @@ import com.kodilla.ClothesFactoryBackend.auxiliary.Color;
 import com.kodilla.ClothesFactoryBackend.auxiliary.Fashion;
 import com.kodilla.ClothesFactoryBackend.auxiliary.Font;
 import com.kodilla.ClothesFactoryBackend.auxiliary.Size;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 
-@Entity(name="CLOTHES")
+@Entity(name = "CLOTHES")
 @Builder
 @Getter
 @Setter

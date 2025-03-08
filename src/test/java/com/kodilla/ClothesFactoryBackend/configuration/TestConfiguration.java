@@ -1,12 +1,13 @@
 package com.kodilla.ClothesFactoryBackend.configuration;
 
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 @Configuration
 public class TestConfiguration {
 
-    @MockBean
+    @MockitoBean
     JavaMailSender javaMailSender;
+
 }

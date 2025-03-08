@@ -1,11 +1,15 @@
 package com.kodilla.ClothesFactoryBackend.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 
-@Entity(name="RATES")
+@Entity(name = "RATES")
 @Builder
 @Getter
 @Setter

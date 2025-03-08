@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Transactional
@@ -21,6 +22,9 @@ public class UserRepositoryTestSuite {
         User user1 = UserMother.createUser1();
         User user2 = UserMother.createUser2();
 
+        user1.setId(null);
+        user2.setId(null);
+
         //When
         userRepository.save(user1);
         userRepository.save(user2);
@@ -34,10 +38,17 @@ public class UserRepositoryTestSuite {
         //Given
         User user1 = UserMother.createUser1();
         User user2 = UserMother.createUser2();
+
+        user1.setId(null);
         user2.setId(null);
+
         userRepository.save(user1);
         userRepository.save(user2);
-        Long id = user2.getId();
+        Long id = userRepository.findAll()
+                .stream()
+                .map(User::getId)
+                .findFirst()
+                .orElseThrow();
 
         //When
         userRepository.deleteById(id);

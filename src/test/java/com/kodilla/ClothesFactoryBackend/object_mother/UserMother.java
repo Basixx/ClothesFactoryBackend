@@ -1,6 +1,8 @@
 package com.kodilla.ClothesFactoryBackend.object_mother;
 
-import com.kodilla.ClothesFactoryBackend.domain.*;
+import com.kodilla.ClothesFactoryBackend.domain.User;
+import com.kodilla.ClothesFactoryBackend.domain.UserDto;
+
 import java.util.ArrayList;
 
 public class UserMother {
@@ -20,6 +22,7 @@ public class UserMother {
                 .ordersList(new ArrayList<>())
                 .build();
     }
+
     public static User createUser2() {
         return User.builder()
                 .id(7L)
@@ -52,4 +55,5 @@ public class UserMother {
                 .cartId(2L)
                 .build();
     }
+
 }
