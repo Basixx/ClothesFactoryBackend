@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import java.net.URI;
 import java.util.Optional;
 
@@ -24,8 +25,8 @@ public class EmailVerificationApiClient {
 
     public EmailVerificationDto checkEmail(String email) throws EmailVerificationFailedException {
 
-        URI url = UriComponentsBuilder.fromHttpUrl(
-                emailCheckEndpoint)
+        URI url = UriComponentsBuilder.fromUriString(
+                        emailCheckEndpoint)
                 .queryParam("apiKey", emailCheckKey)
                 .queryParam("emailAddress", email)
                 .build()
@@ -38,4 +39,5 @@ public class EmailVerificationApiClient {
         );
         return Optional.ofNullable(emailCheckResponse).orElseThrow(EmailVerificationFailedException::new);
     }
+
 }

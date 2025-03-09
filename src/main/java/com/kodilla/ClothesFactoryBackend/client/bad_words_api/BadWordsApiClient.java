@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import java.net.URI;
 import java.util.Optional;
 
@@ -28,8 +29,8 @@ public class BadWordsApiClient {
         Gson gson = new Gson();
         String jsonContent = gson.toJson(text);
 
-        URI url = UriComponentsBuilder.fromHttpUrl(
-                badWordsEndpoint)
+        URI url = UriComponentsBuilder.fromUriString(
+                        badWordsEndpoint)
                 .queryParam("censor_character", "x")
                 .queryParam("apikey", badWordsKey)
                 .build()
@@ -43,4 +44,5 @@ public class BadWordsApiClient {
         );
         return Optional.ofNullable(profanityResponse).orElseThrow(ProfanityCheckFailedException::new);
     }
+
 }

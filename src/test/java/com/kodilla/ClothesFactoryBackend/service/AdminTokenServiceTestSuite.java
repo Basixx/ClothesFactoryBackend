@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -48,7 +49,7 @@ public class AdminTokenServiceTestSuite {
 
         //Then
         verify(emailService, times(1)).send(any());
-        assertEquals(adminToken.getId(), 5L);
-        assertEquals(adminToken.getToken(), "ABCDEF");
+        assertEquals(5L, adminToken.getId());
+        assertEquals("ABCDEF", adminToken.getToken());
     }
 }

@@ -61,7 +61,7 @@ public class OrderService {
 
         String address = userFromDb.getStreet() + ", " + userFromDb.getStreetAndApartmentNumber() + ", " + userFromDb.getCity() + ", " + userFromDb.getPostCode();
 
-        if (cartFromDb.getClothesList().size() == 0) {
+        if (cartFromDb.getClothesList().isEmpty()) {
             throw new EmptyCartException();
         } else {
             Order order = Order.builder()

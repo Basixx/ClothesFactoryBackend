@@ -20,4 +20,5 @@ public class KanyeQuoteController {
     public ResponseEntity<KanyeQuoteDto> getQuote() throws QuoteNotFoundException {
         return ResponseEntity.ok(kanyeQuoteService.getQuote());
     }
+
 }

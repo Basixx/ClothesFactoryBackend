@@ -29,4 +29,5 @@ public class AdminTokenController {
         adminTokenFacade.deleteAllTokens();
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
 }

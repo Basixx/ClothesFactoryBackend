@@ -11,6 +11,7 @@ import com.kodilla.ClothesFactoryBackend.facade.ClothFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -44,4 +45,5 @@ public class ClothController {
     public ResponseEntity<ClothDto> updateCloth(@PathVariable Long id, @RequestBody ClothDto clothDto) throws ClothNotFoundException, ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
         return ResponseEntity.ok(clothFacade.updateCloth(id, clothDto));
     }
+
 }

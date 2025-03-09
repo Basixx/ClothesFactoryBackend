@@ -16,14 +16,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class OrderMapperTestSuite {
@@ -76,16 +78,16 @@ public class OrderMapperTestSuite {
         //Then
         assertEquals(2, ordersDto.size());
 
-        assertEquals(2L, ordersDto.get(0).getId());
-        assertEquals(LocalDate.of(2022, 4, 22), ordersDto.get(0).getOrderDate());
-        assertEquals(new BigDecimal(20), ordersDto.get(0).getTotalOrderPrice());
-        assertTrue(ordersDto.get(0).isPaid());
-        assertFalse(ordersDto.get(0).isSent());
-        assertEquals(new BigDecimal(20), ordersDto.get(0).getShippingPrice());
-        assertEquals("Marszalkowska, 1/2, Warsaw, 00-111", ordersDto.get(0).getAddress());
-        assertEquals(6L, ordersDto.get(0).getUserId());
-        assertEquals("john@smith.com", ordersDto.get(0).getUserMail());
-        assertEquals(0, ordersDto.get(0).getClothesIdList().size());
+        assertEquals(2L, ordersDto.getFirst().getId());
+        assertEquals(LocalDate.of(2022, 4, 22), ordersDto.getFirst().getOrderDate());
+        assertEquals(new BigDecimal(20), ordersDto.getFirst().getTotalOrderPrice());
+        assertTrue(ordersDto.getFirst().isPaid());
+        assertFalse(ordersDto.getFirst().isSent());
+        assertEquals(new BigDecimal(20), ordersDto.getFirst().getShippingPrice());
+        assertEquals("Marszalkowska, 1/2, Warsaw, 00-111", ordersDto.getFirst().getAddress());
+        assertEquals(6L, ordersDto.getFirst().getUserId());
+        assertEquals("john@smith.com", ordersDto.getFirst().getUserMail());
+        assertEquals(0, ordersDto.getFirst().getClothesIdList().size());
 
         assertEquals(3L, ordersDto.get(1).getId());
         assertEquals(LocalDate.of(2022, 4, 22), ordersDto.get(1).getOrderDate());
@@ -119,9 +121,9 @@ public class OrderMapperTestSuite {
 
         //Then
         assertEquals(2, orders.size());
-        assertEquals(4L, orders.get(0).getId());
+        assertEquals(4L, orders.getFirst().getId());
         assertEquals(5L, orders.get(1).getId());
-        assertEquals(new BigDecimal(30), orders.get(0).getTotalOrderPrice());
+        assertEquals(new BigDecimal(30), orders.getFirst().getTotalOrderPrice());
         assertEquals(new BigDecimal(100), orders.get(1).getTotalOrderPrice());
     }
 
@@ -145,7 +147,7 @@ public class OrderMapperTestSuite {
 
         //Then
         assertEquals(3, ids.size());
-        assertEquals(5L, ids.get(0));
+        assertEquals(5L, ids.getFirst());
         assertEquals(6L, ids.get(1));
         assertEquals(7L, ids.get(2));
     }

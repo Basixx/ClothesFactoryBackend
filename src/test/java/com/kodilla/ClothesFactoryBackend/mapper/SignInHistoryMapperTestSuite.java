@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.junit.jupiter.api.Assertions.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 public class SignInHistoryMapperTestSuite {
@@ -46,11 +48,11 @@ public class SignInHistoryMapperTestSuite {
         //Then
         assertEquals(2, signInHistoryDtoList.size());
 
-        assertEquals(LocalDateTime.of(2022, 5, 30, 12, 30, 0 ), signInHistoryDtoList.get(0).getSignInTime());
+        assertEquals(LocalDateTime.of(2022, 5, 30, 12, 30, 0), signInHistoryDtoList.getFirst().getSignInTime());
         assertEquals("test1@mail.com", signInHistoryDtoList.get(0).getUserMail());
         assertEquals("123456789", signInHistoryDtoList.get(0).getUserNumber());
 
-        assertEquals(LocalDateTime.of(2022, 6, 1, 11, 45, 0 ), signInHistoryDtoList.get(1).getSignInTime());
+        assertEquals(LocalDateTime.of(2022, 6, 1, 11, 45, 0), signInHistoryDtoList.get(1).getSignInTime());
         assertEquals("test2@mail.com", signInHistoryDtoList.get(1).getUserMail());
         assertEquals("987654321", signInHistoryDtoList.get(1).getUserNumber());
     }
