@@ -9,6 +9,17 @@ spring:
     hibernate.ddl-auto: update
     open-in-view: true
     properties.hibernate.dialect: org.hibernate.dialect.MySQLDialect
+  mail:
+    properties.mail.smtp:
+      connecttimeout: 5000
+      timeout: 3000
+      writetimeout: 5000
+      starttls.enable: true
+      auth: true
+    host: smtp.gmail.com
+    password: ${OUTLOOK_MAIL_PASSWORD}
+    port: 587
+    username: ${OUTLOOK_MAIL_USERNAME}
 
 # API CONFIGURATION
 exchange.rates.api.endpoint: https://api.apilayer.com/exchangerates_data/convert
@@ -19,3 +30,6 @@ whoisxml:
     endpoint: https://emailverification.whoisxmlapi.com/api/v2
     key: ${MAIL_API_KEY}
 api.layer.key: ${API_LAYER_KEY}
+
+# Shop owner email address:
+admin.mail: ${ADMIN_MAIL}
