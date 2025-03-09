@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class ExchangeRatesMapperTestSuite {
+public class ExchangeRatesMapperTests {
 
     @InjectMocks
     private ExchangeRatesMapper exchangeRatesMapper;
@@ -34,4 +34,5 @@ public class ExchangeRatesMapperTestSuite {
         assertEquals("ENG", exchangeRateDto.getToCurrency());
         assertEquals(new BigDecimal("0.23"), exchangeRate.getCurrencyRate());
     }
+
 }

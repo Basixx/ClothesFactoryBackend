@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,15 +17,17 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringJUnitWebConfig
 @WebMvcTest(SignInHistoryController.class)
-public class SignInHistoryControllerTestSuite {
+public class SignInHistoryControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
+
     @MockitoBean
     private SignInHistoryFacade signInHistoryFacade;
 
@@ -51,13 +52,14 @@ public class SignInHistoryControllerTestSuite {
         signInHistoryDtoList.add(signInHistoryDto1);
         signInHistoryDtoList.add(signInHistoryDto2);
 
-        when(signInHistoryFacade.getAllSignInHistory()).thenReturn(signInHistoryDtoList);
+        when(signInHistoryFacade.getAllSignInHistory())
+                .thenReturn(signInHistoryDtoList);
 
         //When & Then
-        mockMvc
-                .perform(MockMvcRequestBuilders
-                        .get("/v1/signInHistory")
-                        .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(
+                        get("/v1/signInHistory")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].id", is(1)))
@@ -69,4 +71,5 @@ public class SignInHistoryControllerTestSuite {
                 .andExpect(jsonPath("$[1].userMail", is("test2@mail.com")))
                 .andExpect(jsonPath("$[1].userNumber", is("987654321")));
     }
+
 }

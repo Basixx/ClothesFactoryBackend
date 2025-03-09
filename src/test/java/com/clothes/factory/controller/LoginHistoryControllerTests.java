@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,15 +17,17 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringJUnitWebConfig
 @WebMvcTest(LoginHistoryController.class)
-public class LoginHistoryControllerTestSuite {
+public class LoginHistoryControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
+
     @MockitoBean
     private LoginHistoryFacade loginHistoryFacade;
 
@@ -51,14 +52,14 @@ public class LoginHistoryControllerTestSuite {
         loginHistoryDtoList.add(loginHistoryDto1);
         loginHistoryDtoList.add(loginHistoryDto2);
 
-        when(loginHistoryFacade.getAllLoginHistory()).thenReturn(loginHistoryDtoList);
+        when(loginHistoryFacade.getAllLoginHistory())
+                .thenReturn(loginHistoryDtoList);
 
         //When & Then
-        mockMvc
-                .perform(MockMvcRequestBuilders
-                        .get("/v1/loginHistory")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200))
+        mockMvc.perform(
+                        get("/v1/loginHistory")
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].loginTime", is("2022-04-25T15:00:00")))
@@ -69,4 +70,5 @@ public class LoginHistoryControllerTestSuite {
                 .andExpect(jsonPath("$[1].userMail", is("test123@mail.com")))
                 .andExpect(jsonPath("$[1].succeed", is(false)));
     }
+
 }

@@ -8,7 +8,6 @@ import com.clothes.factory.exception.user.UserEmailNotFoundException;
 import com.clothes.factory.exception.user.UserNotFoundException;
 import com.clothes.factory.exception.user.WrongPasswordException;
 import com.clothes.factory.mail.UserMailCreator;
-import com.clothes.factory.object_mother.UserMother;
 import com.clothes.factory.repository.CartRepository;
 import com.clothes.factory.repository.LoginHistoryRepository;
 import com.clothes.factory.repository.SignInHistoryRepository;
@@ -18,40 +17,51 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.List;
 import java.util.Optional;
+
+import static com.clothes.factory.object_mother.UserMother.createUser1;
+import static com.clothes.factory.object_mother.UserMother.createUser2;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceTestSuite {
+public class UserServiceTests {
 
     @InjectMocks
     private UserService userService;
 
     @Mock
     private UserRepository userRepository;
+
     @Mock
     private CartRepository cartRepository;
+
     @Mock
     private LoginHistoryRepository loginHistoryRepository;
+
     @Mock
     private SignInHistoryRepository signInHistoryRepository;
+
     @Mock
     private EmailVerificationService emailVerificationService;
+
     @Mock
     private EmailService emailService;
+
     @Mock
     private UserMailCreator userMailCreator;
 
     @Test
     void testGetAllUsers() {
         //Given
-        User user1 = UserMother.createUser1();
-        User user2 = UserMother.createUser2();
+        User user1 = createUser1();
+        User user2 = createUser2();
         List<User> userList = List.of(user1, user2);
-        when(userRepository.findAll()).thenReturn(userList);
+        when(userRepository.findAll())
+                .thenReturn(userList);
 
         //When
         List<User> resultList = userService.getAllUsers();
@@ -65,8 +75,9 @@ public class UserServiceTestSuite {
     @Test
     void testGetUser() throws UserNotFoundException {
         //Given
-        User user = UserMother.createUser1();
-        when(userRepository.findById(anyLong())).thenReturn(Optional.ofNullable(user));
+        User user = createUser1();
+        when(userRepository.findById(anyLong()))
+                .thenReturn(Optional.ofNullable(user));
 
         //When
         User resultUser = userService.getUser(6L);
@@ -87,11 +98,14 @@ public class UserServiceTestSuite {
     @Test
     void testCreateUser() throws EmailVerificationFailedException, UserAlreadyExistsException, EmailAddressDoesNotExistException {
         //Given
-        User user = UserMother.createUser1();
+        User user = createUser1();
         user.setCart(null);
-        when(userRepository.existsUserByEmailAddress(anyString())).thenReturn(false);
-        when(emailVerificationService.emailExists(anyString())).thenReturn(true);
-        when(userRepository.save(any())).thenReturn(user);
+        when(userRepository.existsUserByEmailAddress(anyString()))
+                .thenReturn(false);
+        when(emailVerificationService.emailExists(anyString()))
+                .thenReturn(true);
+        when(userRepository.save(any()))
+                .thenReturn(user);
 
         //When
         User resultUser = userService.createUser(user);
@@ -112,12 +126,13 @@ public class UserServiceTestSuite {
     }
 
     @Test
-    void  testEditUser() throws UserNotFoundException {
+    void testEditUser() throws UserNotFoundException {
         //Given
-        User user = UserMother.createUser1();
-        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+        User user = createUser1();
+        when(userRepository.findById(anyLong()))
+                .thenReturn(Optional.of(user));
 
-        User editedUser = UserMother.createUser2();
+        User editedUser = createUser2();
         editedUser.setId(6L);
 
         //When
@@ -139,8 +154,9 @@ public class UserServiceTestSuite {
     @Test
     void testAuthenticateUserCorrectly() throws UserEmailNotFoundException, WrongPasswordException {
         //Given
-        User user = UserMother.createUser1();
-        when(userRepository.findByEmailAddress(anyString())).thenReturn(Optional.of(user));
+        User user = createUser1();
+        when(userRepository.findByEmailAddress(anyString()))
+                .thenReturn(Optional.of(user));
 
         //When
         User resultUser = userService.authenticateUser("john@smith.com", "password1");
@@ -156,4 +172,5 @@ public class UserServiceTestSuite {
         assertEquals("Warsaw", resultUser.getCity());
         assertEquals("00-111", resultUser.getPostCode());
     }
+
 }

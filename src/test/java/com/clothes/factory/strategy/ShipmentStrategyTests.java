@@ -6,11 +6,13 @@ import com.clothes.factory.auxiliary.shipment.strategy.ShipmentMethod;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import java.math.BigDecimal;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class ShipmentStrategyTestSuite {
+public class ShipmentStrategyTests {
 
     @Autowired
     CompanySetter companySetter;
@@ -58,4 +60,5 @@ public class ShipmentStrategyTestSuite {
         assertEquals(new BigDecimal(20), fedex.getPrice());
         assertEquals(3, fedex.getDeliveryDays());
     }
+
 }

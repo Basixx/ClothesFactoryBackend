@@ -1,17 +1,18 @@
 package com.clothes.factory.repository;
 
 import com.clothes.factory.domain.User;
-import com.clothes.factory.object_mother.UserMother;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.clothes.factory.object_mother.UserMother.createUser1;
+import static com.clothes.factory.object_mother.UserMother.createUser2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Transactional
-public class UserRepositoryTestSuite {
+public class UserRepositoryTests {
 
     @Autowired
     private UserRepository userRepository;
@@ -19,8 +20,8 @@ public class UserRepositoryTestSuite {
     @Test
     void testSaveUser() {
         //Given
-        User user1 = UserMother.createUser1();
-        User user2 = UserMother.createUser2();
+        User user1 = createUser1();
+        User user2 = createUser2();
 
         user1.setId(null);
         user2.setId(null);
@@ -36,8 +37,8 @@ public class UserRepositoryTestSuite {
     @Test
     void testDeleteUser() {
         //Given
-        User user1 = UserMother.createUser1();
-        User user2 = UserMother.createUser2();
+        User user1 = createUser1();
+        User user2 = createUser2();
 
         user1.setId(null);
         user2.setId(null);
@@ -57,4 +58,5 @@ public class UserRepositoryTestSuite {
         //Then
         assertEquals(1, userCount);
     }
+
 }

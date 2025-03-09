@@ -8,12 +8,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class EmailVerificationServiceTestSuite {
+public class EmailVerificationServiceTests {
 
     @InjectMocks
     EmailVerificationService emailVerificationService;
@@ -27,7 +28,8 @@ public class EmailVerificationServiceTestSuite {
         String email = "test@mail.com";
         EmailVerificationDto emailVerificationDto = new EmailVerificationDto();
         emailVerificationDto.setEmailExists(true);
-        when(emailVerificationApiClient.checkEmail(anyString())).thenReturn(emailVerificationDto);
+        when(emailVerificationApiClient.checkEmail(anyString()))
+                .thenReturn(emailVerificationDto);
 
         //When
         boolean exists = emailVerificationService.emailExists(email);
@@ -35,4 +37,5 @@ public class EmailVerificationServiceTestSuite {
         //Then
         assertTrue(exists);
     }
+
 }

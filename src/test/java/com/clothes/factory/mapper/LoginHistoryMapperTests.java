@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-public class LoginHistoryMapperTestSuite {
+public class LoginHistoryMapperTests {
 
     @InjectMocks
     private LoginHistoryMapper loginHistoryMapper;
@@ -49,8 +49,8 @@ public class LoginHistoryMapperTestSuite {
         assertEquals(2, loginHistoryDtoList.size());
 
         assertEquals(LocalDateTime.of(2022, 5, 15, 13, 15), loginHistoryDtoList.getFirst().getLoginTime());
-        assertEquals("test@mail.com", loginHistoryDtoList.get(0).getUserMail());
-        assertTrue(loginHistoryDtoList.get(0).isSucceed());
+        assertEquals("test@mail.com", loginHistoryDtoList.getFirst().getUserMail());
+        assertTrue(loginHistoryDtoList.getFirst().isSucceed());
 
         assertEquals(LocalDateTime.of(2022, 5, 14, 12, 3), loginHistoryDtoList.get(1).getLoginTime());
         assertEquals("test2@mail.com", loginHistoryDtoList.get(1).getUserMail());
@@ -72,4 +72,5 @@ public class LoginHistoryMapperTestSuite {
                 .succeed(false)
                 .build();
     }
+
 }

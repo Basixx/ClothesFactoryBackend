@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,15 +17,17 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringJUnitWebConfig
 @WebMvcTest(ShipmentHistoryController.class)
-public class ShipmentHistoryControllerTestSuite {
+public class ShipmentHistoryControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
+
     @MockitoBean
     private ShipmentHistoryFacade shipmentHistoryFacade;
 
@@ -53,14 +54,14 @@ public class ShipmentHistoryControllerTestSuite {
         shipmentHistoryDtoList.add(shipmentHistoryDto1);
         shipmentHistoryDtoList.add(shipmentHistoryDto2);
 
-        when(shipmentHistoryFacade.getAllShipmentHistory()).thenReturn(shipmentHistoryDtoList);
+        when(shipmentHistoryFacade.getAllShipmentHistory())
+                .thenReturn(shipmentHistoryDtoList);
 
         //When & Then
-        mockMvc
-                .perform(MockMvcRequestBuilders
-                        .get("/v1/shipmentHistory")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200))
+        mockMvc.perform(
+                        get("/v1/shipmentHistory")
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].shipmentTime", is("2022-05-12T12:00:00")))
@@ -73,4 +74,5 @@ public class ShipmentHistoryControllerTestSuite {
                 .andExpect(jsonPath("$[1].userMail", is("test123@mail.com")))
                 .andExpect(jsonPath("$[1].shippingCompany", is("Dhl")));
     }
+
 }

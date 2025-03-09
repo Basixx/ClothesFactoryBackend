@@ -8,8 +8,6 @@ import com.clothes.factory.domain.Order;
 import com.clothes.factory.domain.OrderDto;
 import com.clothes.factory.domain.User;
 import com.clothes.factory.exception.order.OrderNotFoundException;
-import com.clothes.factory.object_mother.OrderMother;
-import com.clothes.factory.object_mother.UserMother;
 import com.clothes.factory.repository.OrderRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,14 +21,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.clothes.factory.object_mother.OrderMother.createOrder;
+import static com.clothes.factory.object_mother.UserMother.createUser1;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class OrderMapperTestSuite {
+public class OrderMapperTests {
+
     @InjectMocks
     private OrderMapper orderMapper;
+
     @Mock
     private ClothMapper clothMapper;
 
@@ -40,10 +42,11 @@ public class OrderMapperTestSuite {
     @Test
     void testMapToOrderDto() {
         //Given
-        User user = UserMother.createUser1();
+        User user = createUser1();
 
-        Order order = OrderMother.createOrder(1L, user, new BigDecimal(30), new Dhl());
-        when(clothMapper.mapToClothesIdsFromClothes(anyList())).thenReturn(new ArrayList<>());
+        Order order = createOrder(1L, user, new BigDecimal(30), new Dhl());
+        when(clothMapper.mapToClothesIdsFromClothes(anyList()))
+                .thenReturn(new ArrayList<>());
 
         //When
         OrderDto orderDto = orderMapper.mapToOrderDto(order);
@@ -64,9 +67,9 @@ public class OrderMapperTestSuite {
     @Test
     void testMapToOrderDtoList() {
         //Given
-        User user = UserMother.createUser1();
-        Order order1 = OrderMother.createOrder(2L, user, new BigDecimal(20), new Fedex());
-        Order order2 = OrderMother.createOrder(3L, user, new BigDecimal(50), new Ups());
+        User user = createUser1();
+        Order order1 = createOrder(2L, user, new BigDecimal(20), new Fedex());
+        Order order2 = createOrder(3L, user, new BigDecimal(50), new Ups());
 
         List<Order> orders = new ArrayList<>();
         orders.add(order1);
@@ -108,13 +111,15 @@ public class OrderMapperTestSuite {
         ordersIds.add(4L);
         ordersIds.add(5L);
 
-        User user = UserMother.createUser1();
+        User user = createUser1();
 
-        Order order1 = OrderMother.createOrder(4L, user, new BigDecimal(30), new InPost());
-        Order order2 = OrderMother.createOrder(5L, user, new BigDecimal(100), new Ups());
+        Order order1 = createOrder(4L, user, new BigDecimal(30), new InPost());
+        Order order2 = createOrder(5L, user, new BigDecimal(100), new Ups());
 
-        when(orderRepository.findById(4L)).thenReturn(Optional.of(order1));
-        when(orderRepository.findById(5L)).thenReturn(Optional.of(order2));
+        when(orderRepository.findById(4L))
+                .thenReturn(Optional.of(order1));
+        when(orderRepository.findById(5L))
+                .thenReturn(Optional.of(order2));
 
         //When
         List<Order> orders = orderMapper.mapToOrdersFromIds(ordersIds);
@@ -130,11 +135,11 @@ public class OrderMapperTestSuite {
     @Test
     void testMapToOrdersIdsFromOrders() {
         //Given
-        User user = UserMother.createUser1();
+        User user = createUser1();
 
-        Order order1 = OrderMother.createOrder(5L, user, new BigDecimal(50), new InPost());
-        Order order2 = OrderMother.createOrder(6L, user, new BigDecimal(200), new Dhl());
-        Order order3 = OrderMother.createOrder(7L, user, new BigDecimal(70), new Fedex());
+        Order order1 = createOrder(5L, user, new BigDecimal(50), new InPost());
+        Order order2 = createOrder(6L, user, new BigDecimal(200), new Dhl());
+        Order order3 = createOrder(7L, user, new BigDecimal(70), new Fedex());
 
         List<Order> orders = new ArrayList<>();
 
@@ -151,4 +156,5 @@ public class OrderMapperTestSuite {
         assertEquals(6L, ids.get(1));
         assertEquals(7L, ids.get(2));
     }
+
 }

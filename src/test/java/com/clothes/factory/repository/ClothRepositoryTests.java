@@ -1,7 +1,6 @@
 package com.clothes.factory.repository;
 
 import com.clothes.factory.domain.Cloth;
-import com.clothes.factory.object_mother.ClothMother;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,19 +8,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.clothes.factory.object_mother.ClothMother.createCloth1;
+import static com.clothes.factory.object_mother.ClothMother.createCloth2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Transactional
-public class ClothRepositoryTestSuite {
+public class ClothRepositoryTests {
+
     @Autowired
     private ClothRepository clothRepository;
 
     @Test
     void testSaveCloth() {
         //Given
-        Cloth cloth1 = ClothMother.createCloth1();
-        Cloth cloth2 = ClothMother.createCloth2();
+        Cloth cloth1 = createCloth1();
+        Cloth cloth2 = createCloth2();
 
         cloth1.setId(null);
         cloth2.setId(null);
@@ -39,8 +41,8 @@ public class ClothRepositoryTestSuite {
     @Test
     void testDeleteCloth() {
         //Given
-        Cloth cloth1 = ClothMother.createCloth1();
-        Cloth cloth2 = ClothMother.createCloth2();
+        Cloth cloth1 = createCloth1();
+        Cloth cloth2 = createCloth2();
         cloth1.setId(null);
         cloth2.setId(null);
         clothRepository.save(cloth1);
@@ -53,10 +55,10 @@ public class ClothRepositoryTestSuite {
 
         //When
         clothRepository.deleteById(id);
-
         int clothesCount = clothRepository.findAll().size();
 
         //Then
         assertEquals(1, clothesCount);
     }
+
 }

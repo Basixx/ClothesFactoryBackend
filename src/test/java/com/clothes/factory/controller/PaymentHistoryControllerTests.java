@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,15 +18,17 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringJUnitWebConfig
 @WebMvcTest(PaymentHistoryController.class)
-public class PaymentHistoryControllerTestSuite {
+public class PaymentHistoryControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
+
     @MockitoBean
     private PaymentHistoryFacade paymentHistoryFacade;
 
@@ -54,14 +55,14 @@ public class PaymentHistoryControllerTestSuite {
         paymentHistoryDtoList.add(paymentHistoryDto1);
         paymentHistoryDtoList.add(paymentHistoryDto2);
 
-        when(paymentHistoryFacade.getAllPaymentHistory()).thenReturn(paymentHistoryDtoList);
+        when(paymentHistoryFacade.getAllPaymentHistory())
+                .thenReturn(paymentHistoryDtoList);
 
         //When & Then
-        mockMvc
-                .perform(MockMvcRequestBuilders
-                        .get("/v1/paymentHistory")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200))
+        mockMvc.perform(
+                        get("/v1/paymentHistory")
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].paymentTime", is("2022-05-15T12:00:00")))
@@ -74,4 +75,5 @@ public class PaymentHistoryControllerTestSuite {
                 .andExpect(jsonPath("$[1].userMail", is("test123@mail.com")))
                 .andExpect(jsonPath("$[1].price", is(150)));
     }
+
 }

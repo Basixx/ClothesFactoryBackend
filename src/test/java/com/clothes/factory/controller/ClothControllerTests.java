@@ -1,68 +1,70 @@
 package com.clothes.factory.controller;
 
-import com.google.gson.Gson;
 import com.clothes.factory.domain.ClothDto;
 import com.clothes.factory.exception.cloth.ClothPrintContainsBadWordsException;
 import com.clothes.factory.facade.ClothFacade;
-import com.clothes.factory.object_mother.ClothMother;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 
+import static com.clothes.factory.object_mother.ClothMother.createClothDto;
+import static com.clothes.factory.object_mother.ClothMother.createClothDtoList;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringJUnitWebConfig
 @WebMvcTest(ClothController.class)
-class ClothControllerTestSuite {
+class ClothControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
+
     @MockitoBean
     private ClothFacade clothFacade;
 
     @Test
     void testGetClothes() throws Exception {
         // Given
-        List<ClothDto> clothesDto = ClothMother.createClothDtoList();
+        List<ClothDto> clothesDto = createClothDtoList();
 
-        when(clothFacade.getAllClothes()).thenReturn(clothesDto);
+        when(clothFacade.getAllClothes())
+                .thenReturn(clothesDto);
 
         //When & Then
-        ResultActions resultActions = mockMvc
-                .perform(MockMvcRequestBuilders
-                        .get("/v1/clothes")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200));
+        ResultActions resultActions = mockMvc.perform(
+                get("/v1/clothes")
+                        .contentType(APPLICATION_JSON)
+        ).andExpect(status().is(200));
         matchListResult(resultActions);
     }
 
     @Test
     void testGetClothesFromUserCart() throws Exception {
         // Given
-        List<ClothDto> clothesDto = ClothMother.createClothDtoList();
+        List<ClothDto> clothesDto = createClothDtoList();
 
-        when(clothFacade.getClothesFromUserCart(anyLong())).thenReturn(clothesDto);
+        when(clothFacade.getClothesFromUserCart(anyLong()))
+                .thenReturn(clothesDto);
 
         //When & Then
-        ResultActions resultActions = mockMvc
-                .perform(MockMvcRequestBuilders
-                        .get("/v1/clothes/fromUserCart/3")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200))
+        ResultActions resultActions = mockMvc.perform(
+                        get("/v1/clothes/fromUserCart/3")
+                                .contentType(APPLICATION_JSON)
+                ).andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(3)));
         matchListResult(resultActions);
     }
@@ -70,16 +72,16 @@ class ClothControllerTestSuite {
     @Test
     void testGetClothesFromOrder() throws Exception {
         // Given
-        List<ClothDto> clothesDto = ClothMother.createClothDtoList();
+        List<ClothDto> clothesDto = createClothDtoList();
 
-        when(clothFacade.getClothesFromOrder(anyLong())).thenReturn(clothesDto);
+        when(clothFacade.getClothesFromOrder(anyLong()))
+                .thenReturn(clothesDto);
 
         //When & Then
-        ResultActions resultActions = mockMvc
-                .perform(MockMvcRequestBuilders
-                        .get("/v1/clothes/fromOrder/3")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200))
+        ResultActions resultActions = mockMvc.perform(
+                        get("/v1/clothes/fromOrder/3")
+                                .contentType(APPLICATION_JSON)
+                ).andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(3)));
         matchListResult(resultActions);
     }
@@ -87,65 +89,68 @@ class ClothControllerTestSuite {
     @Test
     void testCreateCloth() throws Exception {
         //Given
-        ClothDto clothDto = ClothMother.createClothDto();
+        ClothDto clothDto = createClothDto();
 
-        when(clothFacade.createCloth(any(ClothDto.class))).thenReturn(clothDto);
+        when(clothFacade.createCloth(any(ClothDto.class)))
+                .thenReturn(clothDto);
 
         Gson gson = new Gson();
         String jsonContent = gson.toJson(clothDto);
 
         //When & Then
-        ResultActions resultActions = mockMvc
-                .perform(MockMvcRequestBuilders
-                        .post("/v1/clothes")
-                        .contentType(MediaType.APPLICATION_JSON)
+        ResultActions resultActions = mockMvc.perform(
+                post("/v1/clothes")
+                        .contentType(APPLICATION_JSON)
                         .characterEncoding("UTF-8")
-                        .content(jsonContent))
-                .andExpect(status().is(200));
+                        .content(jsonContent)
+        ).andExpect(status().is(200));
         matchResult(resultActions, 1, "MyPrint", "$");
     }
 
     @Test
     void testUpdateCloth() throws Exception {
         //Given
-        ClothDto clothDto = ClothMother.createClothDto();
+        ClothDto clothDto = createClothDto();
 
-        when(clothFacade.updateCloth(anyLong(), any(ClothDto.class))).thenReturn(clothDto);
+        when(clothFacade.updateCloth(anyLong(), any(ClothDto.class)))
+                .thenReturn(clothDto);
         Gson gson = new Gson();
         String jsonContent = gson.toJson(clothDto);
 
         //When & Then
-        ResultActions resultActions = mockMvc
-                .perform(MockMvcRequestBuilders
-                        .put("/v1/clothes/1")
-                        .contentType(MediaType.APPLICATION_JSON)
+        ResultActions resultActions = mockMvc.perform(
+                put("/v1/clothes/1")
+                        .contentType(APPLICATION_JSON)
                         .characterEncoding("UTF-8")
-                        .content(jsonContent))
-                .andExpect(status().is(200));
+                        .content(jsonContent)
+        ).andExpect(status().is(200));
         matchResult(resultActions, 1, "MyPrint", "$");
     }
 
     @Test
     void testCreateClothProfanityFailed() throws Exception {
         //Given
-        ClothDto clothDto = ClothMother.createClothDto();
-        when(clothFacade.createCloth(any(ClothDto.class))).thenThrow(new ClothPrintContainsBadWordsException());
+        ClothDto clothDto = createClothDto();
+        when(clothFacade.createCloth(any(ClothDto.class)))
+                .thenThrow(new ClothPrintContainsBadWordsException());
 
         Gson gson = new Gson();
         String jsonContent = gson.toJson(clothDto);
 
         //When & Then
-        mockMvc
-                .perform(MockMvcRequestBuilders
-                        .post("/v1/clothes")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding("UTF-8")
-                        .content(jsonContent))
-                .andExpect(status().is(405))
+        mockMvc.perform(
+                        post("/v1/clothes")
+                                .contentType(APPLICATION_JSON)
+                                .characterEncoding("UTF-8")
+                                .content(jsonContent)
+                ).andExpect(status().is(405))
                 .andExpect(jsonPath("$", is("Cloth print cannot contain any bad words, please change your choice.")));
     }
 
-    private void matchResult(ResultActions resultActions, int id, String print, String expression) throws Exception {
+    private void matchResult(ResultActions resultActions,
+                             int id,
+                             String print,
+                             String expression) throws Exception {
         resultActions
                 .andExpect(jsonPath(expression + ".id", is(id)))
                 .andExpect(jsonPath(expression + ".fashion", is("LONGSLEEVE")))
@@ -158,8 +163,24 @@ class ClothControllerTestSuite {
     }
 
     private void matchListResult(ResultActions resultActions) throws Exception {
-        matchResult(resultActions, 1, "MyPrint 0", "$[0]");
-        matchResult(resultActions, 2, "MyPrint 1", "$[1]");
-        matchResult(resultActions, 3, "MyPrint 2", "$[2]");
+        matchResult(
+                resultActions,
+                1,
+                "MyPrint 0",
+                "$[0]"
+        );
+        matchResult(
+                resultActions,
+                2,
+                "MyPrint 1",
+                "$[1]"
+        );
+        matchResult(
+                resultActions,
+                3,
+                "MyPrint 2",
+                "$[2]"
+        );
     }
+
 }
