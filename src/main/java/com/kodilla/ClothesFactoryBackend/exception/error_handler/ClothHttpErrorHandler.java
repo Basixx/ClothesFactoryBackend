@@ -26,4 +26,5 @@ public class ClothHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleClothPrintContainsBadWordsException() {
         return new ResponseEntity<>("Cloth print cannot contain any bad words, please change your choice.", HttpStatus.METHOD_NOT_ALLOWED);
     }
+
 }

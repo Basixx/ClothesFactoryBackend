@@ -12,22 +12,24 @@ import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
 
 @Transactional
 @Service
 @RequiredArgsConstructor
 public class CartService {
+
     private final CartRepository cartRepository;
     private final UserRepository userRepository;
     private final ClothRepository clothRepository;
 
-    public Cart getCartByUser (final Long userId) throws UserNotFoundException {
+    public Cart getCartByUser(final Long userId) throws UserNotFoundException {
         User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         return userFromDb.getCart();
     }
 
-    public Cart addClothToCart (final Long cartId, final Long clothId) throws CartNotFoundException, ClothNotFoundException {
+    public Cart addClothToCart(final Long cartId, final Long clothId) throws CartNotFoundException, ClothNotFoundException {
         Cart cartFromDb = cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
         Cloth clothFromDb = clothRepository.findById(clothId).orElseThrow(ClothNotFoundException::new);
         clothFromDb.setCart(cartFromDb);
@@ -37,7 +39,7 @@ public class CartService {
         return cartFromDb;
     }
 
-    public Cart removeClothFromCart (final Long cartId, final Long clothId) throws CartNotFoundException, ClothNotFoundException {
+    public Cart removeClothFromCart(final Long cartId, final Long clothId) throws CartNotFoundException, ClothNotFoundException {
         Cart cartFromDb = cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
         Cloth clothFromCart = cartFromDb.getClothesList().stream()
                 .filter(cloth -> cloth.getId().equals(clothId))
@@ -49,4 +51,5 @@ public class CartService {
         clothRepository.delete(clothFromCart);
         return cartFromDb;
     }
+
 }

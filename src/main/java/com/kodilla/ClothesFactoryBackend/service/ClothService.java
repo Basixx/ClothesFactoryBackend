@@ -17,6 +17,7 @@ import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ClothService {
+
     private final ClothRepository clothRepository;
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
@@ -46,24 +48,23 @@ public class ClothService {
         return orderFromDb.getClothesList();
     }
 
-    public Cloth createCloth (final Cloth cloth) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException, ClothWithQuantityZeroException {
+    public Cloth createCloth(final Cloth cloth) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException, ClothWithQuantityZeroException {
 
         boolean containsBadWords = badWordsService.containsBadWords(cloth.getPrint());
-        if(cloth.getQuantity() == 0) {
+        if (cloth.getQuantity() == 0) {
             throw new ClothWithQuantityZeroException();
-        }
-        else if(!containsBadWords){
+        } else if (!containsBadWords) {
             return clothRepository.save(cloth);
         } else {
             throw new ClothPrintContainsBadWordsException();
         }
     }
 
-    public Cloth editCloth (final Long id, final Cloth cloth) throws ClothNotFoundException, ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
+    public Cloth editCloth(final Long id, final Cloth cloth) throws ClothNotFoundException, ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
         Cloth clothFromDb = clothRepository.findById(id).orElseThrow(ClothNotFoundException::new);
         boolean containsBadWords = badWordsService.containsBadWords(cloth.getPrint());
 
-        if(!containsBadWords){
+        if (!containsBadWords) {
             clothFromDb.setFashion(cloth.getFashion());
             clothFromDb.setColor(cloth.getColor());
             clothFromDb.setPrint(cloth.getPrint());
@@ -79,4 +80,5 @@ public class ClothService {
             throw new ClothPrintContainsBadWordsException();
         }
     }
+
 }

@@ -6,6 +6,7 @@ import com.kodilla.ClothesFactoryBackend.exception.order.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class OrderMapper {
+
     private final OrderRepository orderRepository;
     private final ClothMapper clothMapper;
 
@@ -42,7 +44,7 @@ public class OrderMapper {
     public List<Order> mapToOrdersFromIds(final List<Long> ordersIds) throws OrderNotFoundException {
         List<Order> orders = new ArrayList<>();
 
-        if (ordersIds.size() > 0) {
+        if (!ordersIds.isEmpty()) {
             for (Long orderId : ordersIds) {
                 orders.add(orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new));
             }
@@ -52,11 +54,12 @@ public class OrderMapper {
 
     public List<Long> mapToOrdersIdsFromOrders(final List<Order> orders) {
         List<Long> ordersIds = new ArrayList<>();
-        if (orders.size() > 0) {
+        if (!orders.isEmpty()) {
             ordersIds = orders.stream()
                     .map(Order::getId)
                     .collect(Collectors.toList());
         }
         return ordersIds;
     }
+
 }

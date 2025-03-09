@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentHistory {
+
     @Id
     @GeneratedValue
     @NotNull
@@ -34,4 +35,5 @@ public class PaymentHistory {
 
     @NotNull
     private BigDecimal price;
+
 }

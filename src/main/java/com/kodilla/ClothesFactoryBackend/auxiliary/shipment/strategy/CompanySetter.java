@@ -9,17 +9,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class CompanySetter {
     public ShipmentCompany setCompany(final ShipmentMethod shipmentMethod) {
-        switch (shipmentMethod) {
-            case FEDEX:
-                return new Fedex();
-            case DHL:
-                return new Dhl();
-            case UPS:
-                return new Ups();
-            case IN_POST:
-                return new InPost();
-            default:
-                return new ShipmentCompany();
-        }
+        return switch (shipmentMethod) {
+            case FEDEX -> new Fedex();
+            case DHL -> new Dhl();
+            case UPS -> new Ups();
+            case IN_POST -> new InPost();
+        };
     }
 }

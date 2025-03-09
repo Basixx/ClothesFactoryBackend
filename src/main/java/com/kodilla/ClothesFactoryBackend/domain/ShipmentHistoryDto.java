@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Getter
@@ -11,9 +12,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShipmentHistoryDto {
+
     private Long id;
     private LocalDateTime shipmentTime;
     private Long orderId;
     private String userMail;
     private String shippingCompany;
+
 }

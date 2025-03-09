@@ -6,12 +6,14 @@ import com.kodilla.ClothesFactoryBackend.repository.AdminTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.UUID;
 
 @Transactional
 @Service
 @RequiredArgsConstructor
 public class AdminTokenService {
+
     private final AdminTokenRepository adminTokenRepository;
     private final EmailService emailService;
     private final AdminMailCreator adminMailCreator;
@@ -31,4 +33,5 @@ public class AdminTokenService {
     public void deleteAllTokens() {
         adminTokenRepository.deleteAll();
     }
+
 }

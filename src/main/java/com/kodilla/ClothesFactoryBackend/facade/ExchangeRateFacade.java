@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ExchangeRateFacade {
+
     private final ExchangeRatesMapper exchangeRatesMapper;
     private final ExchangeRatesService exchangeRatesService;
 
     public ExchangeRateDto getExchange(String from, String to) throws CurrencyExchangeFailedException {
         return exchangeRatesMapper.mapToExchangeRateDto(exchangeRatesService.getExchangeRate(from, to));
     }
+
 }

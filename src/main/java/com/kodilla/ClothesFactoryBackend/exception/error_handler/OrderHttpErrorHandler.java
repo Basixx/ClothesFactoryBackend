@@ -32,4 +32,5 @@ public class OrderHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleOrderAlreadySentException() {
         return new ResponseEntity<>("Order has already been sent.", HttpStatus.METHOD_NOT_ALLOWED);
     }
+
 }

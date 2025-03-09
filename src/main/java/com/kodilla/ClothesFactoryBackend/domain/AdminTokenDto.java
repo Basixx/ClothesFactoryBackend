@@ -1,6 +1,9 @@
 package com.kodilla.ClothesFactoryBackend.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
@@ -10,4 +13,5 @@ public class AdminTokenDto {
 
     private Long id;
     private String token;
+
 }

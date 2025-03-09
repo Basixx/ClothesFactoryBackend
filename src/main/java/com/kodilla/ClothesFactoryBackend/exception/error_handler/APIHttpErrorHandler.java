@@ -26,4 +26,5 @@ public class APIHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleQuoteNotFoundException() {
         return new ResponseEntity<>("Quote could not be found, please try again later.", HttpStatus.NOT_FOUND);
     }
+
 }

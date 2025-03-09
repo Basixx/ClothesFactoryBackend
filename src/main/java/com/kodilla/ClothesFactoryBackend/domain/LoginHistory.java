@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginHistory {
+
     @Id
     @GeneratedValue
     @NotNull
@@ -30,4 +31,5 @@ public class LoginHistory {
 
     @NotNull
     private boolean succeed;
+
 }

@@ -8,4 +8,5 @@ public class BadWordsClientDto {
 
     @JsonProperty("bad_words_total")
     private int badWordsTotal;
+
 }

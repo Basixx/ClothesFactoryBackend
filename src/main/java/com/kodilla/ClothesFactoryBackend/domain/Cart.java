@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cart {
+
     @Id
     @GeneratedValue
     @NotNull
@@ -29,4 +30,5 @@ public class Cart {
             mappedBy = "cart"
     )
     private List<Cloth> clothesList;
+
 }

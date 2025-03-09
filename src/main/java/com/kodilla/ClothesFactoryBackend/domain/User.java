@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+
     @Id
     @GeneratedValue
     @NotNull
@@ -64,4 +65,5 @@ public class User {
     public String toString() {
         return street + ", " + streetAndApartmentNumber + ", " + city + ", " + postCode;
     }
+
 }

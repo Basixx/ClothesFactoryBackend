@@ -4,7 +4,11 @@ import com.kodilla.ClothesFactoryBackend.auxiliary.Color;
 import com.kodilla.ClothesFactoryBackend.auxiliary.Fashion;
 import com.kodilla.ClothesFactoryBackend.auxiliary.Font;
 import com.kodilla.ClothesFactoryBackend.auxiliary.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 
 @Getter
@@ -12,6 +16,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClothDto {
+
     private Long id;
     private Fashion fashion;
     private Color color;
@@ -21,4 +26,5 @@ public class ClothDto {
     private Size size;
     private int quantity;
     private BigDecimal price;
+
 }

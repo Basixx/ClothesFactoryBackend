@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cloth {
+
     @Id
     @GeneratedValue
     @NotNull
@@ -73,4 +74,5 @@ public class Cloth {
                 ", price: " + price +
                 ".";
     }
+
 }

@@ -4,12 +4,14 @@ import com.kodilla.ClothesFactoryBackend.domain.Cart;
 import com.kodilla.ClothesFactoryBackend.domain.CartDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CartMapper {
+
     private final ClothMapper clothMapper;
 
     public CartDto mapToCartDto(final Cart cart) {
@@ -25,4 +27,5 @@ public class CartMapper {
                 .map(this::mapToCartDto)
                 .collect(Collectors.toList());
     }
+
 }

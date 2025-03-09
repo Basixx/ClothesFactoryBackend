@@ -18,6 +18,7 @@ import com.kodilla.ClothesFactoryBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -45,10 +46,10 @@ public class UserService {
     }
 
     public User createUser(final User user) throws UserAlreadyExistsException, EmailVerificationFailedException, EmailAddressDoesNotExistException {
-        if(userRepository.existsUserByEmailAddress(user.getEmailAddress())) {
+        if (userRepository.existsUserByEmailAddress(user.getEmailAddress())) {
             throw new UserAlreadyExistsException();
         } else {
-            if(!emailVerificationService.emailExists(user.getEmailAddress())) {
+            if (!emailVerificationService.emailExists(user.getEmailAddress())) {
                 throw new EmailAddressDoesNotExistException();
             } else {
                 Cart userCart = Cart.builder()
@@ -88,7 +89,7 @@ public class UserService {
     public User authenticateUser(final String email, final String password) throws UserEmailNotFoundException, WrongPasswordException {
         User userFromDb = userRepository.findByEmailAddress(email).orElseThrow(UserEmailNotFoundException::new);
 
-        if(password.equals(userFromDb.getPassword())) {
+        if (password.equals(userFromDb.getPassword())) {
             loginHistoryRepository.save(LoginHistory.builder().loginTime(LocalDateTime.now()).userMail(userFromDb.getEmailAddress()).succeed(true).build());
             return userFromDb;
         } else {
@@ -96,4 +97,5 @@ public class UserService {
             throw new WrongPasswordException();
         }
     }
+
 }

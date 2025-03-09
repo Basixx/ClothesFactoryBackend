@@ -20,4 +20,5 @@ public class EmailHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleEmailAddressDoesNotExistException() {
         return new ResponseEntity<>("This email address does not exist, please provide a different one.", HttpStatus.BAD_REQUEST);
     }
+
 }

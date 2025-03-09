@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
+
     @Id
     @GeneratedValue
     @NotNull
@@ -61,4 +62,5 @@ public class Order {
             mappedBy = "order"
     )
     private List<Cloth> clothesList;
+
 }

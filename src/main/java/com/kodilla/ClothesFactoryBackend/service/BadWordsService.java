@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class BadWordsService {
+
     private final BadWordsApiClient badWordsClient;
 
     public boolean containsBadWords(String text) throws ProfanityCheckFailedException {
@@ -19,4 +20,5 @@ public class BadWordsService {
 
         return badWordsCount != 0;
     }
+
 }
