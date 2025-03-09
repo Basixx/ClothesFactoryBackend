@@ -6,11 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.junit.jupiter.api.Assertions.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentHistoryMapperTestSuite {
@@ -33,7 +35,8 @@ public class PaymentHistoryMapperTestSuite {
         assertEquals(new BigDecimal(500), paymentHistoryDto.getPrice());
     }
 
-    @Test void testMapToPaymentHistoryDtoList() {
+    @Test
+    void testMapToPaymentHistoryDtoList() {
         //Given
         List<PaymentHistory> paymentHistoryList = new ArrayList<>();
         PaymentHistory paymentHistory1 = createPaymentHistory1();
@@ -47,8 +50,8 @@ public class PaymentHistoryMapperTestSuite {
         //Then
         assertEquals(2, paymentHistoryDtoList.size());
 
-        assertEquals(LocalDateTime.of(2022, 4, 27, 13, 15), paymentHistoryDtoList.get(0).getPaymentTime());
-        assertEquals(3L, paymentHistoryDtoList.get(0).getOrderId());
+        assertEquals(LocalDateTime.of(2022, 4, 27, 13, 15), paymentHistoryDtoList.getFirst().getPaymentTime());
+        assertEquals(3L, paymentHistoryDtoList.getFirst().getOrderId());
         assertEquals("test@mail.com", paymentHistoryDtoList.get(0).getUserMail());
         assertEquals(new BigDecimal(500), paymentHistoryDtoList.get(0).getPrice());
 

@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.junit.jupiter.api.Assertions.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class LoginHistoryMapperTestSuite {
@@ -26,7 +28,7 @@ public class LoginHistoryMapperTestSuite {
         LoginHistoryDto loginHistoryDto = loginHistoryMapper.mapToLoginHistoryDto(loginHistory);
 
         //Then
-        assertEquals(LocalDateTime.of(2022, 5, 15,13, 15 ), loginHistoryDto.getLoginTime());
+        assertEquals(LocalDateTime.of(2022, 5, 15, 13, 15), loginHistoryDto.getLoginTime());
         assertEquals("test@mail.com", loginHistoryDto.getUserMail());
         assertTrue(loginHistoryDto.isSucceed());
     }
@@ -46,18 +48,18 @@ public class LoginHistoryMapperTestSuite {
         //Then
         assertEquals(2, loginHistoryDtoList.size());
 
-        assertEquals(LocalDateTime.of(2022, 5, 15,13, 15 ), loginHistoryDtoList.get(0).getLoginTime());
+        assertEquals(LocalDateTime.of(2022, 5, 15, 13, 15), loginHistoryDtoList.getFirst().getLoginTime());
         assertEquals("test@mail.com", loginHistoryDtoList.get(0).getUserMail());
         assertTrue(loginHistoryDtoList.get(0).isSucceed());
 
-        assertEquals(LocalDateTime.of(2022, 5, 14,12, 3 ), loginHistoryDtoList.get(1).getLoginTime());
+        assertEquals(LocalDateTime.of(2022, 5, 14, 12, 3), loginHistoryDtoList.get(1).getLoginTime());
         assertEquals("test2@mail.com", loginHistoryDtoList.get(1).getUserMail());
         assertFalse(loginHistoryDtoList.get(1).isSucceed());
     }
 
     private LoginHistory createLogin1() {
         return LoginHistory.builder()
-                .loginTime(LocalDateTime.of(2022, 5, 15,13, 15 ))
+                .loginTime(LocalDateTime.of(2022, 5, 15, 13, 15))
                 .userMail("test@mail.com")
                 .succeed(true)
                 .build();
@@ -65,7 +67,7 @@ public class LoginHistoryMapperTestSuite {
 
     private LoginHistory createLogin2() {
         return LoginHistory.builder()
-                .loginTime(LocalDateTime.of(2022, 5, 14,12, 3 ))
+                .loginTime(LocalDateTime.of(2022, 5, 14, 12, 3))
                 .userMail("test2@mail.com")
                 .succeed(false)
                 .build();

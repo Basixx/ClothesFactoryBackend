@@ -20,4 +20,5 @@ public class CartHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleEmptyCartException() {
         return new ResponseEntity<>("You cannot create an order from an empty cart.", HttpStatus.METHOD_NOT_ALLOWED);
     }
+
 }

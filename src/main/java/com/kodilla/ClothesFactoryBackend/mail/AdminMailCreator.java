@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AdminMailCreator {
+
     private final AdminConfig adminConfig;
 
     public Mail createMailForAdminOrderCreated(Order order) {
@@ -17,7 +18,7 @@ public class AdminMailCreator {
         String message = "New order has been created by " + order.getUser().getName() + " " + order.getUser().getSurname() + " - " + order.getUser().getEmailAddress() + ".";
         StringBuilder messageClothes = new StringBuilder("\nOrder contains: ");
         int i = 1;
-        for(Cloth cloth : order.getClothesList()) {
+        for (Cloth cloth : order.getClothesList()) {
             messageClothes.append("\n").append(i).append(". ").append(cloth.toString());
             i++;
         }
@@ -33,4 +34,5 @@ public class AdminMailCreator {
         String message = "Admin token has been generated, enter below code to log in as admin: \n" + token;
         return new Mail(adminMail, subject, message);
     }
+
 }

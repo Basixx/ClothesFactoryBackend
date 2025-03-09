@@ -18,6 +18,7 @@ import com.kodilla.ClothesFactoryBackend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,6 +29,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
+
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
@@ -42,12 +44,12 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public List<Order> getAllUsersOrder (final Long userId) throws UserNotFoundException {
+    public List<Order> getAllUsersOrder(final Long userId) throws UserNotFoundException {
         User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         return userFromDb.getOrdersList();
     }
 
-    public Order getOrder (final Long id) throws OrderNotFoundException {
+    public Order getOrder(final Long id) throws OrderNotFoundException {
         return orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
     }
 
@@ -59,7 +61,7 @@ public class OrderService {
 
         String address = userFromDb.getStreet() + ", " + userFromDb.getStreetAndApartmentNumber() + ", " + userFromDb.getCity() + ", " + userFromDb.getPostCode();
 
-        if(cartFromDb.getClothesList().size() == 0) {
+        if (cartFromDb.getClothesList().isEmpty()) {
             throw new EmptyCartException();
         } else {
             Order order = Order.builder()
@@ -77,7 +79,7 @@ public class OrderService {
                     .build();
 
 
-            for(Cloth cloth : cartFromDb.getClothesList()){
+            for (Cloth cloth : cartFromDb.getClothesList()) {
                 cloth.setCart(null);
                 cloth.setOrder(order);
             }
@@ -125,4 +127,5 @@ public class OrderService {
                 .build());
         return orderFromDb;
     }
+
 }

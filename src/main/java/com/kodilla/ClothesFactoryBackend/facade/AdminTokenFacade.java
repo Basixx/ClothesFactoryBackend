@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AdminTokenFacade {
+
     private final AdminTokenMapper adminTokenMapper;
     private final AdminTokenService adminTokenService;
 
@@ -23,4 +24,5 @@ public class AdminTokenFacade {
     public void deleteAllTokens() {
         adminTokenService.deleteAllTokens();
     }
+
 }

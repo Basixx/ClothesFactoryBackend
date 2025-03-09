@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExchangeRate {
+
     @Id
     @GeneratedValue
     @NotNull
@@ -30,4 +31,5 @@ public class ExchangeRate {
 
     @NotNull
     private BigDecimal currencyRate;
+
 }

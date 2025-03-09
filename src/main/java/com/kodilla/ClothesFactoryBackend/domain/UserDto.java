@@ -1,6 +1,10 @@
 package com.kodilla.ClothesFactoryBackend.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 @Getter
@@ -8,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
+
     private Long id;
     private String name;
     private String surname;
@@ -20,4 +25,5 @@ public class UserDto {
     private String postCode;
     private Long cartId;
     private List<Long> ordersIdList;
+    
 }

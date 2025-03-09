@@ -3,6 +3,7 @@ package com.kodilla.ClothesFactoryBackend.mapper;
 import com.kodilla.ClothesFactoryBackend.domain.PaymentHistory;
 import com.kodilla.ClothesFactoryBackend.domain.PaymentHistoryDto;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,4 +24,5 @@ public class PaymentHistoryMapper {
                 .map(this::mapToPaymentHistoryDto)
                 .collect(Collectors.toList());
     }
+
 }

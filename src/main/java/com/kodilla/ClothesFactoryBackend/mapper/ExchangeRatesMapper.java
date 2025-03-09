@@ -17,4 +17,5 @@ public class ExchangeRatesMapper {
                 .currencyRate(exchangeRate.getCurrencyRate())
                 .build();
     }
+
 }

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -53,4 +54,5 @@ public class UserController {
     public ResponseEntity<UserDto> authenticateUser(@PathVariable String email, @PathVariable String password) throws UserEmailNotFoundException, WrongPasswordException {
         return ResponseEntity.ok(userFacade.authenticateUser(email, password));
     }
+
 }

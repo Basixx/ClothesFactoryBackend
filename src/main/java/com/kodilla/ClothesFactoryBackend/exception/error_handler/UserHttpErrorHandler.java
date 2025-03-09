@@ -32,4 +32,5 @@ public class UserHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleWrongPasswordException() {
         return new ResponseEntity<>("Wrong password.", HttpStatus.BAD_REQUEST);
     }
+
 }

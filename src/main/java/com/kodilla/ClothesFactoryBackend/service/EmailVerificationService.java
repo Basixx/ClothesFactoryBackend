@@ -18,4 +18,5 @@ public class EmailVerificationService {
         EmailVerificationDto emailVerificationDto = emailVerificationApiClient.checkEmail(email);
         return emailVerificationDto.isEmailExists();
     }
+
 }

@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.junit.jupiter.api.Assertions.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 public class ShipmentHistoryMapperTestSuite {
@@ -47,8 +49,8 @@ public class ShipmentHistoryMapperTestSuite {
         //Then
         assertEquals(2, shipmentHistoryDtoList.size());
 
-        assertEquals(LocalDateTime.of(2022, 5, 10, 9, 40), shipmentHistoryDtoList.get(0).getShipmentTime());
-        assertEquals(3L, shipmentHistoryDtoList.get(0).getOrderId());
+        assertEquals(LocalDateTime.of(2022, 5, 10, 9, 40), shipmentHistoryDtoList.getFirst().getShipmentTime());
+        assertEquals(3L, shipmentHistoryDtoList.getFirst().getOrderId());
         assertEquals("test@mail.com", shipmentHistoryDtoList.get(0).getUserMail());
         assertEquals("Fedex", shipmentHistoryDtoList.get(0).getShippingCompany());
 

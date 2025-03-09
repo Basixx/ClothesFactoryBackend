@@ -34,4 +34,5 @@ public class ShipmentHistory {
 
     @NotNull
     private String shippingCompany;
+
 }

@@ -8,4 +8,5 @@ public class EmailVerificationDto {
 
     @JsonProperty("smtpCheck")
     private boolean emailExists;
+
 }

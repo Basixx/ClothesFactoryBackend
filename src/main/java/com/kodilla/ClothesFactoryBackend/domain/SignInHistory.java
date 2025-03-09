@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SignInHistory {
+
     @Id
     @GeneratedValue
     @NotNull
@@ -30,4 +31,5 @@ public class SignInHistory {
 
     @NotNull
     private String userNumber;
+
 }

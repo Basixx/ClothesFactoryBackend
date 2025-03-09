@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class KanyeQuoteService {
+
     private final KanyeWestApiClient kanyeWestApiClient;
 
     public KanyeQuoteDto getQuote() throws QuoteNotFoundException {
         return kanyeWestApiClient.getQuote();
     }
+
 }

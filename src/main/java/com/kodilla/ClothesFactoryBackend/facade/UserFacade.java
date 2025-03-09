@@ -13,11 +13,13 @@ import com.kodilla.ClothesFactoryBackend.mapper.UserMapper;
 import com.kodilla.ClothesFactoryBackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UserFacade {
+
     private final UserService userService;
     private final UserMapper userMapper;
 
@@ -44,4 +46,5 @@ public class UserFacade {
     public UserDto authenticateUser(String email, String password) throws UserEmailNotFoundException, WrongPasswordException {
         return userMapper.mapToUserDto(userService.authenticateUser(email, password));
     }
+
 }

@@ -15,4 +15,5 @@ public class AdminTokenMapper {
                 .token(adminToken.getToken())
                 .build();
     }
+
 }

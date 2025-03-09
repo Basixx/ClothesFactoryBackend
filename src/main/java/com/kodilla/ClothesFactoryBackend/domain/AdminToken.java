@@ -14,6 +14,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdminToken {
+
     @Id
     @GeneratedValue
     @NotNull
@@ -22,4 +23,5 @@ public class AdminToken {
 
     @NotNull
     private String token;
+
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Optional;
@@ -24,8 +25,8 @@ public class ExchangeRatesApiClient {
     private String exchangeRateKey;
 
     public ExchangeRatesClientDto getConversion(String to, String from, BigDecimal amount) throws CurrencyExchangeFailedException {
-        URI url = UriComponentsBuilder.fromHttpUrl(
-                exchangeRateEndpoint)
+        URI url = UriComponentsBuilder.fromUriString(
+                        exchangeRateEndpoint)
                 .queryParam("to", to)
                 .queryParam("from", from)
                 .queryParam("amount", amount)
@@ -40,4 +41,5 @@ public class ExchangeRatesApiClient {
         );
         return Optional.ofNullable(rateResponse).orElseThrow(CurrencyExchangeFailedException::new);
     }
+
 }

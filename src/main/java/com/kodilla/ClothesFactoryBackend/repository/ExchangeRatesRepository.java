@@ -10,4 +10,5 @@ public interface ExchangeRatesRepository extends CrudRepository<ExchangeRate, Lo
     ExchangeRate findByFromCurrencyAndToCurrency(String from, String to);
 
     Boolean existsByFromCurrencyAndToCurrency(String from, String to);
+
 }

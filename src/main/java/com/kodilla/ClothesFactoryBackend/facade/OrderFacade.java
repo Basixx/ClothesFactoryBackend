@@ -15,12 +15,14 @@ import com.kodilla.ClothesFactoryBackend.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class OrderFacade {
+
     private final OrderService orderService;
     private final OrderMapper orderMapper;
 
@@ -47,4 +49,5 @@ public class OrderFacade {
     public OrderDto setOrderToSent(Long id) throws OrderNotFoundException, OrderNotPaidException, OrderAlreadySentException {
         return orderMapper.mapToOrderDto(orderService.setOrderSent(id));
     }
+
 }

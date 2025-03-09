@@ -37,7 +37,7 @@ public class ExchangeRatesControllerTestSuite {
                 .id(1L)
                 .fromCurrency("PLN")
                 .toCurrency("EUR")
-                .currencyRate(new BigDecimal(0.34))
+                .currencyRate(new BigDecimal("0.34"))
                 .build();
 
         when(exchangeRateFacade.getExchange(anyString(), anyString())).thenReturn(exchangeRateDto);
@@ -51,7 +51,7 @@ public class ExchangeRatesControllerTestSuite {
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.fromCurrency", is("PLN")))
                 .andExpect(jsonPath("$.toCurrency", is("EUR")))
-                .andExpect(jsonPath("$.currencyRate", is(new BigDecimal(0.34))));
+                .andExpect(jsonPath("$.currencyRate", is(new BigDecimal("0.34"))));
     }
 
     @Test

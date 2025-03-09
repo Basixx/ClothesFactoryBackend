@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/exchange")
 @RequiredArgsConstructor
 public class ExchangeRatesController {
-    private  final ExchangeRateFacade exchangeRateFacade;
+
+    private final ExchangeRateFacade exchangeRateFacade;
 
     @GetMapping
     public ResponseEntity<ExchangeRateDto> getExchangeRate(@RequestParam String from, @RequestParam String to) throws CurrencyExchangeFailedException {
         return ResponseEntity.ok(exchangeRateFacade.getExchange(from, to));
     }
+
 }

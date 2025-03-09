@@ -15,12 +15,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/v1/orders")
 @RequiredArgsConstructor
 public class OrderController {
+
     private final OrderFacade orderFacade;
 
     @GetMapping(value = "/{id}")
@@ -52,4 +54,5 @@ public class OrderController {
     public ResponseEntity<OrderDto> setOrderToSent(@PathVariable Long id) throws OrderNotFoundException, OrderNotPaidException, OrderAlreadySentException {
         return ResponseEntity.ok(orderFacade.setOrderToSent(id));
     }
+
 }

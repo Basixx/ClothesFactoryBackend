@@ -8,10 +8,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class RatesRefresher {
+
     private final ExchangeRatesService exchangeRatesService;
 
     @Scheduled(cron = "0 0 0 * * *")
     public void deleteRates() {
         exchangeRatesService.deleteAllRates();
     }
+
 }

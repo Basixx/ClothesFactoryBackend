@@ -27,7 +27,7 @@ bad.words.api.endpoint: https://api.apilayer.com/bad_words
 kanye.west.api.endpoint: https://api.kanye.rest
 whoisxml:
   api:
-    endpoint: https://emailverification.whoisxmlapi.com/api/v2
+    endpoint: https://emailverification.whoisxmlapi.com/api/v3
     key: ${MAIL_API_KEY}
 api.layer.key: ${API_LAYER_KEY}
 

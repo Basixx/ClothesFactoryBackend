@@ -7,12 +7,14 @@ import com.kodilla.ClothesFactoryBackend.exception.order.OrderNotFoundException;
 import com.kodilla.ClothesFactoryBackend.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserMapper {
+
     private final CartRepository cartRepository;
     private final OrderMapper orderMapper;
 
@@ -55,4 +57,5 @@ public class UserMapper {
                 .map(this::mapToUserDto)
                 .collect(Collectors.toList());
     }
+
 }
