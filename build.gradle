@@ -35,7 +35,7 @@ dependencies {
 
     testImplementation 'org.mockito:mockito-junit-jupiter:5.16.0'
 
-    compileOnly 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.google.code.gson:gson:2.10.1'
     testImplementation 'com.google.code.gson:gson:2.10.1'
 
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'

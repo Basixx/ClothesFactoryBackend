@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/clothes_factory?serverTimezone=Europe/Warsaw&useSSL=False&allowPublicKeyRetrieval=true
+    username: ${SQL_USERNAME}
+    password: ${SQL_PASSWORD}
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate.ddl-auto: update
+    open-in-view: true
+    properties.hibernate.dialect: org.hibernate.dialect.MySQLDialect
+
+# API CONFIGURATION
+exchange.rates.api.endpoint: https://api.apilayer.com/exchangerates_data/convert
+bad.words.api.endpoint: https://api.apilayer.com/bad_words
+kanye.west.api.endpoint: https://api.kanye.rest
+whoisxml:
+  api:
+    endpoint: https://emailverification.whoisxmlapi.com/api/v2
+    key: ${MAIL_API_KEY}
+api.layer.key: ${API_LAYER_KEY}
