@@ -5,25 +5,28 @@ import com.clothes.factory.domain.User;
 import com.clothes.factory.domain.UserDto;
 import com.clothes.factory.exception.cart.CartNotFoundException;
 import com.clothes.factory.exception.order.OrderNotFoundException;
-import com.clothes.factory.object_mother.CartMother;
-import com.clothes.factory.object_mother.UserMother;
 import com.clothes.factory.repository.CartRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static com.clothes.factory.object_mother.CartMother.createCart;
+import static com.clothes.factory.object_mother.UserMother.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class UserMapperTestSuite {
+public class UserMapperTests {
+
     @InjectMocks
     private UserMapper userMapper;
 
@@ -36,12 +39,14 @@ public class UserMapperTestSuite {
     @Test
     void testMapToUser() throws OrderNotFoundException, CartNotFoundException {
         //Given
-        UserDto userDto = UserMother.createUserDto();
+        UserDto userDto = createUserDto();
 
-        Cart cart = CartMother.createCart(new BigDecimal(40));
+        Cart cart = createCart(new BigDecimal(40));
 
-        when(cartRepository.findById(anyLong())).thenReturn(Optional.ofNullable(cart));
-        when(orderMapper.mapToOrdersFromIds(anyList())).thenReturn(new ArrayList<>());
+        when(cartRepository.findById(anyLong()))
+                .thenReturn(Optional.ofNullable(cart));
+        when(orderMapper.mapToOrdersFromIds(anyList()))
+                .thenReturn(new ArrayList<>());
 
         //When
         User user = userMapper.mapToUser(userDto);
@@ -60,11 +65,12 @@ public class UserMapperTestSuite {
     @Test
     void testMapToUserDto() {
         //Given
-        Cart cart = CartMother.createCart(new BigDecimal(40));
-        User user = UserMother.createUser1();
+        Cart cart = createCart(new BigDecimal(40));
+        User user = createUser1();
         user.setCart(cart);
 
-        when(orderMapper.mapToOrdersIdsFromOrders(anyList())).thenReturn(new ArrayList<>());
+        when(orderMapper.mapToOrdersIdsFromOrders(anyList()))
+                .thenReturn(new ArrayList<>());
 
         //When
         UserDto userDto = userMapper.mapToUserDto(user);
@@ -83,12 +89,12 @@ public class UserMapperTestSuite {
     @Test
     void testMapToUserDtoList() {
         //Given
-        Cart cart1 = CartMother.createCart( new BigDecimal(150));
-        Cart cart2 = CartMother.createCart( new BigDecimal(250));
+        Cart cart1 = createCart(new BigDecimal(150));
+        Cart cart2 = createCart(new BigDecimal(250));
         cart2.setId(10L);
-        User user1 = UserMother.createUser1();
+        User user1 = createUser1();
         user1.setCart(cart1);
-        User user2 = UserMother.createUser2();
+        User user2 = createUser2();
         user2.setCart(cart2);
 
         List<User> users = new ArrayList<>();
@@ -100,9 +106,10 @@ public class UserMapperTestSuite {
 
         //Then
         assertEquals(2, usersDto.size());
-        assertEquals(6L, usersDto.get(0).getId());
+        assertEquals(6L, usersDto.getFirst().getId());
         assertEquals(7L, usersDto.get(1).getId());
-        assertEquals(9L, usersDto.get(0).getCartId());
+        assertEquals(9L, usersDto.getFirst().getCartId());
         assertEquals(10L, usersDto.get(1).getCartId());
     }
+
 }

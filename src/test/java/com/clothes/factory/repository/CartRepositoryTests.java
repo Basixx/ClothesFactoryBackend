@@ -5,25 +5,32 @@ import com.clothes.factory.domain.Cloth;
 import com.clothes.factory.domain.User;
 import com.clothes.factory.exception.cart.CartNotFoundException;
 import com.clothes.factory.exception.user.UserNotFoundException;
-import com.clothes.factory.object_mother.CartMother;
-import com.clothes.factory.object_mother.ClothMother;
-import com.clothes.factory.object_mother.UserMother;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static com.clothes.factory.object_mother.CartMother.createCart;
+import static com.clothes.factory.object_mother.ClothMother.createCloth1;
+import static com.clothes.factory.object_mother.ClothMother.createCloth2;
+import static com.clothes.factory.object_mother.UserMother.createUser1;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Transactional
-public class CartRepositoryTestSuite {
+public class CartRepositoryTests {
+
     @Autowired
     private CartRepository cartRepository;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private ClothRepository clothRepository;
 
@@ -31,9 +38,9 @@ public class CartRepositoryTestSuite {
     @Test
     void testSaveCartWithUser() throws UserNotFoundException {
         //Given
-        User user = UserMother.createUser1();
+        User user = createUser1();
         user.setId(null);
-        Cart cart = CartMother.createCart(new BigDecimal(50));
+        Cart cart = createCart(new BigDecimal(50));
         cart.setId(null);
         user.setCart(cart);
 
@@ -43,7 +50,8 @@ public class CartRepositoryTestSuite {
         cartRepository.save(cart);
         Long cartId = cart.getId();
 
-        User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        User userFromDb = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
 
         //Then
         assertEquals(1, cartRepository.findAll().size());
@@ -54,12 +62,15 @@ public class CartRepositoryTestSuite {
     @Test
     void testCartHasClothes() throws CartNotFoundException {
         //Given
-        Cart cart = Cart.builder().clothesList(new ArrayList<>()).totalPrice(new BigDecimal(50)).build();
+        Cart cart = Cart.builder()
+                .clothesList(new ArrayList<>())
+                .totalPrice(new BigDecimal(50))
+                .build();
 
-        Cloth cloth1 = ClothMother.createCloth1();
+        Cloth cloth1 = createCloth1();
         cloth1.setId(null);
 
-        Cloth cloth2 = ClothMother.createCloth2();
+        Cloth cloth2 = createCloth2();
         cloth2.setId(null);
 
         cart.getClothesList().add(cloth1);
@@ -70,13 +81,13 @@ public class CartRepositoryTestSuite {
         Long cartId = cart.getId();
 
         clothRepository.save(cloth1);
-
         clothRepository.save(cloth2);
 
         List<Cart> carts = cartRepository.findAll();
         List<Cloth> clothes = clothRepository.findAll();
 
-        Cart cartFromDb = cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
+        Cart cartFromDb = cartRepository.findById(cartId)
+                .orElseThrow(CartNotFoundException::new);
 
         //Then
         assertEquals(1, carts.size());
@@ -86,4 +97,5 @@ public class CartRepositoryTestSuite {
         assertTrue(cartFromDb.getClothesList().contains(cloth1));
         assertTrue(cartFromDb.getClothesList().contains(cloth2));
     }
+
 }

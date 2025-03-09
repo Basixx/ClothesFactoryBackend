@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class PaymentHistoryMapperTestSuite {
+public class PaymentHistoryMapperTests {
 
     @InjectMocks
     private PaymentHistoryMapper paymentHistoryMapper;
@@ -52,8 +52,8 @@ public class PaymentHistoryMapperTestSuite {
 
         assertEquals(LocalDateTime.of(2022, 4, 27, 13, 15), paymentHistoryDtoList.getFirst().getPaymentTime());
         assertEquals(3L, paymentHistoryDtoList.getFirst().getOrderId());
-        assertEquals("test@mail.com", paymentHistoryDtoList.get(0).getUserMail());
-        assertEquals(new BigDecimal(500), paymentHistoryDtoList.get(0).getPrice());
+        assertEquals("test@mail.com", paymentHistoryDtoList.getFirst().getUserMail());
+        assertEquals(new BigDecimal(500), paymentHistoryDtoList.getFirst().getPrice());
 
         assertEquals(LocalDateTime.of(2022, 3, 22, 22, 0), paymentHistoryDtoList.get(1).getPaymentTime());
         assertEquals(6L, paymentHistoryDtoList.get(1).getOrderId());
@@ -78,4 +78,5 @@ public class PaymentHistoryMapperTestSuite {
                 .price(new BigDecimal(800))
                 .build();
     }
+
 }

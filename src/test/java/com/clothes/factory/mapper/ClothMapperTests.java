@@ -1,13 +1,8 @@
 package com.clothes.factory.mapper;
 
-import com.clothes.factory.auxiliary.Color;
-import com.clothes.factory.auxiliary.Fashion;
-import com.clothes.factory.auxiliary.Font;
-import com.clothes.factory.auxiliary.Size;
 import com.clothes.factory.domain.Cloth;
 import com.clothes.factory.domain.ClothDto;
 import com.clothes.factory.exception.cloth.ClothNotFoundException;
-import com.clothes.factory.object_mother.ClothMother;
 import com.clothes.factory.repository.ClothRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,32 +15,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.clothes.factory.auxiliary.Color.*;
+import static com.clothes.factory.auxiliary.Fashion.*;
+import static com.clothes.factory.auxiliary.Font.ARIAL;
+import static com.clothes.factory.auxiliary.Font.COMIC_SANS;
+import static com.clothes.factory.auxiliary.Size.M;
+import static com.clothes.factory.auxiliary.Size.XXL;
+import static com.clothes.factory.object_mother.ClothMother.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ClothMapperTestSuite {
+public class ClothMapperTests {
 
     @Mock
     private ClothRepository clothRepository;
+
     @InjectMocks
     private ClothMapper clothMapper;
 
     @Test
     void testMapToCloth() {
         //Given
-        ClothDto clothDto = ClothMother.createClothDto();
+        ClothDto clothDto = createClothDto();
 
         //When
         Cloth cloth = clothMapper.mapToCloth(clothDto);
 
         //Then
-        assertEquals(Fashion.LONGSLEEVE, cloth.getFashion());
-        assertEquals(Color.RED, cloth.getColor());
+        assertEquals(LONGSLEEVE, cloth.getFashion());
+        assertEquals(RED, cloth.getColor());
         assertEquals("MyPrint", cloth.getPrint());
-        assertEquals(Font.ARIAL, cloth.getFont());
-        assertEquals(Color.WHITE, cloth.getPrintColor());
-        assertEquals(Size.M, cloth.getSize());
+        assertEquals(ARIAL, cloth.getFont());
+        assertEquals(WHITE, cloth.getPrintColor());
+        assertEquals(M, cloth.getSize());
         assertEquals(1, cloth.getQuantity());
         assertEquals(new BigDecimal(70), cloth.getPrice());
     }
@@ -53,19 +56,19 @@ public class ClothMapperTestSuite {
     @Test
     void testMapToClothDto() {
         //Given
-        Cloth cloth = ClothMother.createCloth1();
+        Cloth cloth = createCloth1();
 
         //When
         ClothDto clothDto = clothMapper.mapToClothDto(cloth);
 
         //Then
         assertEquals(1L, clothDto.getId());
-        assertEquals(Fashion.HOODIE, clothDto.getFashion());
-        assertEquals(Color.RED, clothDto.getColor());
+        assertEquals(HOODIE, clothDto.getFashion());
+        assertEquals(RED, clothDto.getColor());
         assertEquals("hello", clothDto.getPrint());
-        assertEquals(Font.ARIAL, clothDto.getFont());
-        assertEquals(Color.BLACK, clothDto.getPrintColor());
-        assertEquals(Size.M, clothDto.getSize());
+        assertEquals(ARIAL, clothDto.getFont());
+        assertEquals(BLACK, clothDto.getPrintColor());
+        assertEquals(M, clothDto.getSize());
         assertEquals(2, clothDto.getQuantity());
         assertEquals(new BigDecimal(200), clothDto.getPrice());
     }
@@ -73,8 +76,8 @@ public class ClothMapperTestSuite {
     @Test
     void testMapToClothDtoList() {
         //Given
-        Cloth cloth1 = ClothMother.createCloth1();
-        Cloth cloth2 = ClothMother.createCloth2();
+        Cloth cloth1 = createCloth1();
+        Cloth cloth2 = createCloth2();
 
         List<Cloth> clothes = new ArrayList<>();
         clothes.add(cloth1);
@@ -86,23 +89,23 @@ public class ClothMapperTestSuite {
         //Then
         assertEquals(2, clothDtoList.size());
 
-        assertEquals(1L, clothDtoList.get(0).getId());
-        assertEquals(Fashion.HOODIE, clothDtoList.get(0).getFashion());
-        assertEquals(Color.RED, clothDtoList.get(0).getColor());
-        assertEquals("hello", clothDtoList.get(0).getPrint());
-        assertEquals(Font.ARIAL, clothDtoList.get(0).getFont());
-        assertEquals(Color.BLACK, clothDtoList.get(0).getPrintColor());
-        assertEquals(Size.M, clothDtoList.get(0).getSize());
-        assertEquals(2, clothDtoList.get(0).getQuantity());
-        assertEquals(new BigDecimal(200), clothDtoList.get(0).getPrice());
+        assertEquals(1L, clothDtoList.getFirst().getId());
+        assertEquals(HOODIE, clothDtoList.getFirst().getFashion());
+        assertEquals(RED, clothDtoList.getFirst().getColor());
+        assertEquals("hello", clothDtoList.getFirst().getPrint());
+        assertEquals(ARIAL, clothDtoList.getFirst().getFont());
+        assertEquals(BLACK, clothDtoList.getFirst().getPrintColor());
+        assertEquals(M, clothDtoList.getFirst().getSize());
+        assertEquals(2, clothDtoList.getFirst().getQuantity());
+        assertEquals(new BigDecimal(200), clothDtoList.getFirst().getPrice());
 
         assertEquals(2L, clothDtoList.get(1).getId());
-        assertEquals(Fashion.T_SHIRT, clothDtoList.get(1).getFashion());
-        assertEquals(Color.BLACK, clothDtoList.get(1).getColor());
+        assertEquals(T_SHIRT, clothDtoList.get(1).getFashion());
+        assertEquals(BLACK, clothDtoList.get(1).getColor());
         assertEquals("drama", clothDtoList.get(1).getPrint());
-        assertEquals(Font.COMIC_SANS, clothDtoList.get(1).getFont());
-        assertEquals(Color.WHITE, clothDtoList.get(1).getPrintColor());
-        assertEquals(Size.XXL, clothDtoList.get(1).getSize());
+        assertEquals(COMIC_SANS, clothDtoList.get(1).getFont());
+        assertEquals(WHITE, clothDtoList.get(1).getPrintColor());
+        assertEquals(XXL, clothDtoList.get(1).getSize());
         assertEquals(3, clothDtoList.get(1).getQuantity());
         assertEquals(new BigDecimal(150), clothDtoList.get(1).getPrice());
     }
@@ -114,25 +117,27 @@ public class ClothMapperTestSuite {
         clothesIds.add(1L);
         clothesIds.add(2L);
 
-        Cloth cloth1 = ClothMother.createCloth1();
-        Cloth cloth2 = ClothMother.createCloth2();
-        when(clothRepository.findById(1L)).thenReturn(Optional.of(cloth1));
-        when(clothRepository.findById(2L)).thenReturn(Optional.of(cloth2));
+        Cloth cloth1 = createCloth1();
+        Cloth cloth2 = createCloth2();
+        when(clothRepository.findById(1L))
+                .thenReturn(Optional.of(cloth1));
+        when(clothRepository.findById(2L))
+                .thenReturn(Optional.of(cloth2));
 
         //When
         List<Cloth> clothes = clothMapper.mapToClothesFromIds(clothesIds);
 
         //Then
         assertEquals(2, clothes.size());
-        assertEquals(1L, clothes.get(0).getId());
+        assertEquals(1L, clothes.getFirst().getId());
         assertEquals(2L, clothes.get(1).getId());
     }
 
     @Test
     void mapToClothesIdsFromClothes() {
         //Given
-        Cloth cloth1 = ClothMother.createCloth1();
-        Cloth cloth2 = ClothMother.createCloth2();
+        Cloth cloth1 = createCloth1();
+        Cloth cloth2 = createCloth2();
 
         List<Cloth> clothes = new ArrayList<>();
         clothes.add(cloth1);
@@ -144,7 +149,8 @@ public class ClothMapperTestSuite {
         //Then
         assertEquals(2, ids.size());
 
-        assertEquals(1L, ids.get(0));
+        assertEquals(1L, ids.getFirst());
         assertEquals(2L, ids.get(1));
     }
+
 }

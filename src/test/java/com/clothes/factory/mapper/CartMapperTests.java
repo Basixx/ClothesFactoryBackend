@@ -2,19 +2,22 @@ package com.clothes.factory.mapper;
 
 import com.clothes.factory.domain.Cart;
 import com.clothes.factory.domain.CartDto;
-import com.clothes.factory.object_mother.CartMother;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.junit.jupiter.api.Assertions.*;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.clothes.factory.object_mother.CartMother.createCart;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @ExtendWith(MockitoExtension.class)
-public class CartMapperTestSuite {
+public class CartMapperTests {
+
     @InjectMocks
     private CartMapper cartMapper;
 
@@ -24,7 +27,7 @@ public class CartMapperTestSuite {
     @Test
     void testMapToCartDto() {
         //Given
-        Cart cart = CartMother.createCart(new BigDecimal(300));
+        Cart cart = createCart(new BigDecimal(300));
 
         //When
         CartDto cartDto = cartMapper.mapToCartDto(cart);
@@ -37,9 +40,9 @@ public class CartMapperTestSuite {
 
     @Test
     void testMapToCartDtoList() {
-        Cart cart1 = CartMother.createCart(new BigDecimal(300));
+        Cart cart1 = createCart(new BigDecimal(300));
 
-        Cart cart2 = CartMother.createCart(new BigDecimal(500));
+        Cart cart2 = createCart(new BigDecimal(500));
         cart2.setId(10L);
 
         List<Cart> carts = new ArrayList<>();
@@ -51,9 +54,10 @@ public class CartMapperTestSuite {
 
         //Then
         assertEquals(2, cartDtoList.size());
-        assertEquals(9L, cartDtoList.get(0).getId());
+        assertEquals(9L, cartDtoList.getFirst().getId());
         assertEquals(10L, cartDtoList.get(1).getId());
-        assertEquals(new BigDecimal(300), cartDtoList.get(0).getTotalPrice());
+        assertEquals(new BigDecimal(300), cartDtoList.getFirst().getTotalPrice());
         assertEquals(new BigDecimal(500), cartDtoList.get(1).getTotalPrice());
     }
+
 }

@@ -21,10 +21,6 @@ import com.clothes.factory.exception.order.OrderNotPaidException;
 import com.clothes.factory.exception.user.UserNotFoundException;
 import com.clothes.factory.mail.AdminMailCreator;
 import com.clothes.factory.mail.UserMailCreator;
-import com.clothes.factory.object_mother.CartMother;
-import com.clothes.factory.object_mother.ClothMother;
-import com.clothes.factory.object_mother.OrderMother;
-import com.clothes.factory.object_mother.UserMother;
 import com.clothes.factory.repository.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,6 +32,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import static com.clothes.factory.object_mother.CartMother.createCart;
+import static com.clothes.factory.object_mother.ClothMother.createCloth1;
+import static com.clothes.factory.object_mother.OrderMother.createOrder;
+import static com.clothes.factory.object_mother.UserMother.createUser1;
+import static com.clothes.factory.object_mother.UserMother.createUser2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -44,41 +45,50 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class OrderServiceTestSuite {
+public class OrderServiceTests {
 
     @InjectMocks
     private OrderService orderService;
 
     @Mock
     private OrderRepository orderRepository;
+
     @Mock
     private UserRepository userRepository;
+
     @Mock
     private CartRepository cartRepository;
+
     @Mock
     private ShipmentHistoryRepository shipmentHistoryRepository;
+
     @Mock
     private PaymentHistoryRepository paymentHistoryRepository;
+
     @Mock
     private EmailService emailService;
+
     @Mock
     private UserMailCreator userMailCreator;
+
     @Mock
     private AdminMailCreator adminMailCreator;
+
     @Mock
     private CompanySetter companySetter;
 
     @Test
     void testGetAllOrders() {
         //Given
-        User user1 = UserMother.createUser1();
-        Order order1 = OrderMother.createOrder(5L, user1, new BigDecimal(100), new InPost());
+        User user1 = createUser1();
+        Order order1 = createOrder(5L, user1, new BigDecimal(100), new InPost());
 
-        User user2 = UserMother.createUser2();
-        Order order2 = OrderMother.createOrder(6L, user2, new BigDecimal(200), new Dhl());
+        User user2 = createUser2();
+        Order order2 = createOrder(6L, user2, new BigDecimal(200), new Dhl());
 
         List<Order> orderList = List.of(order1, order2);
-        when(orderRepository.findAll()).thenReturn(orderList);
+        when(orderRepository.findAll())
+                .thenReturn(orderList);
 
         //When
         List<Order> resultList = orderService.getAllOrders();
@@ -92,13 +102,14 @@ public class OrderServiceTestSuite {
     @Test
     void testGetAllUsersOrder() throws UserNotFoundException {
         //Given
-        User user = UserMother.createUser1();
-        Order order1 = OrderMother.createOrder(5L, user, new BigDecimal(100), new Ups());
-        Order order2 = OrderMother.createOrder(6L, user, new BigDecimal(200), new Fedex());
+        User user = createUser1();
+        Order order1 = createOrder(5L, user, new BigDecimal(100), new Ups());
+        Order order2 = createOrder(6L, user, new BigDecimal(200), new Fedex());
         List<Order> orderList = List.of(order1, order2);
         user.setOrdersList(orderList);
 
-        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+        when(userRepository.findById(anyLong()))
+                .thenReturn(Optional.of(user));
 
         //When
         List<Order> resultList = orderService.getAllUsersOrder(6L);
@@ -112,19 +123,24 @@ public class OrderServiceTestSuite {
     @Test
     void testCreateOrder() throws UserNotFoundException, EmptyCartException, CartNotFoundException, CurrencyExchangeFailedException {
         //Given
-        User user = UserMother.createUser1();
-        Cart cart = CartMother.createCart(new BigDecimal(100));
-        Cloth cloth = ClothMother.createCloth1();
+        User user = createUser1();
+        Cart cart = createCart(new BigDecimal(100));
+        Cloth cloth = createCloth1();
         cart.setClothesList(List.of(cloth));
         user.setCart(cart);
         ShipmentCompany shipmentCompany = new Fedex();
-        Order order = OrderMother.createOrder(9L, user, new BigDecimal(500), shipmentCompany);
+        Order order = createOrder(9L, user, new BigDecimal(500), shipmentCompany);
         order.setClothesList(List.of(cloth));
-        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
-        when(cartRepository.findById(anyLong())).thenReturn(Optional.of(cart));
-        when(orderRepository.save(any())).thenReturn(order);
-        when(companySetter.setCompany(any())).thenReturn(shipmentCompany);
-        doNothing().when(emailService).send(any());
+        when(userRepository.findById(anyLong()))
+                .thenReturn(Optional.of(user));
+        when(cartRepository.findById(anyLong()))
+                .thenReturn(Optional.of(cart));
+        when(orderRepository.save(any()))
+                .thenReturn(order);
+        when(companySetter.setCompany(any()))
+                .thenReturn(shipmentCompany);
+        doNothing().when(emailService)
+                .send(any());
 
         //When
         Order resultOrder = orderService.createOrder(6L, ShipmentMethod.UPS);
@@ -137,18 +153,20 @@ public class OrderServiceTestSuite {
 
     @Test
     void testSetOrderToPaid() throws OrderNotFoundException, OrderAlreadyPaidException {
-        User user = UserMother.createUser1();
-        Cart cart = CartMother.createCart(new BigDecimal(100));
-        Cloth cloth = ClothMother.createCloth1();
+        User user = createUser1();
+        Cart cart = createCart(new BigDecimal(100));
+        Cloth cloth = createCloth1();
         cart.setClothesList(List.of(cloth));
         user.setCart(cart);
         ShipmentCompany shipmentCompany = new Fedex();
-        Order order = OrderMother.createOrder(9L, user, new BigDecimal(500), shipmentCompany);
+        Order order = createOrder(9L, user, new BigDecimal(500), shipmentCompany);
         order.setClothesList(List.of(cloth));
         order.setPaid(false);
 
-        when(orderRepository.findById(anyLong())).thenReturn(Optional.of(order));
-        doNothing().when(emailService).send(any());
+        when(orderRepository.findById(anyLong()))
+                .thenReturn(Optional.of(order));
+        doNothing().when(emailService)
+                .send(any());
 
         //When
         Order resultOrder = orderService.setOrderPaid(6L);
@@ -159,17 +177,19 @@ public class OrderServiceTestSuite {
 
     @Test
     void testSetOrderToSent() throws OrderNotFoundException, OrderNotPaidException, OrderAlreadySentException {
-        User user = UserMother.createUser1();
-        Cart cart = CartMother.createCart(new BigDecimal(100));
-        Cloth cloth = ClothMother.createCloth1();
+        User user = createUser1();
+        Cart cart = createCart(new BigDecimal(100));
+        Cloth cloth = createCloth1();
         cart.setClothesList(List.of(cloth));
         user.setCart(cart);
         ShipmentCompany shipmentCompany = new Fedex();
-        Order order = OrderMother.createOrder(9L, user, new BigDecimal(500), shipmentCompany);
+        Order order = createOrder(9L, user, new BigDecimal(500), shipmentCompany);
         order.setClothesList(List.of(cloth));
 
-        when(orderRepository.findById(anyLong())).thenReturn(Optional.of(order));
-        doNothing().when(emailService).send(any());
+        when(orderRepository.findById(anyLong()))
+                .thenReturn(Optional.of(order));
+        doNothing().when(emailService)
+                .send(any());
 
         //When
         Order resultOrder = orderService.setOrderSent(6L);
@@ -177,4 +197,5 @@ public class OrderServiceTestSuite {
         //Then
         assertTrue(resultOrder.isSent());
     }
+
 }

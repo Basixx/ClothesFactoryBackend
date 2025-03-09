@@ -2,6 +2,7 @@ package com.clothes.factory.object_mother;
 
 import com.clothes.factory.domain.Cart;
 import com.clothes.factory.domain.CartDto;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -22,4 +23,5 @@ public class CartMother {
                 .clothesIdList(new ArrayList<>())
                 .build();
     }
+
 }

@@ -4,6 +4,7 @@ import com.clothes.factory.auxiliary.shipment.strategy.ShipmentCompany;
 import com.clothes.factory.domain.Order;
 import com.clothes.factory.domain.OrderDto;
 import com.clothes.factory.domain.User;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -43,4 +44,5 @@ public class OrderMother {
                 .clothesIdList(new ArrayList<>())
                 .build();
     }
+
 }
