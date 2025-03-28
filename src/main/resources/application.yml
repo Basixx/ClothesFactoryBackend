@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/clothes_factory?serverTimezone=Europe/Warsaw&useSSL=False&allowPublicKeyRetrieval=true
-    username: ${SQL_USERNAME}
-    password: ${SQL_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL}?serverTimezone=Europe/Warsaw&useSSL=False&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
   jpa:
     database: mysql
     show-sql: true
@@ -20,6 +20,10 @@ spring:
     password: ${OUTLOOK_MAIL_PASSWORD}
     port: 587
     username: ${OUTLOOK_MAIL_USERNAME}
+  sql:
+    init:
+      platform: mysql
+      mode: always
 
 # API CONFIGURATION
 exchange.rates.api.endpoint: https://api.apilayer.com/exchangerates_data/convert
