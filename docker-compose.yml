@@ -1,0 +1,48 @@
+services:
+  cf-app:
+    container_name: cf-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      cf-db:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://cf-db:3306/${MYSQL_DATABASE}
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - ADMIN_MAIL=${ADMIN_MAIL}
+      - API_LAYER_KEY=${API_LAYER_KEY}
+      - MAIL_API_KEY=${MAIL_API_KEY}
+      - OUTLOOK_MAIL_PASSWORD=${OUTLOOK_MAIL_PASSWORD}
+      - OUTLOOK_MAIL_USERNAME=${OUTLOOK_MAIL_USERNAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    networks:
+      - c-f-net
+  cf-db:
+    container_name: cf-db
+    image: mysql:latest
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - c-f-net
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+volumes:
+  mysql-data:
+networks:
+  c-f-net:
+    name: c-f-net
