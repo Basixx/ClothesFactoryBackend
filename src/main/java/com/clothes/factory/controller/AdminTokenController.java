@@ -3,31 +3,33 @@ package com.clothes.factory.controller;
 import com.clothes.factory.domain.AdminTokenDto;
 import com.clothes.factory.facade.AdminTokenFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.http.HttpStatus.*;
+
 @RestController
-@RequestMapping("/v1/token")
+@RequestMapping("/tokens")
 @RequiredArgsConstructor
 public class AdminTokenController {
 
     private final AdminTokenFacade adminTokenFacade;
 
     @GetMapping(value = "/{token}")
-    public ResponseEntity<Boolean> existsToken(@PathVariable String token) {
-        return ResponseEntity.ok(adminTokenFacade.existsByToken(token));
+    @ResponseStatus(OK)
+    public boolean existsToken(@PathVariable String token) {
+        return adminTokenFacade.existsByToken(token);
     }
 
     @PostMapping
-    public ResponseEntity<AdminTokenDto> createToken() {
-        return ResponseEntity.status(HttpStatus.CREATED).body(adminTokenFacade.createToken());
+    @ResponseStatus(CREATED)
+    public AdminTokenDto createToken() {
+        return adminTokenFacade.createToken();
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteTokens() {
+    @ResponseStatus(NO_CONTENT)
+    public void deleteTokens() {
         adminTokenFacade.deleteAllTokens();
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
