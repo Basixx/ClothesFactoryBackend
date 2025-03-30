@@ -42,7 +42,6 @@ public class UserMapper {
                 .surname(user.getSurname())
                 .phoneNumber(user.getPhoneNumber())
                 .emailAddress(user.getEmailAddress())
-                .password(user.getPassword())
                 .street(user.getStreet())
                 .streetAndApartmentNumber(user.getStreetAndApartmentNumber())
                 .city(user.getCity())

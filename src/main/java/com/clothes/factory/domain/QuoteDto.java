@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class KanyeQuoteDto {
+public class QuoteDto {
 
     private String quote;
 

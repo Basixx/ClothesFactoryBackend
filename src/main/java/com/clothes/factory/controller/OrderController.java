@@ -12,47 +12,53 @@ import com.clothes.factory.exception.order.OrderNotPaidException;
 import com.clothes.factory.exception.user.UserNotFoundException;
 import com.clothes.factory.facade.OrderFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
+
 @RestController
-@RequestMapping("/v1/orders")
 @RequiredArgsConstructor
 public class OrderController {
 
     private final OrderFacade orderFacade;
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<OrderDto> getOrder(@PathVariable Long id) throws OrderNotFoundException {
-        return ResponseEntity.ok(orderFacade.getOrder(id));
+    @GetMapping(value = "/orders/{id}")
+    @ResponseStatus(OK)
+    public OrderDto getOrder(@PathVariable Long id) throws OrderNotFoundException {
+        return orderFacade.getOrder(id);
     }
 
-    @GetMapping
-    public ResponseEntity<List<OrderDto>> getAllOrders() {
-        return ResponseEntity.ok(orderFacade.getAllOrders());
+    @GetMapping("/orders")
+    @ResponseStatus(OK)
+    public List<OrderDto> getAllOrders() {
+        return orderFacade.getAllOrders();
     }
 
-    @GetMapping(value = "/byUser/{userId}")
-    public ResponseEntity<List<OrderDto>> getOrdersByUser(@PathVariable Long userId) throws UserNotFoundException {
-        return ResponseEntity.ok(orderFacade.getOrdersByUser(userId));
+    @GetMapping(value = "/users/{userId}/orders")
+    @ResponseStatus(OK)
+    public List<OrderDto> getOrdersByUser(@PathVariable Long userId) throws UserNotFoundException {
+        return orderFacade.getOrdersByUser(userId);
     }
 
-    @PostMapping(value = "/{userId}/{shipmentMethod}")
-    public ResponseEntity<OrderDto> createOrder(@PathVariable Long userId, @PathVariable ShipmentMethod shipmentMethod) throws UserNotFoundException, CartNotFoundException, EmptyCartException, CurrencyExchangeFailedException {
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderFacade.createOrder(userId, shipmentMethod));
+    @PostMapping(value = "/users/{userId}/order/{shipmentMethod}")
+    @ResponseStatus(CREATED)
+    public OrderDto createOrder(@PathVariable Long userId, @PathVariable ShipmentMethod shipmentMethod) throws UserNotFoundException, CartNotFoundException, EmptyCartException, CurrencyExchangeFailedException {
+        return orderFacade.createOrder(userId, shipmentMethod);
     }
 
-    @PutMapping(value = "/paid/{id}")
-    public ResponseEntity<OrderDto> setOrderToPaid(@PathVariable Long id) throws OrderNotFoundException, OrderAlreadyPaidException {
-        return ResponseEntity.ok(orderFacade.setOrderToPaid(id));
+    @PutMapping(value = "/orders/{id}/paid")
+    @ResponseStatus(OK)
+    public OrderDto setOrderToPaid(@PathVariable Long id) throws OrderNotFoundException, OrderAlreadyPaidException {
+        return orderFacade.setOrderToPaid(id);
     }
 
-    @PutMapping(value = "/sent/{id}")
-    public ResponseEntity<OrderDto> setOrderToSent(@PathVariable Long id) throws OrderNotFoundException, OrderNotPaidException, OrderAlreadySentException {
-        return ResponseEntity.ok(orderFacade.setOrderToSent(id));
+    @PutMapping(value = "/orders/{id}/sent")
+    @ResponseStatus(OK)
+    public OrderDto setOrderToSent(@PathVariable Long id) throws OrderNotFoundException, OrderNotPaidException, OrderAlreadySentException {
+        return orderFacade.setOrderToSent(id);
     }
 
 }

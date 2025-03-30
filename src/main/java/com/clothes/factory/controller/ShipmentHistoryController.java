@@ -3,23 +3,26 @@ package com.clothes.factory.controller;
 import com.clothes.factory.domain.ShipmentHistoryDto;
 import com.clothes.factory.facade.ShipmentHistoryFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.OK;
+
 @RestController
-@RequestMapping("/v1/shipmentHistory")
+@RequestMapping("/shipmentHistory")
 @RequiredArgsConstructor
 public class ShipmentHistoryController {
 
     private final ShipmentHistoryFacade shipmentHistoryFacade;
 
     @GetMapping
-    public ResponseEntity<List<ShipmentHistoryDto>> getAllShipmentHistory() {
-        return ResponseEntity.ok(shipmentHistoryFacade.getAllShipmentHistory());
+    @ResponseStatus(OK)
+    public List<ShipmentHistoryDto> getAllShipmentHistory() {
+        return shipmentHistoryFacade.getAllShipmentHistory();
     }
 
 }
