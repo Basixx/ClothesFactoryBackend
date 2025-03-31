@@ -28,7 +28,7 @@ public class ClothController {
         return clothFacade.getAllClothes();
     }
 
-    @GetMapping(value = "/user/{userId}/cart/clothes")
+    @GetMapping(value = "/users/{userId}/cart/clothes")
     @ResponseStatus(OK)
     public List<ClothDto> getClothesFromUserCart(@PathVariable Long userId) throws UserNotFoundException {
         return clothFacade.getClothesFromUserCart(userId);
