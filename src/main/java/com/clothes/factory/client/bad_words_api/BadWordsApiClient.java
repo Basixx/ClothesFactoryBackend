@@ -1,6 +1,5 @@
 package com.clothes.factory.client.bad_words_api;
 
-import com.google.gson.Gson;
 import com.clothes.factory.domain.BadWordsClientDto;
 import com.clothes.factory.exception.api.ProfanityCheckFailedException;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +17,13 @@ public class BadWordsApiClient {
 
     private final RestTemplate restTemplate;
 
-    @Value("${bad.words.api.endpoint:defaultValue}")
+    @Value("${bad.words.api.endpoint}")
     private String badWordsEndpoint;
 
-    @Value("${api.layer.key:defaultValue}")
+    @Value("${api.layer.key}")
     private String badWordsKey;
 
     public BadWordsClientDto checkProfanity(String text) throws ProfanityCheckFailedException {
-
-        Gson gson = new Gson();
-        String jsonContent = gson.toJson(text);
 
         URI url = UriComponentsBuilder.fromUriString(
                         badWordsEndpoint)
@@ -39,7 +35,7 @@ public class BadWordsApiClient {
 
         BadWordsClientDto profanityResponse = restTemplate.postForObject(
                 url,
-                jsonContent,
+                text,
                 BadWordsClientDto.class
         );
         return Optional.ofNullable(profanityResponse).orElseThrow(ProfanityCheckFailedException::new);

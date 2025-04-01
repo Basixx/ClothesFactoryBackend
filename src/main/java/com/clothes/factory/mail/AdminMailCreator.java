@@ -1,19 +1,19 @@
 package com.clothes.factory.mail;
 
-import com.clothes.factory.config.AdminConfig;
 import com.clothes.factory.domain.Cloth;
 import com.clothes.factory.domain.Order;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AdminMailCreator {
 
-    private final AdminConfig adminConfig;
+    @Value("${admin.mail}")
+    private String adminMail;
 
     public Mail createMailForAdminOrderCreated(Order order) {
-        String adminMail = adminConfig.getAdminMail();
         String subject = "New order created";
         String message = "New order has been created by " + order.getUser().getName() + " " + order.getUser().getSurname() + " - " + order.getUser().getEmailAddress() + ".";
         StringBuilder messageClothes = new StringBuilder("\nOrder contains: ");
@@ -29,7 +29,6 @@ public class AdminMailCreator {
     }
 
     public Mail createTokenMail(String token) {
-        String adminMail = adminConfig.getAdminMail();
         String subject = "New Admin Token generated.";
         String message = "Admin token has been generated, enter below code to log in as admin: \n" + token;
         return new Mail(adminMail, subject, message);

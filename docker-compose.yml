@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+      - "5005:5005"
     depends_on:
       cf-db:
         condition: service_healthy
@@ -16,8 +17,8 @@ services:
       - ADMIN_MAIL=${ADMIN_MAIL}
       - API_LAYER_KEY=${API_LAYER_KEY}
       - MAIL_API_KEY=${MAIL_API_KEY}
-      - OUTLOOK_MAIL_PASSWORD=${OUTLOOK_MAIL_PASSWORD}
-      - OUTLOOK_MAIL_USERNAME=${OUTLOOK_MAIL_USERNAME}
+      - FACTORY_MAIL_PASSWORD=${FACTORY_MAIL_PASSWORD}
+      - FACTORY_MAIL_USERNAME=${FACTORY_MAIL_USERNAME}
       - MYSQL_USER=${DB_USER}
       - MYSQL_PASSWORD=${DB_PASSWORD}
     networks:
@@ -37,7 +38,7 @@ services:
     networks:
       - c-f-net
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
       retries: 10
       interval: 3s
       timeout: 30s

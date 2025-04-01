@@ -17,10 +17,10 @@ public class EmailVerificationApiClient {
 
     private final RestTemplate restTemplate;
 
-    @Value("${whoisxml.api.endpoint:defaultValue}")
+    @Value("${whoisxml.api.endpoint}")
     private String emailCheckEndpoint;
 
-    @Value("${whoisxml.api.key:defaultValue}")
+    @Value("${whoisxml.api.key}")
     private String emailCheckKey;
 
     public EmailVerificationDto checkEmail(String email) throws EmailVerificationFailedException {

@@ -3,8 +3,6 @@ package com.clothes.factory.config;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,11 +21,6 @@ public class CoreConfiguration {
                 .group("ClothesFactoryBackend")
                 .packagesToScan("com.clothes.factory.controller")
                 .build();
-    }
-
-    @Bean
-    public JavaMailSender javaMailSender() {
-        return new JavaMailSenderImpl();
     }
 
 }
