@@ -5,7 +5,6 @@ import com.clothes.factory.domain.ShipmentHistoryDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ShipmentHistoryMapper {
@@ -22,7 +21,7 @@ public class ShipmentHistoryMapper {
     public List<ShipmentHistoryDto> mapToShipmentHistoryDtoList(final List<ShipmentHistory> shipmentHistories) {
         return shipmentHistories.stream()
                 .map(this::mapToShipmentHistoryDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }

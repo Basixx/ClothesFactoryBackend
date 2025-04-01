@@ -5,7 +5,6 @@ import com.clothes.factory.domain.PaymentHistoryDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PaymentHistoryMapper {
@@ -22,7 +21,7 @@ public class PaymentHistoryMapper {
     public List<PaymentHistoryDto> mapToPaymentHistoryDtoList(final List<PaymentHistory> paymentHistories) {
         return paymentHistories.stream()
                 .map(this::mapToPaymentHistoryDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }

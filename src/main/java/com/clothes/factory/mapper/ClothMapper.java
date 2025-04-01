@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +49,7 @@ public class ClothMapper {
     public List<ClothDto> mapToClothDtoList(final List<Cloth> cloths) {
         return cloths.stream()
                 .map(this::mapToClothDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<Cloth> mapToClothesFromIds(final List<Long> clothesIds) throws ClothNotFoundException {
@@ -70,7 +69,7 @@ public class ClothMapper {
         if (!clothes.isEmpty()) {
             clothesIds = clothes.stream()
                     .map(Cloth::getId)
-                    .collect(Collectors.toList());
+                    .toList();
         }
         return clothesIds;
     }
