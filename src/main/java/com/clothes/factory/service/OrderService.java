@@ -3,7 +3,12 @@ package com.clothes.factory.service;
 import com.clothes.factory.auxiliary.shipment.strategy.CompanySetter;
 import com.clothes.factory.auxiliary.shipment.strategy.ShipmentCompany;
 import com.clothes.factory.auxiliary.shipment.strategy.ShipmentMethod;
-import com.clothes.factory.domain.*;
+import com.clothes.factory.domain.Cart;
+import com.clothes.factory.domain.Cloth;
+import com.clothes.factory.domain.Order;
+import com.clothes.factory.domain.PaymentHistory;
+import com.clothes.factory.domain.ShipmentHistory;
+import com.clothes.factory.domain.User;
 import com.clothes.factory.exception.api.CurrencyExchangeFailedException;
 import com.clothes.factory.exception.cart.CartNotFoundException;
 import com.clothes.factory.exception.cart.EmptyCartException;
@@ -14,7 +19,11 @@ import com.clothes.factory.exception.order.OrderNotPaidException;
 import com.clothes.factory.exception.user.UserNotFoundException;
 import com.clothes.factory.mail.AdminMailCreator;
 import com.clothes.factory.mail.UserMailCreator;
-import com.clothes.factory.repository.*;
+import com.clothes.factory.repository.CartRepository;
+import com.clothes.factory.repository.OrderRepository;
+import com.clothes.factory.repository.PaymentHistoryRepository;
+import com.clothes.factory.repository.ShipmentHistoryRepository;
+import com.clothes.factory.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,7 +86,6 @@ public class OrderService {
                     .address(address)
                     .clothesList(cartFromDb.getClothesList())
                     .build();
-
 
             for (Cloth cloth : cartFromDb.getClothesList()) {
                 cloth.setCart(null);

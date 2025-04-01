@@ -23,7 +23,9 @@ import java.util.Optional;
 
 import static com.clothes.factory.object_mother.OrderMother.createOrder;
 import static com.clothes.factory.object_mother.UserMother.createUser1;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 

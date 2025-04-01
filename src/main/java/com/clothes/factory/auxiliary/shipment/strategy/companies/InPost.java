@@ -8,4 +8,5 @@ public class InPost extends ShipmentCompany {
     public InPost() {
         this.shipmentSetting = new InPostSetting();
     }
+
 }

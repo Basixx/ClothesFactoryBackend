@@ -18,8 +18,11 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.clothes.factory.object_mother.CartMother.createCart;
-import static com.clothes.factory.object_mother.UserMother.*;
+import static com.clothes.factory.object_mother.UserMother.createUser1;
+import static com.clothes.factory.object_mother.UserMother.createUser2;
+import static com.clothes.factory.object_mother.UserMother.createUserDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -27,14 +30,12 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UserMapperTests {
 
-    @InjectMocks
-    private UserMapper userMapper;
-
     @Mock
     CartRepository cartRepository;
-
     @Mock
     OrderMapper orderMapper;
+    @InjectMocks
+    private UserMapper userMapper;
 
     @Test
     void testMapToUser() throws OrderNotFoundException, CartNotFoundException {
@@ -81,7 +82,7 @@ public class UserMapperTests {
         assertEquals("Smith", userDto.getSurname());
         assertEquals("111111111", userDto.getPhoneNumber());
         assertEquals("john@smith.com", userDto.getEmailAddress());
-        assertEquals("password1", userDto.getPassword());
+        assertNull(userDto.getPassword());
         assertEquals(9L, userDto.getCartId());
         assertEquals(0, userDto.getOrdersIdList().size());
     }

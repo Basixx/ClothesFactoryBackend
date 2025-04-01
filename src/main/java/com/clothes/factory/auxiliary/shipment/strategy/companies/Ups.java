@@ -8,4 +8,5 @@ public class Ups extends ShipmentCompany {
     public Ups() {
         this.shipmentSetting = new UpsSetting();
     }
+
 }

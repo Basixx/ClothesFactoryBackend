@@ -22,11 +22,6 @@ spring:
     password: ${FACTORY_MAIL_PASSWORD}
     username: ${FACTORY_MAIL_USERNAME}
 
-  sql:
-    init:
-      platform: mysql
-      mode: always
-
 # API CONFIGURATION
 exchange.rates.api.endpoint: https://api.apilayer.com/exchangerates_data/convert
 bad.words.api.endpoint: https://api.apilayer.com/bad_words

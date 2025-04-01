@@ -1,5 +1,6 @@
 package com.clothes.factory.repository;
 
+import com.clothes.factory.BaseTest;
 import com.clothes.factory.domain.Cloth;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Transactional
-public class ClothRepositoryTests {
+public class ClothRepositoryTests extends BaseTest {
 
     @Autowired
     private ClothRepository clothRepository;

@@ -24,10 +24,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.clothes.factory.object_mother.UserMother.createUserDto;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringJUnitWebConfig
@@ -62,7 +67,7 @@ class UserControllerTests {
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
-                        get("/v1/users")
+                        get("/users")
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(MockMvcResultMatchers.status().is(200))
@@ -93,7 +98,7 @@ class UserControllerTests {
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
-                get("/v1/users/1")
+                get("/users/1")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().is(200));
         matchResult(resultActions, "$", 1);
@@ -112,7 +117,7 @@ class UserControllerTests {
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
-                post("/v1/users")
+                post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent)
@@ -132,7 +137,7 @@ class UserControllerTests {
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
-                put("/v1/users/1")
+                put("/users/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent)
@@ -148,7 +153,7 @@ class UserControllerTests {
 
         //When & Then
         mockMvc.perform(
-                delete("/v1/users/1")
+                delete("/users/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
         ).andExpect(MockMvcResultMatchers.status().is(204));
@@ -163,7 +168,7 @@ class UserControllerTests {
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
-                get("/v1/users/mail@test.com/password")
+                get("/users/mail@test.com/password")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().is(200));
         matchResult(resultActions, "$", 1);
@@ -177,7 +182,7 @@ class UserControllerTests {
 
         //When & Then
         mockMvc.perform(
-                        get("/v1/users/1")
+                        get("/users/1")
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(MockMvcResultMatchers.status().is(404))
                 .andExpect(jsonPath("$", Matchers.is("User with given id doesn't exist or can't be found.")));
@@ -191,7 +196,7 @@ class UserControllerTests {
 
         //When & Then
         mockMvc.perform(
-                        get("/v1/users/mail@test.com/password")
+                        get("/users/mail@test.com/password")
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(MockMvcResultMatchers.status().is(404))
                 .andExpect(jsonPath("$", Matchers.is("User with given email does not exist.")));
@@ -205,7 +210,7 @@ class UserControllerTests {
 
         //When & Then
         mockMvc.perform(
-                        get("/v1/users/mail@test.com/password")
+                        get("/users/mail@test.com/password")
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(400)
                 ).andExpect(jsonPath("$", Matchers.is("Wrong password.")));
@@ -224,7 +229,7 @@ class UserControllerTests {
 
         //When & Then
         mockMvc.perform(
-                        post("/v1/users")
+                        post("/users")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
                                 .content(jsonContent)
@@ -245,7 +250,7 @@ class UserControllerTests {
 
         //When & Then
         mockMvc.perform(
-                        post("/v1/users")
+                        post("/users")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
                                 .content(jsonContent)
@@ -265,7 +270,7 @@ class UserControllerTests {
 
         //When & Then
         mockMvc.perform(
-                        post("/v1/users")
+                        post("/users")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
                                 .content(jsonContent)
@@ -273,9 +278,11 @@ class UserControllerTests {
                 .andExpect(jsonPath("$", Matchers.is("Email verification failed, please try again later.")));
     }
 
-    private void matchResult(ResultActions resultActions,
-                             String expression,
-                             int id) throws Exception {
+    private void matchResult(
+            ResultActions resultActions,
+            String expression,
+            int id
+    ) throws Exception {
         resultActions
                 .andExpect(jsonPath(expression + ".id", Matchers.is(id)))
                 .andExpect(jsonPath(expression + ".name", Matchers.is("John")))

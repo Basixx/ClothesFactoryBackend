@@ -15,13 +15,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.clothes.factory.auxiliary.Color.*;
-import static com.clothes.factory.auxiliary.Fashion.*;
+import static com.clothes.factory.auxiliary.Color.BLACK;
+import static com.clothes.factory.auxiliary.Color.RED;
+import static com.clothes.factory.auxiliary.Color.WHITE;
+import static com.clothes.factory.auxiliary.Fashion.HOODIE;
+import static com.clothes.factory.auxiliary.Fashion.LONGSLEEVE;
+import static com.clothes.factory.auxiliary.Fashion.T_SHIRT;
 import static com.clothes.factory.auxiliary.Font.ARIAL;
 import static com.clothes.factory.auxiliary.Font.COMIC_SANS;
 import static com.clothes.factory.auxiliary.Size.M;
 import static com.clothes.factory.auxiliary.Size.XXL;
-import static com.clothes.factory.object_mother.ClothMother.*;
+import static com.clothes.factory.object_mother.ClothMother.createCloth1;
+import static com.clothes.factory.object_mother.ClothMother.createCloth2;
+import static com.clothes.factory.object_mother.ClothMother.createClothDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 

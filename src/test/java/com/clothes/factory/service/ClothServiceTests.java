@@ -25,7 +25,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import static com.clothes.factory.auxiliary.Color.*;
+import static com.clothes.factory.auxiliary.Color.BLACK;
+import static com.clothes.factory.auxiliary.Color.RED;
+import static com.clothes.factory.auxiliary.Color.WHITE;
 import static com.clothes.factory.auxiliary.Fashion.HOODIE;
 import static com.clothes.factory.auxiliary.Fashion.T_SHIRT;
 import static com.clothes.factory.auxiliary.Font.ARIAL;
@@ -39,7 +41,9 @@ import static com.clothes.factory.object_mother.OrderMother.createOrder;
 import static com.clothes.factory.object_mother.UserMother.createUser1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

@@ -2,6 +2,7 @@ package com.clothes.factory.auxiliary.shipment.strategy;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
 import java.math.BigDecimal;
 
 @RequiredArgsConstructor
@@ -21,4 +22,5 @@ public class ShipmentCompany {
     public int getDeliveryDays() {
         return shipmentSetting.getDeliveryDays();
     }
+
 }

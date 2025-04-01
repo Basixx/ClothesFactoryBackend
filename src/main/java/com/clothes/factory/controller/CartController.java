@@ -6,7 +6,12 @@ import com.clothes.factory.exception.cloth.ClothNotFoundException;
 import com.clothes.factory.exception.user.UserNotFoundException;
 import com.clothes.factory.facade.CartFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.HttpStatus.OK;
 
@@ -28,7 +33,7 @@ public class CartController {
         return cartFacade.addClothToCart(idCart, idCloth);
     }
 
-    @DeleteMapping("carts/{idCart}/clothes/{idCloth}")
+    @DeleteMapping("/carts/{idCart}/clothes/{idCloth}")
     @ResponseStatus(OK)
     public CartDto deleteClothFromCart(@PathVariable Long idCart, @PathVariable Long idCloth) throws ClothNotFoundException, CartNotFoundException {
         return cartFacade.deleteClothFromCart(idCart, idCloth);

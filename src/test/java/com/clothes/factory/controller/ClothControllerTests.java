@@ -22,7 +22,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -46,7 +48,7 @@ class ClothControllerTests {
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
-                get("/v1/clothes")
+                get("/clothes")
                         .contentType(APPLICATION_JSON)
         ).andExpect(status().is(200));
         matchListResult(resultActions);
@@ -62,7 +64,7 @@ class ClothControllerTests {
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
-                        get("/v1/clothes/fromUserCart/3")
+                        get("/users/3/cart/clothes")
                                 .contentType(APPLICATION_JSON)
                 ).andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(3)));
@@ -79,7 +81,7 @@ class ClothControllerTests {
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
-                        get("/v1/clothes/fromOrder/3")
+                        get("/orders/3/clothes")
                                 .contentType(APPLICATION_JSON)
                 ).andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(3)));
@@ -99,11 +101,11 @@ class ClothControllerTests {
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
-                post("/v1/clothes")
+                post("/clothes")
                         .contentType(APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent)
-        ).andExpect(status().is(200));
+        ).andExpect(status().is(201));
         matchResult(resultActions, 1, "MyPrint", "$");
     }
 
@@ -119,7 +121,7 @@ class ClothControllerTests {
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
-                put("/v1/clothes/1")
+                put("/clothes/1")
                         .contentType(APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent)
@@ -139,7 +141,7 @@ class ClothControllerTests {
 
         //When & Then
         mockMvc.perform(
-                        post("/v1/clothes")
+                        post("/clothes")
                                 .contentType(APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
                                 .content(jsonContent)
@@ -147,10 +149,12 @@ class ClothControllerTests {
                 .andExpect(jsonPath("$", is("Cloth print cannot contain any bad words, please change your choice.")));
     }
 
-    private void matchResult(ResultActions resultActions,
-                             int id,
-                             String print,
-                             String expression) throws Exception {
+    private void matchResult(
+            ResultActions resultActions,
+            int id,
+            String print,
+            String expression
+    ) throws Exception {
         resultActions
                 .andExpect(jsonPath(expression + ".id", is(id)))
                 .andExpect(jsonPath(expression + ".fashion", is("LONGSLEEVE")))
