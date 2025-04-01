@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -54,7 +53,7 @@ public class UserMapper {
     public List<UserDto> mapToUserDtoList(final List<User> users) {
         return users.stream()
                 .map(this::mapToUserDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +37,7 @@ public class OrderMapper {
     public List<OrderDto> mapToOrderDtoList(final List<Order> orders) {
         return orders.stream()
                 .map(this::mapToOrderDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<Order> mapToOrdersFromIds(final List<Long> ordersIds) throws OrderNotFoundException {
@@ -57,7 +56,7 @@ public class OrderMapper {
         if (!orders.isEmpty()) {
             ordersIds = orders.stream()
                     .map(Order::getId)
-                    .collect(Collectors.toList());
+                    .toList();
         }
         return ordersIds;
     }

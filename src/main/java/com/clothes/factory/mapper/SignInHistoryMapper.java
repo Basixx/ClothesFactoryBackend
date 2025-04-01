@@ -5,7 +5,6 @@ import com.clothes.factory.domain.SignInHistoryDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SignInHistoryMapper {
@@ -22,7 +21,7 @@ public class SignInHistoryMapper {
     public List<SignInHistoryDto> mapToSignInHistoryDtoList(final List<SignInHistory> signInHistories) {
         return signInHistories.stream()
                 .map(this::mapToSignInHistoryDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }
