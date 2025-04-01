@@ -17,7 +17,7 @@ public class QuoteApiClient {
 
     private final RestTemplate restTemplate;
 
-    @Value("${kanye.west.api.endpoint:defaultValue}")
+    @Value("${kanye.west.api.endpoint}")
     private String quoteEndpoint;
 
     public QuoteDto getQuote() throws QuoteNotFoundException {

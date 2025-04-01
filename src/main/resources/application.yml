@@ -10,16 +10,18 @@ spring:
     open-in-view: true
     properties.hibernate.dialect: org.hibernate.dialect.MySQLDialect
   mail:
+    host: smtp.gmail.com
+    port: 587
     properties.mail.smtp:
       connecttimeout: 5000
       timeout: 3000
       writetimeout: 5000
       starttls.enable: true
       auth: true
-    host: smtp.gmail.com
-    password: ${OUTLOOK_MAIL_PASSWORD}
-    port: 587
-    username: ${OUTLOOK_MAIL_USERNAME}
+      ssl.trust: smtp.gmail.com
+    password: ${FACTORY_MAIL_PASSWORD}
+    username: ${FACTORY_MAIL_USERNAME}
+
   sql:
     init:
       platform: mysql

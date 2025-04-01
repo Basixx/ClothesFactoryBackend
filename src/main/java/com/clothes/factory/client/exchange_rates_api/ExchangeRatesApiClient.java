@@ -18,10 +18,10 @@ public class ExchangeRatesApiClient {
 
     private final RestTemplate restTemplate;
 
-    @Value("${exchange.rates.api.endpoint:defaultValue}")
+    @Value("${exchange.rates.api.endpoint}")
     private String exchangeRateEndpoint;
 
-    @Value("${api.layer.key:defaultValue}")
+    @Value("${api.layer.key}")
     private String exchangeRateKey;
 
     public ExchangeRatesClientDto getConversion(String to, String from, BigDecimal amount) throws CurrencyExchangeFailedException {
