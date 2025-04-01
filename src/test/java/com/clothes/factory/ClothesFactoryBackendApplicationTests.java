@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
-class ClothesFactoryBackendApplicationTests {
+class ClothesFactoryBackendApplicationTests extends BaseTest {
 
     @Test
     void contextLoads() {

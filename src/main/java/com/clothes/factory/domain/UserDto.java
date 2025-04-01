@@ -25,5 +25,5 @@ public class UserDto {
     private String postCode;
     private Long cartId;
     private List<Long> ordersIdList;
-    
+
 }

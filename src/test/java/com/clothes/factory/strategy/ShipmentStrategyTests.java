@@ -1,5 +1,6 @@
 package com.clothes.factory.strategy;
 
+import com.clothes.factory.BaseTest;
 import com.clothes.factory.auxiliary.shipment.strategy.CompanySetter;
 import com.clothes.factory.auxiliary.shipment.strategy.ShipmentCompany;
 import com.clothes.factory.auxiliary.shipment.strategy.ShipmentMethod;
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class ShipmentStrategyTests {
+public class ShipmentStrategyTests extends BaseTest {
 
     @Autowired
     CompanySetter companySetter;

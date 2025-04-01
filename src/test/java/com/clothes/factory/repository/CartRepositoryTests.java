@@ -1,5 +1,6 @@
 package com.clothes.factory.repository;
 
+import com.clothes.factory.BaseTest;
 import com.clothes.factory.domain.Cart;
 import com.clothes.factory.domain.Cloth;
 import com.clothes.factory.domain.User;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Transactional
-public class CartRepositoryTests {
+public class CartRepositoryTests extends BaseTest {
 
     @Autowired
     private CartRepository cartRepository;
@@ -33,7 +34,6 @@ public class CartRepositoryTests {
 
     @Autowired
     private ClothRepository clothRepository;
-
 
     @Test
     void testSaveCartWithUser() throws UserNotFoundException {

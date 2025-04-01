@@ -13,7 +13,9 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -35,7 +37,7 @@ public class AdminTokenControllerTests {
 
         //When & Then
         mockMvc.perform(
-                        get("/v1/token/ABCDEFG")
+                        get("/tokens/ABCDEFG")
                                 .contentType(APPLICATION_JSON)
                 ).andExpect(status().is(200))
                 .andExpect(jsonPath("$", is(true)));
@@ -52,7 +54,7 @@ public class AdminTokenControllerTests {
                 .thenReturn(adminTokenDto);
 
         //When & Then
-        mockMvc.perform(post("/v1/token"))
+        mockMvc.perform(post("/tokens"))
                 .andExpect(status().is(201))
                 .andExpect(jsonPath("$.id", is(5)))
                 .andExpect(jsonPath("$.token", is("ABCDEFG")));
@@ -65,7 +67,7 @@ public class AdminTokenControllerTests {
                 .deleteAllTokens();
 
         //When & Then
-        mockMvc.perform(delete("/v1/token"))
+        mockMvc.perform(delete("/tokens"))
                 .andExpect(status().is(204));
     }
 

@@ -57,7 +57,7 @@ public class LoginHistoryControllerTests {
 
         //When & Then
         mockMvc.perform(
-                        get("/v1/loginHistory")
+                        get("/loginHistory")
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(2)))

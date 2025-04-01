@@ -1,4 +1,5 @@
 package com.clothes.factory.exception.cloth;
 
-public class ClothWithQuantityZeroException extends Exception{
+public class ClothWithQuantityZeroException extends Exception {
+
 }

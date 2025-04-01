@@ -18,6 +18,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -43,7 +44,7 @@ class CartControllerTests {
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
-                get("/v1/carts/3")
+                get("/users/3/cart")
                         .contentType(APPLICATION_JSON)
         ).andExpect(status().is(200));
         matchResult(resultActions, 0);
@@ -60,7 +61,7 @@ class CartControllerTests {
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
-                        put("/v1/carts/addCloth/1/3")
+                        put("/carts/1/clothes/3")
                                 .contentType(APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
                 ).andExpect(status().is(200))
@@ -78,7 +79,7 @@ class CartControllerTests {
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
-                put("/v1/carts/1/3")
+                delete("/carts/1/clothes/3")
                         .contentType(APPLICATION_JSON)
                         .characterEncoding("UTF-8")
         ).andExpect(status().is(200));
@@ -96,7 +97,7 @@ class CartControllerTests {
 
         //When & Then
         mockMvc.perform(
-                        put("/v1/carts/addCloth/1/3")
+                        put("/carts/1/clothes/3")
                                 .contentType(APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
                 ).andExpect(status().is(404))
@@ -111,7 +112,7 @@ class CartControllerTests {
 
         //When & Then
         mockMvc.perform(
-                        put("/v1/carts/addCloth/1/3")
+                        put("/carts/1/clothes/3")
                                 .contentType(APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
                 ).andExpect(status().is(404))

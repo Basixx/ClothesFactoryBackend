@@ -57,7 +57,7 @@ public class SignInHistoryControllerTests {
 
         //When & Then
         mockMvc.perform(
-                        get("/v1/signInHistory")
+                        get("/signInHistory")
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().is(200))

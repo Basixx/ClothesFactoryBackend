@@ -59,7 +59,7 @@ public class ShipmentHistoryControllerTests {
 
         //When & Then
         mockMvc.perform(
-                        get("/v1/shipmentHistory")
+                        get("/shipmentHistory")
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(2)))

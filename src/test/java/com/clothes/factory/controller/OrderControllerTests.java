@@ -53,7 +53,7 @@ class OrderControllerTests {
         //When & Then
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-                        .get("/v1/orders/1")
+                        .get("/orders/1")
                         .contentType(APPLICATION_JSON)
         ).andExpect(status().is(200));
         matchResult(
@@ -92,7 +92,7 @@ class OrderControllerTests {
         //When & Then
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-                        .get("/v1/orders")
+                        .get("/orders")
                         .contentType(APPLICATION_JSON)
         ).andExpect(status().is(200));
         matchResult(
@@ -126,7 +126,7 @@ class OrderControllerTests {
         //When & Then
         ResultActions resultActions = mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get("/v1/orders/byUser/2")
+                                .get("/users/2/orders")
                                 .contentType(APPLICATION_JSON)
                 ).andExpect(status().is(200))
                 .andExpect(jsonPath("$", Matchers.hasSize(1)));
@@ -151,7 +151,7 @@ class OrderControllerTests {
         //When & Then
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-                        .post("/v1/orders/2/UPS")
+                        .post("/users/2/order/UPS")
                         .contentType(APPLICATION_JSON)
                         .characterEncoding("UTF-8")
         ).andExpect(status().is(201));
@@ -188,7 +188,7 @@ class OrderControllerTests {
         //When & Then
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-                        .put("/v1/orders/paid/1")
+                        .put("/orders/1/paid")
                         .contentType(APPLICATION_JSON)
                         .characterEncoding("UTF-8")
         ).andExpect(status().is(200));
@@ -225,7 +225,7 @@ class OrderControllerTests {
         //When & Then
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-                        .put("/v1/orders/sent/1")
+                        .put("/orders/1/sent")
                         .contentType(APPLICATION_JSON)
                         .characterEncoding("UTF-8")
         ).andExpect(status().is(200));
@@ -248,7 +248,7 @@ class OrderControllerTests {
         //When & Then
         mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get("/v1/orders/1")
+                                .get("/orders/1")
                                 .contentType(APPLICATION_JSON)
                 ).andExpect(status().is(404))
                 .andExpect(jsonPath("$", is("Order with given id doesn't exist or can't be found.")));
@@ -263,7 +263,7 @@ class OrderControllerTests {
         //When & Then
         mockMvc.perform(
                         MockMvcRequestBuilders
-                                .put("/v1/orders/paid/3")
+                                .put("/orders/3/paid")
                                 .contentType(APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
                 ).andExpect(status().is(405))
@@ -279,7 +279,7 @@ class OrderControllerTests {
         //When & Then
         mockMvc.perform(
                         MockMvcRequestBuilders
-                                .put("/v1/orders/sent/3")
+                                .put("/orders/3/sent")
                                 .contentType(APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
                 ).andExpect(status().is(405))
@@ -295,7 +295,7 @@ class OrderControllerTests {
         //When & Then
         mockMvc.perform(
                         MockMvcRequestBuilders
-                                .put("/v1/orders/sent/3")
+                                .put("/orders/3/sent")
                                 .contentType(APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
                 ).andExpect(status().is(405))
@@ -311,19 +311,21 @@ class OrderControllerTests {
         //When & Then
         mockMvc.perform(
                         MockMvcRequestBuilders
-                                .post("/v1/orders/2/UPS")
+                                .post("/users/2/order/UPS")
                                 .contentType(APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
                 ).andExpect(status().is(405))
                 .andExpect(jsonPath("$", is("You cannot create an order from an empty cart.")));
     }
 
-    private void matchResult(ResultActions resultActions,
-                             String expression,
-                             int id,
-                             boolean paid,
-                             boolean sent,
-                             int userId) throws Exception {
+    private void matchResult(
+            ResultActions resultActions,
+            String expression,
+            int id,
+            boolean paid,
+            boolean sent,
+            int userId
+    ) throws Exception {
         resultActions
                 .andExpect(jsonPath(expression + ".id", is(id)))
                 .andExpect(jsonPath(expression + ".orderDate", is("2022-04-26")))

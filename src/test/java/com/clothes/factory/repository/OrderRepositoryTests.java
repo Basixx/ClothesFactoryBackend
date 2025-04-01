@@ -1,5 +1,6 @@
 package com.clothes.factory.repository;
 
+import com.clothes.factory.BaseTest;
 import com.clothes.factory.auxiliary.shipment.strategy.ShipmentCompany;
 import com.clothes.factory.auxiliary.shipment.strategy.companies.Fedex;
 import com.clothes.factory.domain.Cloth;
@@ -21,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Transactional
-public class OrderRepositoryTests {
+public class OrderRepositoryTests extends BaseTest {
 
     @Autowired
     private OrderRepository orderRepository;

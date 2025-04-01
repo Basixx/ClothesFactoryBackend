@@ -60,7 +60,7 @@ public class PaymentHistoryControllerTests {
 
         //When & Then
         mockMvc.perform(
-                        get("/v1/paymentHistory")
+                        get("/paymentHistory")
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(2)))
