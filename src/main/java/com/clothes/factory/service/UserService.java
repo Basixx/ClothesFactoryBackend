@@ -16,6 +16,7 @@ import com.clothes.factory.repository.LoginHistoryRepository;
 import com.clothes.factory.repository.SignInHistoryRepository;
 import com.clothes.factory.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,7 @@ public class UserService {
     private final EmailVerificationService emailVerificationService;
     private final EmailService emailService;
     private final UserMailCreator userMailCreator;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -58,6 +60,7 @@ public class UserService {
                         .build();
                 user.setCart(userCart);
                 user.setOrdersList(new ArrayList<>());
+                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 cartRepository.save(userCart);
                 emailService.send(userMailCreator.accountCreationMail(user));
                 signInHistoryRepository.save(SignInHistory.builder().signInTime(LocalDateTime.now()).userMail(user.getEmailAddress()).userNumber(user.getPhoneNumber()).build());
@@ -71,7 +74,7 @@ public class UserService {
         userFromDb.setName(user.getName());
         userFromDb.setSurname(user.getSurname());
         userFromDb.setPhoneNumber(user.getPhoneNumber());
-        userFromDb.setPassword(user.getPassword());
+        userFromDb.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userFromDb.setStreet(user.getStreet());
         userFromDb.setStreetAndApartmentNumber(user.getStreetAndApartmentNumber());
         userFromDb.setCity(user.getCity());
@@ -89,7 +92,7 @@ public class UserService {
     public User authenticateUser(final String email, final String password) throws UserEmailNotFoundException, WrongPasswordException {
         User userFromDb = userRepository.findByEmailAddress(email).orElseThrow(UserEmailNotFoundException::new);
 
-        if (password.equals(userFromDb.getPassword())) {
+        if (bCryptPasswordEncoder.matches(password, userFromDb.getPassword())) {
             loginHistoryRepository.save(LoginHistory.builder().loginTime(LocalDateTime.now()).userMail(userFromDb.getEmailAddress()).succeed(true).build());
             return userFromDb;
         } else {
