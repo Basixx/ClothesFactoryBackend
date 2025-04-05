@@ -12,11 +12,12 @@ import com.clothes.factory.repository.CartRepository;
 import com.clothes.factory.repository.LoginHistoryRepository;
 import com.clothes.factory.repository.SignInHistoryRepository;
 import com.clothes.factory.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,8 +35,10 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTests {
 
-    @InjectMocks
+
     private UserService userService;
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Mock
     private UserRepository userRepository;
@@ -57,6 +60,21 @@ public class UserServiceTests {
 
     @Mock
     private UserMailCreator userMailCreator;
+
+    @BeforeEach
+    void setUp() {
+        bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        userService = new UserService(
+                userRepository,
+                cartRepository,
+                loginHistoryRepository,
+                signInHistoryRepository,
+                emailVerificationService,
+                emailService,
+                userMailCreator,
+                bCryptPasswordEncoder
+        );
+    }
 
     @Test
     void testGetAllUsers() {
@@ -119,7 +137,7 @@ public class UserServiceTests {
         assertEquals("Smith", resultUser.getSurname());
         assertEquals("111111111", resultUser.getPhoneNumber());
         assertEquals("john@smith.com", resultUser.getEmailAddress());
-        assertEquals("password1", resultUser.getPassword());
+        assertTrue(bCryptPasswordEncoder.matches("password1", resultUser.getPassword()));
         assertEquals("Marszalkowska", resultUser.getStreet());
         assertEquals("1/2", resultUser.getStreetAndApartmentNumber());
         assertEquals("Warsaw", resultUser.getCity());
@@ -147,7 +165,7 @@ public class UserServiceTests {
         assertEquals("Wazowski", resultUser.getSurname());
         assertEquals("222222222", resultUser.getPhoneNumber());
         assertEquals("john@smith.com", resultUser.getEmailAddress());
-        assertEquals("password2", resultUser.getPassword());
+        assertTrue(bCryptPasswordEncoder.matches("password2", resultUser.getPassword()));
         assertEquals("Polinezyjska", resultUser.getStreet());
         assertEquals("4/10", resultUser.getStreetAndApartmentNumber());
         assertEquals("Cracow", resultUser.getCity());
@@ -159,6 +177,8 @@ public class UserServiceTests {
     void testAuthenticateUserCorrectly() throws UserEmailNotFoundException, WrongPasswordException {
         //Given
         User user = createUser1();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));
         when(userRepository.findByEmailAddress(anyString()))
                 .thenReturn(Optional.of(user));
 
@@ -170,7 +190,7 @@ public class UserServiceTests {
         assertEquals("Smith", resultUser.getSurname());
         assertEquals("111111111", resultUser.getPhoneNumber());
         assertEquals("john@smith.com", resultUser.getEmailAddress());
-        assertEquals("password1", resultUser.getPassword());
+        assertTrue(bCryptPasswordEncoder.matches("password1", resultUser.getPassword()));
         assertEquals("Marszalkowska", resultUser.getStreet());
         assertEquals("1/2", resultUser.getStreetAndApartmentNumber());
         assertEquals("Warsaw", resultUser.getCity());

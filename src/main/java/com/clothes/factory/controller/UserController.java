@@ -1,6 +1,7 @@
 package com.clothes.factory.controller;
 
-import com.clothes.factory.domain.UserDto;
+import com.clothes.factory.domain.UserRequestDto;
+import com.clothes.factory.domain.UserResponseDto;
 import com.clothes.factory.exception.cart.CartNotFoundException;
 import com.clothes.factory.exception.email.EmailAddressDoesNotExistException;
 import com.clothes.factory.exception.email.EmailVerificationFailedException;
@@ -36,26 +37,26 @@ public class UserController {
 
     @GetMapping
     @ResponseStatus(OK)
-    public List<UserDto> getUsers() {
+    public List<UserResponseDto> getUsers() {
         return userFacade.getUsers();
     }
 
     @GetMapping(value = "/{id}")
     @ResponseStatus(OK)
-    public UserDto getUser(@PathVariable Long id) throws UserNotFoundException {
+    public UserResponseDto getUser(@PathVariable Long id) throws UserNotFoundException {
         return userFacade.getUser(id);
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public UserDto createUser(@RequestBody UserDto userDto) throws CartNotFoundException, OrderNotFoundException, UserAlreadyExistsException, EmailVerificationFailedException, EmailAddressDoesNotExistException {
-        return userFacade.createUser(userDto);
+    public UserResponseDto createUser(@RequestBody UserRequestDto userRequestDto) throws CartNotFoundException, OrderNotFoundException, UserAlreadyExistsException, EmailVerificationFailedException, EmailAddressDoesNotExistException {
+        return userFacade.createUser(userRequestDto);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(OK)
-    public UserDto updateUser(@PathVariable Long id, @RequestBody UserDto userDto) throws UserNotFoundException, CartNotFoundException, OrderNotFoundException {
-        return userFacade.updateUser(id, userDto);
+    public UserResponseDto updateUser(@PathVariable Long id, @RequestBody UserRequestDto userRequestDto) throws UserNotFoundException, CartNotFoundException, OrderNotFoundException {
+        return userFacade.updateUser(id, userRequestDto);
     }
 
     @DeleteMapping("/{id}")
@@ -66,7 +67,7 @@ public class UserController {
 
     @GetMapping(value = "/{email}/{password}")
     @ResponseStatus(OK)
-    public UserDto authenticateUser(@PathVariable String email, @PathVariable String password) throws UserEmailNotFoundException, WrongPasswordException {
+    public UserResponseDto authenticateUser(@PathVariable String email, @PathVariable String password) throws UserEmailNotFoundException, WrongPasswordException {
         return userFacade.authenticateUser(email, password);
     }
 

@@ -1,7 +1,8 @@
 package com.clothes.factory.object_mother;
 
 import com.clothes.factory.domain.User;
-import com.clothes.factory.domain.UserDto;
+import com.clothes.factory.domain.UserRequestDto;
+import com.clothes.factory.domain.UserResponseDto;
 
 import java.util.ArrayList;
 
@@ -39,14 +40,30 @@ public class UserMother {
                 .build();
     }
 
-    public static UserDto createUserDto() {
-        return UserDto.builder()
+    public static UserRequestDto createUserRequestDto() {
+        return UserRequestDto.builder()
                 .id(1L)
                 .name("John")
                 .surname("Smith")
                 .phoneNumber("111222333")
                 .emailAddress("john@smith.com")
                 .password("password")
+                .street("Marszalkowska")
+                .streetAndApartmentNumber("1/2")
+                .city("Warsaw")
+                .postCode("00-111")
+                .ordersIdList(new ArrayList<>())
+                .cartId(2L)
+                .build();
+    }
+
+    public static UserResponseDto createUserResponseDto() {
+        return UserResponseDto.builder()
+                .id(1L)
+                .name("John")
+                .surname("Smith")
+                .phoneNumber("111222333")
+                .emailAddress("john@smith.com")
                 .street("Marszalkowska")
                 .streetAndApartmentNumber("1/2")
                 .city("Warsaw")

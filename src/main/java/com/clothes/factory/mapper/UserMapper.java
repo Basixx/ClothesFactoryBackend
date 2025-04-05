@@ -1,7 +1,8 @@
 package com.clothes.factory.mapper;
 
 import com.clothes.factory.domain.User;
-import com.clothes.factory.domain.UserDto;
+import com.clothes.factory.domain.UserRequestDto;
+import com.clothes.factory.domain.UserResponseDto;
 import com.clothes.factory.exception.cart.CartNotFoundException;
 import com.clothes.factory.exception.order.OrderNotFoundException;
 import com.clothes.factory.repository.CartRepository;
@@ -17,25 +18,24 @@ public class UserMapper {
     private final CartRepository cartRepository;
     private final OrderMapper orderMapper;
 
-    public User mapToUser(final UserDto userDto) throws CartNotFoundException, OrderNotFoundException {
-
+    public User mapToUser(final UserRequestDto userRequestDto) throws CartNotFoundException, OrderNotFoundException {
         return User.builder()
-                .name(userDto.getName())
-                .surname(userDto.getSurname())
-                .phoneNumber(userDto.getPhoneNumber())
-                .emailAddress(userDto.getEmailAddress())
-                .password(userDto.getPassword())
-                .street(userDto.getStreet())
-                .streetAndApartmentNumber(userDto.getStreetAndApartmentNumber())
-                .city(userDto.getCity())
-                .postCode(userDto.getPostCode())
-                .cart(userDto.getCartId() == null ? null : cartRepository.findById(userDto.getCartId()).orElseThrow(CartNotFoundException::new))
-                .ordersList(userDto.getOrdersIdList() == null ? null : orderMapper.mapToOrdersFromIds(userDto.getOrdersIdList()))
+                .name(userRequestDto.getName())
+                .surname(userRequestDto.getSurname())
+                .phoneNumber(userRequestDto.getPhoneNumber())
+                .emailAddress(userRequestDto.getEmailAddress())
+                .password(userRequestDto.getPassword())
+                .street(userRequestDto.getStreet())
+                .streetAndApartmentNumber(userRequestDto.getStreetAndApartmentNumber())
+                .city(userRequestDto.getCity())
+                .postCode(userRequestDto.getPostCode())
+                .cart(userRequestDto.getCartId() == null ? null : cartRepository.findById(userRequestDto.getCartId()).orElseThrow(CartNotFoundException::new))
+                .ordersList(userRequestDto.getOrdersIdList() == null ? null : orderMapper.mapToOrdersFromIds(userRequestDto.getOrdersIdList()))
                 .build();
     }
 
-    public UserDto mapToUserDto(final User user) {
-        return UserDto.builder()
+    public UserResponseDto mapToUserResponseDto(final User user) {
+        return UserResponseDto.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .surname(user.getSurname())
@@ -50,9 +50,9 @@ public class UserMapper {
                 .build();
     }
 
-    public List<UserDto> mapToUserDtoList(final List<User> users) {
+    public List<UserResponseDto> mapToUserDtoList(final List<User> users) {
         return users.stream()
-                .map(this::mapToUserDto)
+                .map(this::mapToUserResponseDto)
                 .toList();
     }
 

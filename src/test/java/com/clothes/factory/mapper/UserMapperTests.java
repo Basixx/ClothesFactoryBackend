@@ -2,7 +2,8 @@ package com.clothes.factory.mapper;
 
 import com.clothes.factory.domain.Cart;
 import com.clothes.factory.domain.User;
-import com.clothes.factory.domain.UserDto;
+import com.clothes.factory.domain.UserRequestDto;
+import com.clothes.factory.domain.UserResponseDto;
 import com.clothes.factory.exception.cart.CartNotFoundException;
 import com.clothes.factory.exception.order.OrderNotFoundException;
 import com.clothes.factory.repository.CartRepository;
@@ -20,9 +21,8 @@ import java.util.Optional;
 import static com.clothes.factory.object_mother.CartMother.createCart;
 import static com.clothes.factory.object_mother.UserMother.createUser1;
 import static com.clothes.factory.object_mother.UserMother.createUser2;
-import static com.clothes.factory.object_mother.UserMother.createUserDto;
+import static com.clothes.factory.object_mother.UserMother.createUserRequestDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -40,7 +40,7 @@ public class UserMapperTests {
     @Test
     void testMapToUser() throws OrderNotFoundException, CartNotFoundException {
         //Given
-        UserDto userDto = createUserDto();
+        UserRequestDto userRequestDto = createUserRequestDto();
 
         Cart cart = createCart(new BigDecimal(40));
 
@@ -50,7 +50,7 @@ public class UserMapperTests {
                 .thenReturn(new ArrayList<>());
 
         //When
-        User user = userMapper.mapToUser(userDto);
+        User user = userMapper.mapToUser(userRequestDto);
 
         Long cartId = user.getCart().getId();
         //Then
@@ -64,7 +64,7 @@ public class UserMapperTests {
     }
 
     @Test
-    void testMapToUserDto() {
+    void testMapToUserResponseDto() {
         //Given
         Cart cart = createCart(new BigDecimal(40));
         User user = createUser1();
@@ -74,21 +74,20 @@ public class UserMapperTests {
                 .thenReturn(new ArrayList<>());
 
         //When
-        UserDto userDto = userMapper.mapToUserDto(user);
+        UserResponseDto userResponseDto = userMapper.mapToUserResponseDto(user);
 
         //Then
-        assertEquals(6L, userDto.getId());
-        assertEquals("John", userDto.getName());
-        assertEquals("Smith", userDto.getSurname());
-        assertEquals("111111111", userDto.getPhoneNumber());
-        assertEquals("john@smith.com", userDto.getEmailAddress());
-        assertNull(userDto.getPassword());
-        assertEquals(9L, userDto.getCartId());
-        assertEquals(0, userDto.getOrdersIdList().size());
+        assertEquals(6L, userResponseDto.getId());
+        assertEquals("John", userResponseDto.getName());
+        assertEquals("Smith", userResponseDto.getSurname());
+        assertEquals("111111111", userResponseDto.getPhoneNumber());
+        assertEquals("john@smith.com", userResponseDto.getEmailAddress());
+        assertEquals(9L, userResponseDto.getCartId());
+        assertEquals(0, userResponseDto.getOrdersIdList().size());
     }
 
     @Test
-    void testMapToUserDtoList() {
+    void testMapToUserRequestDtoList() {
         //Given
         Cart cart1 = createCart(new BigDecimal(150));
         Cart cart2 = createCart(new BigDecimal(250));
@@ -103,7 +102,7 @@ public class UserMapperTests {
         users.add(user2);
 
         //When
-        List<UserDto> usersDto = userMapper.mapToUserDtoList(users);
+        List<UserResponseDto> usersDto = userMapper.mapToUserDtoList(users);
 
         //Then
         assertEquals(2, usersDto.size());
