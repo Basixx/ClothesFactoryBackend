@@ -1,6 +1,7 @@
 package com.clothes.factory.facade;
 
-import com.clothes.factory.domain.UserDto;
+import com.clothes.factory.domain.UserRequestDto;
+import com.clothes.factory.domain.UserResponseDto;
 import com.clothes.factory.exception.cart.CartNotFoundException;
 import com.clothes.factory.exception.email.EmailAddressDoesNotExistException;
 import com.clothes.factory.exception.email.EmailVerificationFailedException;
@@ -23,28 +24,28 @@ public class UserFacade {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    public List<UserDto> getUsers() {
+    public List<UserResponseDto> getUsers() {
         return userMapper.mapToUserDtoList(userService.getAllUsers());
     }
 
-    public UserDto getUser(Long id) throws UserNotFoundException {
-        return userMapper.mapToUserDto(userService.getUser(id));
+    public UserResponseDto getUser(Long id) throws UserNotFoundException {
+        return userMapper.mapToUserResponseDto(userService.getUser(id));
     }
 
-    public UserDto createUser(UserDto userDto) throws CartNotFoundException, OrderNotFoundException, UserAlreadyExistsException, EmailVerificationFailedException, EmailAddressDoesNotExistException {
-        return userMapper.mapToUserDto(userService.createUser(userMapper.mapToUser(userDto)));
+    public UserResponseDto createUser(UserRequestDto userRequestDto) throws CartNotFoundException, OrderNotFoundException, UserAlreadyExistsException, EmailVerificationFailedException, EmailAddressDoesNotExistException {
+        return userMapper.mapToUserResponseDto(userService.createUser(userMapper.mapToUser(userRequestDto)));
     }
 
-    public UserDto updateUser(Long id, UserDto userDto) throws UserNotFoundException, CartNotFoundException, OrderNotFoundException {
-        return userMapper.mapToUserDto(userService.editUser(id, userMapper.mapToUser(userDto)));
+    public UserResponseDto updateUser(Long id, UserRequestDto userRequestDto) throws UserNotFoundException, CartNotFoundException, OrderNotFoundException {
+        return userMapper.mapToUserResponseDto(userService.editUser(id, userMapper.mapToUser(userRequestDto)));
     }
 
     public void deleteUser(Long id) throws UserNotFoundException {
         userService.deleteUser(id);
     }
 
-    public UserDto authenticateUser(String email, String password) throws UserEmailNotFoundException, WrongPasswordException {
-        return userMapper.mapToUserDto(userService.authenticateUser(email, password));
+    public UserResponseDto authenticateUser(String email, String password) throws UserEmailNotFoundException, WrongPasswordException {
+        return userMapper.mapToUserResponseDto(userService.authenticateUser(email, password));
     }
 
 }

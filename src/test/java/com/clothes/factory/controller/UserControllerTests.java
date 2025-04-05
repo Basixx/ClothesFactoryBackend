@@ -1,6 +1,7 @@
 package com.clothes.factory.controller;
 
-import com.clothes.factory.domain.UserDto;
+import com.clothes.factory.domain.UserRequestDto;
+import com.clothes.factory.domain.UserResponseDto;
 import com.clothes.factory.exception.email.EmailAddressDoesNotExistException;
 import com.clothes.factory.exception.email.EmailVerificationFailedException;
 import com.clothes.factory.exception.user.UserAlreadyExistsException;
@@ -23,7 +24,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.clothes.factory.object_mother.UserMother.createUserDto;
+import static com.clothes.factory.object_mother.UserMother.createUserRequestDto;
+import static com.clothes.factory.object_mother.UserMother.createUserResponseDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -48,15 +50,14 @@ class UserControllerTests {
     @Test
     void testGetUsers() throws Exception {
         //Given
-        List<UserDto> usersDto = new ArrayList<>();
+        List<UserResponseDto> usersDto = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            usersDto.add(UserDto.builder()
+            usersDto.add(UserResponseDto.builder()
                     .id(i + 1L)
                     .name("John")
                     .surname("Smith")
                     .phoneNumber("111222333")
                     .emailAddress("john@smith.com")
-                    .password("password")
                     .ordersIdList(new ArrayList<>())
                     .cartId(2L)
                     .build());
@@ -92,9 +93,9 @@ class UserControllerTests {
     @Test
     void testGetUser() throws Exception {
         //Given
-        UserDto userDto = createUserDto();
+        UserResponseDto userResponseDto = createUserResponseDto();
 
-        when(userFacade.getUser(anyLong())).thenReturn(userDto);
+        when(userFacade.getUser(anyLong())).thenReturn(userResponseDto);
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
@@ -107,13 +108,13 @@ class UserControllerTests {
     @Test
     void testCreateUser() throws Exception {
         //Given
-        UserDto userDto = createUserDto();
+        UserResponseDto userResponseDto = createUserResponseDto();
 
-        when(userFacade.createUser(any(UserDto.class)))
-                .thenReturn(userDto);
+        when(userFacade.createUser(any(UserRequestDto.class)))
+                .thenReturn(userResponseDto);
 
         Gson gson = new Gson();
-        String jsonContent = gson.toJson(userDto);
+        String jsonContent = gson.toJson(userResponseDto);
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
@@ -128,12 +129,12 @@ class UserControllerTests {
     @Test
     void testUpdateUser() throws Exception {
         //Given
-        UserDto userDto = createUserDto();
+        UserResponseDto userResponseDto = createUserResponseDto();
 
-        when(userFacade.updateUser(anyLong(), any(UserDto.class)))
-                .thenReturn(userDto);
+        when(userFacade.updateUser(anyLong(), any(UserRequestDto.class)))
+                .thenReturn(userResponseDto);
         Gson gson = new Gson();
-        String jsonContent = gson.toJson(userDto);
+        String jsonContent = gson.toJson(userResponseDto);
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
@@ -162,9 +163,9 @@ class UserControllerTests {
     @Test
     void testAuthenticateUser() throws Exception {
         //Given
-        UserDto userDto = createUserDto();
+        UserResponseDto userResponseDto = createUserResponseDto();
         when(userFacade.authenticateUser(anyString(), anyString()))
-                .thenReturn(userDto);
+                .thenReturn(userResponseDto);
 
         //When & Then
         ResultActions resultActions = mockMvc.perform(
@@ -219,13 +220,13 @@ class UserControllerTests {
     @Test
     void testCreateUserWithAlreadyUsedEmail() throws Exception {
         //Given
-        UserDto userDto = createUserDto();
+        UserRequestDto userRequestDto = createUserRequestDto();
 
-        when(userFacade.createUser(any(UserDto.class)))
+        when(userFacade.createUser(any(UserRequestDto.class)))
                 .thenThrow(new UserAlreadyExistsException());
 
         Gson gson = new Gson();
-        String jsonContent = gson.toJson(userDto);
+        String jsonContent = gson.toJson(userRequestDto);
 
         //When & Then
         mockMvc.perform(
@@ -240,13 +241,13 @@ class UserControllerTests {
     @Test
     void testCreateUserWithNonExistingEmail() throws Exception {
         //Given
-        UserDto userDto = createUserDto();
+        UserRequestDto userRequestDto = createUserRequestDto();
 
-        when(userFacade.createUser(any(UserDto.class)))
+        when(userFacade.createUser(any(UserRequestDto.class)))
                 .thenThrow(new EmailAddressDoesNotExistException());
 
         Gson gson = new Gson();
-        String jsonContent = gson.toJson(userDto);
+        String jsonContent = gson.toJson(userRequestDto);
 
         //When & Then
         mockMvc.perform(
@@ -261,12 +262,12 @@ class UserControllerTests {
     @Test
     void testCreateUserEmailVerificationFailed() throws Exception {
         //Given
-        UserDto userDto = createUserDto();
+        UserRequestDto userRequestDto = createUserRequestDto();
 
-        when(userFacade.createUser(any(UserDto.class))).thenThrow(new EmailVerificationFailedException());
+        when(userFacade.createUser(any(UserRequestDto.class))).thenThrow(new EmailVerificationFailedException());
 
         Gson gson = new Gson();
-        String jsonContent = gson.toJson(userDto);
+        String jsonContent = gson.toJson(userRequestDto);
 
         //When & Then
         mockMvc.perform(
@@ -289,7 +290,7 @@ class UserControllerTests {
                 .andExpect(jsonPath(expression + ".surname", Matchers.is("Smith")))
                 .andExpect(jsonPath(expression + ".phoneNumber", Matchers.is("111222333")))
                 .andExpect(jsonPath(expression + ".emailAddress", Matchers.is("john@smith.com")))
-                .andExpect(jsonPath(expression + ".password", Matchers.is("password")))
+//                .andExpect(jsonPath(expression + ".password", Matchers.is("password")))
                 .andExpect(jsonPath(expression + ".ordersIdList", Matchers.hasSize(0)))
                 .andExpect(jsonPath(expression + ".cartId", Matchers.is(2)));
     }
