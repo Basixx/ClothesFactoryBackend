@@ -16,6 +16,7 @@ import com.clothes.factory.repository.LoginHistoryRepository;
 import com.clothes.factory.repository.SignInHistoryRepository;
 import com.clothes.factory.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,9 @@ public class UserService {
     private final UserMailCreator userMailCreator;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Value("${app.mail.verification.enabled:false}")
+    private boolean isMailVerificationEnabled;
+
     public List<User> getAllUsers(int page, int size) {
         return userRepository.findAll(page, size);
     }
@@ -53,28 +57,26 @@ public class UserService {
             EmailAddressDoesNotExistException {
         if (userRepository.existsUserByEmailAddress(user.getEmailAddress())) {
             throw new UserAlreadyExistsException();
-        } else {
-            if (!emailVerificationService.emailExists(user.getEmailAddress())) {
-                throw new EmailAddressDoesNotExistException();
-            } else {
-                Cart userCart = Cart.builder()
-                        .totalPrice(BigDecimal.ZERO)
-                        .clothesList(new ArrayList<>())
-                        .build();
-                user.setCart(userCart);
-                user.setOrdersList(new ArrayList<>());
-                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-                cartRepository.save(userCart);
-                emailService.send(userMailCreator.accountCreationMail(user));
-                signInHistoryRepository.save(SignInHistory.builder()
-                        .signInTime(LocalDateTime.now())
-                        .userMail(user.getEmailAddress())
-                        .userNumber(user.getPhoneNumber()).
-                        build()
-                );
-                return userRepository.save(user);
-            }
         }
+        if (isMailVerificationEnabled && !emailVerificationService.emailExists(user.getEmailAddress())) {
+            throw new EmailAddressDoesNotExistException();
+        }
+        Cart userCart = Cart.builder()
+                .totalPrice(BigDecimal.ZERO)
+                .clothesList(new ArrayList<>())
+                .build();
+        user.setCart(userCart);
+        user.setOrdersList(new ArrayList<>());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        cartRepository.save(userCart);
+        emailService.send(userMailCreator.accountCreationMail(user));
+        signInHistoryRepository.save(SignInHistory.builder()
+                .signInTime(LocalDateTime.now())
+                .userMail(user.getEmailAddress())
+                .userNumber(user.getPhoneNumber()).
+                build()
+        );
+        return userRepository.save(user);
     }
 
     public User editUser(final Long id, final User user) throws UserNotFoundException {
