@@ -18,7 +18,7 @@ public class EmailService {
 
     private final JavaMailSender javaMailSender;
 
-    @Value("${app.mail.sending.enabled:false}")
+    @Value("${app.mail.sending.enabled}")
     private boolean isMailEnabled;
 
     public void send(final Mail mail) {
