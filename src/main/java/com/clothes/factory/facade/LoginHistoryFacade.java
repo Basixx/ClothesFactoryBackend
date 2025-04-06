@@ -17,8 +17,8 @@ public class LoginHistoryFacade {
     private final LoginHistoryService loginHistoryService;
     private final LoginHistoryMapper loginHistoryMapper;
 
-    public List<LoginHistoryDto> getAllLoginHistory() {
-        return loginHistoryMapper.mapToLoginHistoryDtoList(loginHistoryService.getAllLoginHistory());
+    public List<LoginHistoryDto> getAllLoginHistory(int page, int size) {
+        return loginHistoryMapper.mapToLoginHistoryDtoList(loginHistoryService.getAllLoginHistory(page, size));
     }
 
 }
