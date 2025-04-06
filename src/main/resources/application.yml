@@ -34,3 +34,10 @@ api.layer.key: ${API_LAYER_KEY}
 
 # Shop owner email address:
 admin.mail: ${ADMIN_MAIL}
+
+app:
+  mail:
+    sending:
+      enabled: true
+    verification:
+      enabled: true

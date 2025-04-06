@@ -124,8 +124,6 @@ public class UserServiceTests {
         user.setCart(null);
         when(userRepository.existsUserByEmailAddress(anyString()))
                 .thenReturn(false);
-        when(emailVerificationService.emailExists(anyString()))
-                .thenReturn(true);
         when(userRepository.save(any()))
                 .thenReturn(user);
 
