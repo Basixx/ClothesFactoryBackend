@@ -17,8 +17,8 @@ public class SignInHistoryFacade {
     private final SignInHistoryService signInHistoryService;
     private final SignInHistoryMapper signInHistoryMapper;
 
-    public List<SignInHistoryDto> getAllSignInHistory() {
-        return signInHistoryMapper.mapToSignInHistoryDtoList(signInHistoryService.getAllSignInHistory());
+    public List<SignInHistoryDto> getAllSignInHistory(int page, int size) {
+        return signInHistoryMapper.mapToSignInHistoryDtoList(signInHistoryService.getAllSignInHistory(page, size));
     }
 
 }

@@ -44,6 +44,7 @@ import static com.clothes.factory.object_mother.UserMother.createUser2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -91,11 +92,11 @@ public class OrderServiceTests {
         Order order2 = createOrder(6L, user2, new BigDecimal(200), new Dhl());
 
         List<Order> orderList = List.of(order1, order2);
-        when(orderRepository.findAll())
+        when(orderRepository.findAll(0, 10))
                 .thenReturn(orderList);
 
         //When
-        List<Order> resultList = orderService.getAllOrders();
+        List<Order> resultList = orderService.getAllOrders(0, 10);
 
         //Then
         assertEquals(2, resultList.size());
@@ -104,19 +105,18 @@ public class OrderServiceTests {
     }
 
     @Test
-    void testGetAllUsersOrder() throws UserNotFoundException {
+    void testGetAllUsersOrder() {
         //Given
         User user = createUser1();
         Order order1 = createOrder(5L, user, new BigDecimal(100), new Ups());
         Order order2 = createOrder(6L, user, new BigDecimal(200), new Fedex());
         List<Order> orderList = List.of(order1, order2);
-        user.setOrdersList(orderList);
 
-        when(userRepository.findById(anyLong()))
-                .thenReturn(Optional.of(user));
+        when(orderRepository.findAllByUserId(anyLong(), anyInt(), anyInt()))
+                .thenReturn(orderList);
 
         //When
-        List<Order> resultList = orderService.getAllUsersOrder(6L);
+        List<Order> resultList = orderService.getAllUsersOrder(6L, 0, 10);
 
         //Then
         assertEquals(2, resultList.size());

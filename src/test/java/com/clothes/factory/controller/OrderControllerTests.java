@@ -26,6 +26,7 @@ import java.util.List;
 import static com.clothes.factory.object_mother.OrderMother.createOrderDto;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -86,7 +87,7 @@ class OrderControllerTests {
                     .build());
         }
 
-        when(orderFacade.getAllOrders())
+        when(orderFacade.getAllOrders(anyInt(), anyInt()))
                 .thenReturn(ordersDto);
 
         //When & Then
@@ -120,7 +121,7 @@ class OrderControllerTests {
         OrderDto orderDto = createOrderDto();
         orderDtoList.add(orderDto);
 
-        when(orderFacade.getOrdersByUser(anyLong()))
+        when(orderFacade.getOrdersByUser(anyLong(), anyInt(), anyInt()))
                 .thenReturn(orderDtoList);
 
         //When & Then

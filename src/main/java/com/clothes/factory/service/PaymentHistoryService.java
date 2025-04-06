@@ -15,8 +15,8 @@ public class PaymentHistoryService {
 
     private final PaymentHistoryRepository paymentHistoryRepository;
 
-    public List<PaymentHistory> getAllPaymentHistory() {
-        return paymentHistoryRepository.findAll();
+    public List<PaymentHistory> getPaymentHistory(int page, int size) {
+        return paymentHistoryRepository.findAll(page, size);
     }
 
 }

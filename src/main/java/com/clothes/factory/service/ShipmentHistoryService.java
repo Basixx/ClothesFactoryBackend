@@ -15,8 +15,8 @@ public class ShipmentHistoryService {
 
     private final ShipmentHistoryRepository shipmentHistoryRepository;
 
-    public List<ShipmentHistory> getAllShipmentHistory() {
-        return shipmentHistoryRepository.findAll();
+    public List<ShipmentHistory> getAllShipmentHistory(int page, int size) {
+        return shipmentHistoryRepository.findAll(page, size);
     }
 
 }

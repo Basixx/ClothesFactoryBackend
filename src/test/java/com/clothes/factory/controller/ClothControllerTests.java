@@ -19,6 +19,7 @@ import static com.clothes.factory.object_mother.ClothMother.createClothDtoList;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -43,7 +44,7 @@ class ClothControllerTests {
         // Given
         List<ClothDto> clothesDto = createClothDtoList();
 
-        when(clothFacade.getAllClothes())
+        when(clothFacade.getAllClothes(anyInt(), anyInt()))
                 .thenReturn(clothesDto);
 
         //When & Then

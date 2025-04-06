@@ -32,14 +32,13 @@ public class ClothService {
     private final BadWordsService badWordsService;
     private final Prices prices;
 
-    public List<Cloth> getAllClothes() {
-        return clothRepository.findAll();
+    public List<Cloth> getAllClothes(int page, int size) {
+        return clothRepository.findAll(page, size);
     }
 
     public List<Cloth> getAllClothesFromUsersCart(final Long userId) throws UserNotFoundException {
         User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Cart cartFromDb = userFromDb.getCart();
-
         return cartFromDb.getClothesList();
     }
 

@@ -15,8 +15,8 @@ public class LoginHistoryService {
 
     private final LoginHistoryRepository loginHistoryRepository;
 
-    public List<LoginHistory> getAllLoginHistory() {
-        return loginHistoryRepository.findAll();
+    public List<LoginHistory> getAllLoginHistory(int page, int size) {
+        return loginHistoryRepository.findAll(page, size);
     }
 
 }

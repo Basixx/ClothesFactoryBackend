@@ -82,11 +82,11 @@ public class UserServiceTests {
         User user1 = createUser1();
         User user2 = createUser2();
         List<User> userList = List.of(user1, user2);
-        when(userRepository.findAll())
+        when(userRepository.findAll(0, 10))
                 .thenReturn(userList);
 
         //When
-        List<User> resultList = userService.getAllUsers();
+        List<User> resultList = userService.getAllUsers(0, 10);
 
         //Then
         assertEquals(2, resultList.size());

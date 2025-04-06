@@ -39,8 +39,8 @@ public class UserService {
     private final UserMailCreator userMailCreator;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<User> getAllUsers(int page, int size) {
+        return userRepository.findAll(page, size);
     }
 
     public User getUser(final Long id) throws UserNotFoundException {

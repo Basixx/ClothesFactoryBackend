@@ -74,11 +74,11 @@ public class ClothServiceTests {
         Cloth cloth2 = createCloth2();
         List<Cloth> clothesList = List.of(cloth1, cloth2);
 
-        when(clothRepository.findAll())
+        when(clothRepository.findAll(0, 10))
                 .thenReturn(clothesList);
 
         //When
-        List<Cloth> resultClothList = clothService.getAllClothes();
+        List<Cloth> resultClothList = clothService.getAllClothes(0, 10);
 
         //Then
         assertEquals(2, resultClothList.size());

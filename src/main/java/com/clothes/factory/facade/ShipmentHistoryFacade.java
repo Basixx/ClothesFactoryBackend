@@ -17,8 +17,8 @@ public class ShipmentHistoryFacade {
     private final ShipmentHistoryService shipmentHistoryService;
     private final ShipmentHistoryMapper shipmentHistoryMapper;
 
-    public List<ShipmentHistoryDto> getAllShipmentHistory() {
-        return shipmentHistoryMapper.mapToShipmentHistoryDtoList(shipmentHistoryService.getAllShipmentHistory());
+    public List<ShipmentHistoryDto> getAllShipmentHistory(int page, int size) {
+        return shipmentHistoryMapper.mapToShipmentHistoryDtoList(shipmentHistoryService.getAllShipmentHistory(page, size));
     }
 
 }

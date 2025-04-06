@@ -24,8 +24,8 @@ public class UserFacade {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    public List<UserResponseDto> getUsers() {
-        return userMapper.mapToUserDtoList(userService.getAllUsers());
+    public List<UserResponseDto> getUsers(int page, int size) {
+        return userMapper.mapToUserDtoList(userService.getAllUsers(page, size));
     }
 
     public UserResponseDto getUser(Long id) throws UserNotFoundException {

@@ -30,15 +30,21 @@ public class OrderFacade {
         return orderMapper.mapToOrderDto(orderService.getOrder(id));
     }
 
-    public List<OrderDto> getAllOrders() {
-        return orderMapper.mapToOrderDtoList(orderService.getAllOrders());
+    public List<OrderDto> getAllOrders(int page, int size) {
+        return orderMapper.mapToOrderDtoList(orderService.getAllOrders(page, size));
     }
 
-    public List<OrderDto> getOrdersByUser(Long userId) throws UserNotFoundException {
-        return orderMapper.mapToOrderDtoList(orderService.getAllUsersOrder(userId));
+    public List<OrderDto> getOrdersByUser(Long userId,
+                                          int page,
+                                          int size) {
+        return orderMapper.mapToOrderDtoList(orderService.getAllUsersOrder(userId, page, size));
     }
 
-    public OrderDto createOrder(Long userId, ShipmentMethod shipmentCompany) throws UserNotFoundException, CartNotFoundException, EmptyCartException, CurrencyExchangeFailedException {
+    public OrderDto createOrder(Long userId, ShipmentMethod shipmentCompany)
+            throws UserNotFoundException,
+            CartNotFoundException,
+            EmptyCartException,
+            CurrencyExchangeFailedException {
         return orderMapper.mapToOrderDto(orderService.createOrder(userId, shipmentCompany));
     }
 
@@ -46,7 +52,10 @@ public class OrderFacade {
         return orderMapper.mapToOrderDto(orderService.setOrderPaid(id));
     }
 
-    public OrderDto setOrderToSent(Long id) throws OrderNotFoundException, OrderNotPaidException, OrderAlreadySentException {
+    public OrderDto setOrderToSent(Long id)
+            throws OrderNotFoundException,
+            OrderNotPaidException,
+            OrderAlreadySentException {
         return orderMapper.mapToOrderDto(orderService.setOrderSent(id));
     }
 

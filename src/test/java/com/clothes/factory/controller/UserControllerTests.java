@@ -27,6 +27,7 @@ import java.util.List;
 import static com.clothes.factory.object_mother.UserMother.createUserRequestDto;
 import static com.clothes.factory.object_mother.UserMother.createUserResponseDto;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
@@ -63,7 +64,7 @@ class UserControllerTests {
                     .build());
         }
 
-        when(userFacade.getUsers())
+        when(userFacade.getUsers(anyInt(), anyInt()))
                 .thenReturn(usersDto);
 
         //When & Then
