@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
+import static java.math.BigDecimal.ONE;
 
 @Transactional
 @Service
@@ -23,7 +23,7 @@ public class ExchangeRatesService {
         if (exchangeRatesRepository.existsByFromCurrencyAndToCurrency(from, to)) {
             return exchangeRatesRepository.findByFromCurrencyAndToCurrency(from, to);
         } else {
-            ExchangeRatesClientDto exchangeRatesClientDto = exchangeRatesApiClient.getConversion(from, to, BigDecimal.ONE);
+            ExchangeRatesClientDto exchangeRatesClientDto = exchangeRatesApiClient.getConversion(from, to, ONE);
             ExchangeRate exchangeRate = ExchangeRate
                     .builder()
                     .fromCurrency(from)

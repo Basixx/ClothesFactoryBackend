@@ -58,7 +58,11 @@ public class OrderController {
 
     @PostMapping(value = "/users/{userId}/order/{shipmentMethod}")
     @ResponseStatus(CREATED)
-    public OrderDto createOrder(@PathVariable Long userId, @PathVariable ShipmentMethod shipmentMethod) throws UserNotFoundException, CartNotFoundException, EmptyCartException, CurrencyExchangeFailedException {
+    public OrderDto createOrder(@PathVariable Long userId, @PathVariable ShipmentMethod shipmentMethod)
+            throws UserNotFoundException,
+            CartNotFoundException,
+            EmptyCartException,
+            CurrencyExchangeFailedException {
         return orderFacade.createOrder(userId, shipmentMethod);
     }
 
@@ -70,7 +74,10 @@ public class OrderController {
 
     @PutMapping(value = "/orders/{id}/sent")
     @ResponseStatus(OK)
-    public OrderDto setOrderToSent(@PathVariable Long id) throws OrderNotFoundException, OrderNotPaidException, OrderAlreadySentException {
+    public OrderDto setOrderToSent(@PathVariable Long id)
+            throws OrderNotFoundException,
+            OrderNotPaidException,
+            OrderAlreadySentException {
         return orderFacade.setOrderToSent(id);
     }
 

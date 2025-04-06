@@ -29,9 +29,14 @@ public class UserMapper {
                 .streetAndApartmentNumber(userRequestDto.getStreetAndApartmentNumber())
                 .city(userRequestDto.getCity())
                 .postCode(userRequestDto.getPostCode())
-                .cart(userRequestDto.getCartId() == null ? null : cartRepository.findById(userRequestDto.getCartId()).orElseThrow(CartNotFoundException::new))
-                .ordersList(userRequestDto.getOrdersIdList() == null ? null : orderMapper.mapToOrdersFromIds(userRequestDto.getOrdersIdList()))
-                .build();
+                .cart(userRequestDto.getCartId() == null
+                        ? null
+                        : cartRepository.findById(userRequestDto.getCartId())
+                        .orElseThrow(CartNotFoundException::new)
+                ).ordersList(userRequestDto.getOrdersIdList() == null
+                        ? null
+                        : orderMapper.mapToOrdersFromIds(userRequestDto.getOrdersIdList())
+                ).build();
     }
 
     public UserResponseDto mapToUserResponseDto(final User user) {

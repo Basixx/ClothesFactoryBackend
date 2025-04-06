@@ -47,7 +47,10 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
-    public User createUser(final User user) throws UserAlreadyExistsException, EmailVerificationFailedException, EmailAddressDoesNotExistException {
+    public User createUser(final User user)
+            throws UserAlreadyExistsException,
+            EmailVerificationFailedException,
+            EmailAddressDoesNotExistException {
         if (userRepository.existsUserByEmailAddress(user.getEmailAddress())) {
             throw new UserAlreadyExistsException();
         } else {
@@ -63,7 +66,12 @@ public class UserService {
                 user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 cartRepository.save(userCart);
                 emailService.send(userMailCreator.accountCreationMail(user));
-                signInHistoryRepository.save(SignInHistory.builder().signInTime(LocalDateTime.now()).userMail(user.getEmailAddress()).userNumber(user.getPhoneNumber()).build());
+                signInHistoryRepository.save(SignInHistory.builder()
+                        .signInTime(LocalDateTime.now())
+                        .userMail(user.getEmailAddress())
+                        .userNumber(user.getPhoneNumber()).
+                        build()
+                );
                 return userRepository.save(user);
             }
         }

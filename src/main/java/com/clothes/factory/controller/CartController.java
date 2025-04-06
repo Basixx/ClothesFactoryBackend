@@ -29,13 +29,15 @@ public class CartController {
 
     @PutMapping("/carts/{idCart}/clothes/{idCloth}")
     @ResponseStatus(OK)
-    public CartDto addClothToCart(@PathVariable Long idCart, @PathVariable Long idCloth) throws ClothNotFoundException, CartNotFoundException {
+    public CartDto addClothToCart(@PathVariable Long idCart, @PathVariable Long idCloth)
+            throws ClothNotFoundException, CartNotFoundException {
         return cartFacade.addClothToCart(idCart, idCloth);
     }
 
     @DeleteMapping("/carts/{idCart}/clothes/{idCloth}")
     @ResponseStatus(OK)
-    public CartDto deleteClothFromCart(@PathVariable Long idCart, @PathVariable Long idCloth) throws ClothNotFoundException, CartNotFoundException {
+    public CartDto deleteClothFromCart(@PathVariable Long idCart, @PathVariable Long idCloth)
+            throws ClothNotFoundException, CartNotFoundException {
         return cartFacade.deleteClothFromCart(idCart, idCloth);
     }
 
