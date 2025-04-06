@@ -79,13 +79,12 @@ public class OrderService {
 
         ShipmentCompany shipmentCompany = companySetter.setCompany(company);
 
-        String address = userFromDb.getStreet()
-                + ", "
-                + userFromDb.getStreetAndApartmentNumber()
-                + ", "
-                + userFromDb.getCity()
-                + ", "
-                + userFromDb.getPostCode();
+        String address = "%s, %s, %s, %s".formatted(
+                userFromDb.getStreet(),
+                userFromDb.getStreetAndApartmentNumber(),
+                userFromDb.getCity(),
+                userFromDb.getPostCode()
+        );
 
         if (cartFromDb.getClothesList().isEmpty()) {
             throw new EmptyCartException();

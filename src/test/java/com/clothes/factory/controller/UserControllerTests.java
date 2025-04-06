@@ -282,18 +282,17 @@ class UserControllerTests {
 
     private void matchResult(
             ResultActions resultActions,
-            String expression,
+            String expr,
             int id
     ) throws Exception {
         resultActions
-                .andExpect(jsonPath(expression + ".id", Matchers.is(id)))
-                .andExpect(jsonPath(expression + ".name", Matchers.is("John")))
-                .andExpect(jsonPath(expression + ".surname", Matchers.is("Smith")))
-                .andExpect(jsonPath(expression + ".phoneNumber", Matchers.is("111222333")))
-                .andExpect(jsonPath(expression + ".emailAddress", Matchers.is("john@smith.com")))
-//                .andExpect(jsonPath(expression + ".password", Matchers.is("password")))
-                .andExpect(jsonPath(expression + ".ordersIdList", Matchers.hasSize(0)))
-                .andExpect(jsonPath(expression + ".cartId", Matchers.is(2)));
+                .andExpect(jsonPath("%s.id".formatted(expr), Matchers.is(id)))
+                .andExpect(jsonPath("%s.name".formatted(expr), Matchers.is("John")))
+                .andExpect(jsonPath("%s.surname".formatted(expr), Matchers.is("Smith")))
+                .andExpect(jsonPath("%s.phoneNumber".formatted(expr), Matchers.is("111222333")))
+                .andExpect(jsonPath("%s.emailAddress".formatted(expr), Matchers.is("john@smith.com")))
+                .andExpect(jsonPath("%s.ordersIdList".formatted(expr), Matchers.hasSize(0)))
+                .andExpect(jsonPath("%s.cartId".formatted(expr), Matchers.is(2)));
     }
 
 }

@@ -12,9 +12,7 @@
         <property name="eachLine" value="true"/>
     </module>
 
-    <module name="RegexpSingleline">
-        <property name="format" value="\s+$"/>
-    </module>
+    <module name="RegexpSingleline"/>
 
     <module name="TreeWalker">
         <module name="AvoidStarImport"/>

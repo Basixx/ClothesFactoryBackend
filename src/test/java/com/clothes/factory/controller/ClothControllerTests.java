@@ -154,17 +154,17 @@ class ClothControllerTests {
             ResultActions resultActions,
             int id,
             String print,
-            String expression
+            String expr
     ) throws Exception {
         resultActions
-                .andExpect(jsonPath(expression + ".id", is(id)))
-                .andExpect(jsonPath(expression + ".fashion", is("LONGSLEEVE")))
-                .andExpect(jsonPath(expression + ".print", is(print)))
-                .andExpect(jsonPath(expression + ".color", is("RED")))
-                .andExpect(jsonPath(expression + ".printColor", is("WHITE")))
-                .andExpect(jsonPath(expression + ".size", is("M")))
-                .andExpect(jsonPath(expression + ".quantity", is(1)))
-                .andExpect(jsonPath(expression + ".price", is(70)));
+                .andExpect(jsonPath("%s.id".formatted(expr), is(id)))
+                .andExpect(jsonPath("%s.fashion".formatted(expr), is("LONGSLEEVE")))
+                .andExpect(jsonPath("%s.print".formatted(expr), is(print)))
+                .andExpect(jsonPath("%s.color".formatted(expr), is("RED")))
+                .andExpect(jsonPath("%s.printColor".formatted(expr), is("WHITE")))
+                .andExpect(jsonPath("%s.size".formatted(expr), is("M")))
+                .andExpect(jsonPath("%s.quantity".formatted(expr), is(1)))
+                .andExpect(jsonPath("%s.price".formatted(expr), is(70)));
     }
 
     private void matchListResult(ResultActions resultActions) throws Exception {

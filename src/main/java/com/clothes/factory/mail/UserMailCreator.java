@@ -9,7 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+
+import static java.math.RoundingMode.CEILING;
 
 @Service
 @RequiredArgsConstructor
@@ -18,48 +19,72 @@ public class UserMailCreator {
     private final ExchangeRatesService exchangeRatesService;
 
     public Mail createMailForUserOrderCreated(Order order) throws CurrencyExchangeFailedException {
-        BigDecimal totalPrice = order.getTotalOrderPrice();
-
         String userEmail = order.getUser().getEmailAddress();
         String subject = "New order in C L O H T E S   F A C T O R Y";
-        StringBuilder message = new StringBuilder("\nYou have purchased new clothes: ");
+        BigDecimal totalPrice = order.getTotalOrderPrice();
+        StringBuilder message = new StringBuilder("""
+                You have purchased new clothes:
+                """);
         int i = 1;
         for (Cloth cloth : order.getClothesList()) {
-            message.append("\n").append(i).append(". ").append(cloth.toString());
-            i++;
+            message.append("%d. %s%n".formatted(i++, cloth.toString()));
         }
-        String messagePrice = "\n" + "For total price of: " +
-                totalPrice + " PLN  //  " +
-                exchangeRatesService.getExchangeRate("EUR", "PLN").getCurrencyRate().multiply(totalPrice).setScale(2, RoundingMode.CEILING) + " EUR  //  " +
-                exchangeRatesService.getExchangeRate("USD", "PLN").getCurrencyRate().multiply(totalPrice).setScale(2, RoundingMode.CEILING) + " USD  //  " +
-                exchangeRatesService.getExchangeRate("GBP", "PLN").getCurrencyRate().multiply(totalPrice).setScale(2, RoundingMode.CEILING) + " GBP  //  " +
-                "\n" + "Your order number: " + order.getId();
-        String messageAddress = "\n Address: \n" + order.getAddress();
-        String messagePayment = "\nPlease send payment for account number 00 1111 2222 33333 4444 5555 6666.";
-        String messageShipment = "\n Shipment: " + order.getShipmentCompanyName() + ", should be delivered in " + order.getDeliveryDays() + " days.";
-        String end = "\n Thank you for choosing CLOTHES FACTORY!";
-        return new Mail(userEmail, subject, message + messagePrice + messageAddress + messagePayment + messageShipment + end);
+        message.append("""
+                
+                For total price of: %s PLN  //  %s EUR  //  %s USD  //  %s GBP
+                Your order number: %d
+                
+                Address: %s
+                
+                Please send payment for account number 00 1111 2222 33333 4444 5555 6666.
+                Shipment: %s, should be delivered in %d days.
+                
+                Thank you for choosing CLOTHES FACTORY!
+                """.formatted(
+                totalPrice,
+                calculateCurrency("EUR", totalPrice),
+                calculateCurrency("USD", totalPrice),
+                calculateCurrency("GBP", totalPrice),
+                order.getId(),
+                order.getAddress(),
+                order.getShipmentCompanyName(), order.getDeliveryDays()
+        ));
+        return new Mail(userEmail, subject, message.toString());
     }
+
 
     public Mail createMailOrderPaid(Order order) {
         String userEmail = order.getUser().getEmailAddress();
         String subject = "Payment confirmed";
-        String message = "Your order " + order.getId() + " has been paid, we will send it as soon as possible.";
+        String message = "Your order %s has been paid, we will send it as soon as possible."
+                .formatted(order.getId());
         return new Mail(userEmail, subject, message);
     }
 
     public Mail createMailOrderSent(Order order) {
         String userEmail = order.getUser().getEmailAddress();
         String subject = "Shipment confirmed";
-        String message = "Your order " + order.getId() + " has been sent, you will receive it in a few days.";
+        String message = "Your order %s has been sent, you will receive it in a few days."
+                .formatted(order.getId());
         return new Mail(userEmail, subject, message);
     }
 
     public Mail accountCreationMail(User user) {
         String userMail = user.getEmailAddress();
         String subject = "Welcome";
-        String message = "Hello, thank you for creating an account in our shop, " + user.getName() + " " + user.getSurname() + ". We hope you will enjoy your purchase!";
+        String message = """
+                Hello, %s %s!
+                thank you for creating an account in our shop.
+                We hope you will enjoy your purchase!
+                """.formatted(user.getName(), user.getSurname());
         return new Mail(userMail, subject, message);
+    }
+
+    private BigDecimal calculateCurrency(String currency, BigDecimal totalPrice) throws CurrencyExchangeFailedException {
+        return exchangeRatesService.getExchangeRate(currency, "PLN")
+                .getCurrencyRate()
+                .multiply(totalPrice)
+                .setScale(2, CEILING);
     }
 
 }

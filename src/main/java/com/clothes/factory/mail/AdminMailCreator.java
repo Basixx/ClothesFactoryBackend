@@ -15,22 +15,40 @@ public class AdminMailCreator {
 
     public Mail createMailForAdminOrderCreated(Order order) {
         String subject = "New order created";
-        String message = "New order has been created by " + order.getUser().getName() + " " + order.getUser().getSurname() + " - " + order.getUser().getEmailAddress() + ".";
-        StringBuilder messageClothes = new StringBuilder("\nOrder contains: ");
+        StringBuilder message = new StringBuilder("""
+                New order has been created by %s %s - %s.
+                
+                Order contains:
+                """.formatted(
+                order.getUser().getName(),
+                order.getUser().getSurname(),
+                order.getUser().getEmailAddress()
+        ));
         int i = 1;
         for (Cloth cloth : order.getClothesList()) {
-            messageClothes.append("\n").append(i).append(". ").append(cloth.toString());
-            i++;
+            message.append("%d. %s%n".formatted(i++, cloth.toString()));
         }
-        String messagePrice = "\n" + "For total price of: " + order.getTotalOrderPrice();
-        String messageAddress = "\n Address: \n" + order.getAddress();
-        String messageShipment = "\n Shipment: " + order.getShipmentCompanyName();
-        return new Mail(adminMail, subject, message + messageClothes + messagePrice + messageAddress + messageShipment);
+        message.append("""
+                
+                For total price of: %s PLN,
+                Address: %s
+                Shipment: %s
+                """
+                .formatted(
+                        order.getTotalOrderPrice(),
+                        order.getAddress(),
+                        order.getShipmentCompanyName()
+                )
+        );
+        return new Mail(adminMail, subject, message.toString());
     }
 
     public Mail createTokenMail(String token) {
         String subject = "New Admin Token generated.";
-        String message = "Admin token has been generated, enter below code to log in as admin: \n" + token;
+        String message = """
+                Admin token has been generated, enter below code to log in as admin:
+                %s
+                """.formatted(token);
         return new Mail(adminMail, subject, message);
     }
 
