@@ -21,8 +21,8 @@ public class ClothFacade {
     private final ClothMapper clothMapper;
     private final ClothService clothService;
 
-    public List<ClothDto> getAllClothes() {
-        return clothMapper.mapToClothDtoList(clothService.getAllClothes());
+    public List<ClothDto> getAllClothes(int page, int size) {
+        return clothMapper.mapToClothDtoList(clothService.getAllClothes(page, size));
     }
 
     public List<ClothDto> getClothesFromUserCart(Long userId) throws UserNotFoundException {
