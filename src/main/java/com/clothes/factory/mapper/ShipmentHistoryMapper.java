@@ -11,6 +11,7 @@ public class ShipmentHistoryMapper {
 
     public ShipmentHistoryDto mapToShipmentHistoryDto(final ShipmentHistory shipmentHistory) {
         return ShipmentHistoryDto.builder()
+                .id(shipmentHistory.getId())
                 .shipmentTime(shipmentHistory.getShipmentTime())
                 .orderId(shipmentHistory.getOrderId())
                 .userMail(shipmentHistory.getUserMail())

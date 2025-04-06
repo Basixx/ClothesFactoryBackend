@@ -5,6 +5,7 @@ import com.clothes.factory.facade.ShipmentHistoryFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,8 +22,9 @@ public class ShipmentHistoryController {
 
     @GetMapping
     @ResponseStatus(OK)
-    public List<ShipmentHistoryDto> getAllShipmentHistory() {
-        return shipmentHistoryFacade.getAllShipmentHistory();
+    public List<ShipmentHistoryDto> getAllShipmentHistory(@RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "10") int size) {
+        return shipmentHistoryFacade.getAllShipmentHistory(page, size);
     }
 
 }
