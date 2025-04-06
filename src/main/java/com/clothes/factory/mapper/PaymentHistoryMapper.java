@@ -11,6 +11,7 @@ public class PaymentHistoryMapper {
 
     public PaymentHistoryDto mapToPaymentHistoryDto(final PaymentHistory paymentHistory) {
         return PaymentHistoryDto.builder()
+                .id(paymentHistory.getId())
                 .paymentTime(paymentHistory.getPaymentTime())
                 .orderId(paymentHistory.getOrderId())
                 .userMail(paymentHistory.getUserMail())

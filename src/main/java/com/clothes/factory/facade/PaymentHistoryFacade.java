@@ -17,8 +17,8 @@ public class PaymentHistoryFacade {
     private final PaymentHistoryService paymentHistoryService;
     private final PaymentHistoryMapper paymentHistoryMapper;
 
-    public List<PaymentHistoryDto> getAllPaymentHistory() {
-        return paymentHistoryMapper.mapToPaymentHistoryDtoList(paymentHistoryService.getAllPaymentHistory());
+    public List<PaymentHistoryDto> getAllPaymentHistory(int page, int size) {
+        return paymentHistoryMapper.mapToPaymentHistoryDtoList(paymentHistoryService.getPaymentHistory(page, size));
     }
 
 }
