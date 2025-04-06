@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,14 +39,21 @@ public class OrderController {
 
     @GetMapping("/orders")
     @ResponseStatus(OK)
-    public List<OrderDto> getAllOrders() {
-        return orderFacade.getAllOrders();
+    public List<OrderDto> getAllOrders(@RequestParam(defaultValue = "0") int page,
+                                       @RequestParam(defaultValue = "10") int size) {
+        return orderFacade.getAllOrders(page, size);
     }
 
     @GetMapping(value = "/users/{userId}/orders")
     @ResponseStatus(OK)
-    public List<OrderDto> getOrdersByUser(@PathVariable Long userId) throws UserNotFoundException {
-        return orderFacade.getOrdersByUser(userId);
+    public List<OrderDto> getOrdersByUser(@PathVariable Long userId,
+                                          @RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "10") int size) {
+        return orderFacade.getOrdersByUser(
+                userId,
+                page,
+                size
+        );
     }
 
     @PostMapping(value = "/users/{userId}/order/{shipmentMethod}")

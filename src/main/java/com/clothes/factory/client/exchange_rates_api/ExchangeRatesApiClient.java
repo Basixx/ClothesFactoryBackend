@@ -24,7 +24,8 @@ public class ExchangeRatesApiClient {
     @Value("${api.layer.key}")
     private String exchangeRateKey;
 
-    public ExchangeRatesClientDto getConversion(String to, String from, BigDecimal amount) throws CurrencyExchangeFailedException {
+    public ExchangeRatesClientDto getConversion(String to, String from, BigDecimal amount)
+            throws CurrencyExchangeFailedException {
         URI url = UriComponentsBuilder.fromUriString(
                         exchangeRateEndpoint)
                 .queryParam("to", to)

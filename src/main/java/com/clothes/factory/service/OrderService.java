@@ -49,13 +49,14 @@ public class OrderService {
     private final AdminMailCreator adminMailCreator;
     private final CompanySetter companySetter;
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+    public List<Order> getAllOrders(int page, int size) {
+        return orderRepository.findAll(page, size);
     }
 
-    public List<Order> getAllUsersOrder(final Long userId) throws UserNotFoundException {
-        User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-        return userFromDb.getOrdersList();
+    public List<Order> getAllUsersOrder(final Long userId,
+                                        int page,
+                                        int size) {
+        return orderRepository.findAllByUserId(userId, page, size);
     }
 
     public Order getOrder(final Long id) throws OrderNotFoundException {
