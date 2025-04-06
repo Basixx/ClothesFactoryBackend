@@ -60,11 +60,11 @@ public class ClothService {
         boolean containsBadWords = badWordsService.containsBadWords(cloth.getPrint());
         if (cloth.getQuantity() == 0) {
             throw new ClothWithQuantityZeroException();
-        } else if (!containsBadWords) {
-            return clothRepository.save(cloth);
-        } else {
+        }
+        if (containsBadWords) {
             throw new ClothPrintContainsBadWordsException();
         }
+        return clothRepository.save(cloth);
     }
 
     public Cloth editCloth(final Long id, final Cloth cloth)
@@ -75,29 +75,28 @@ public class ClothService {
                 .findById(id)
                 .orElseThrow(ClothNotFoundException::new);
         boolean containsBadWords = badWordsService.containsBadWords(cloth.getPrint());
-        if (!containsBadWords) {
-            clothFromDb.setFashion(cloth.getFashion());
-            clothFromDb.setColor(cloth.getColor());
-            clothFromDb.setPrint(cloth.getPrint());
-            clothFromDb.setFont(cloth.getFont());
-            clothFromDb.setPrintColor(cloth.getPrintColor());
-            clothFromDb.setSize(cloth.getSize());
-            clothFromDb.setQuantity(cloth.getQuantity());
-            clothFromDb.setPrice(prices
-                    .findClothPrice(clothFromDb.getFashion())
-                    .multiply(BigDecimal.valueOf(clothFromDb.getQuantity()))
-            );
-            BigDecimal cartPrice = clothFromDb
-                    .getCart()
-                    .getClothesList()
-                    .stream()
-                    .map(Cloth::getPrice)
-                    .reduce(ZERO, BigDecimal::add);
-            clothFromDb.getCart().setTotalPrice(cartPrice);
-            return clothFromDb;
-        } else {
+        if (containsBadWords) {
             throw new ClothPrintContainsBadWordsException();
         }
+        clothFromDb.setFashion(cloth.getFashion());
+        clothFromDb.setColor(cloth.getColor());
+        clothFromDb.setPrint(cloth.getPrint());
+        clothFromDb.setFont(cloth.getFont());
+        clothFromDb.setPrintColor(cloth.getPrintColor());
+        clothFromDb.setSize(cloth.getSize());
+        clothFromDb.setQuantity(cloth.getQuantity());
+        clothFromDb.setPrice(prices
+                .findClothPrice(clothFromDb.getFashion())
+                .multiply(BigDecimal.valueOf(clothFromDb.getQuantity()))
+        );
+        BigDecimal cartPrice = clothFromDb
+                .getCart()
+                .getClothesList()
+                .stream()
+                .map(Cloth::getPrice)
+                .reduce(ZERO, BigDecimal::add);
+        clothFromDb.getCart().setTotalPrice(cartPrice);
+        return clothFromDb;
     }
 
 }

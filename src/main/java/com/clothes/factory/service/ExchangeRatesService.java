@@ -22,16 +22,15 @@ public class ExchangeRatesService {
     public ExchangeRate getExchangeRate(String from, String to) throws CurrencyExchangeFailedException {
         if (exchangeRatesRepository.existsByFromCurrencyAndToCurrency(from, to)) {
             return exchangeRatesRepository.findByFromCurrencyAndToCurrency(from, to);
-        } else {
-            ExchangeRatesClientDto exchangeRatesClientDto = exchangeRatesApiClient.getConversion(from, to, ONE);
-            ExchangeRate exchangeRate = ExchangeRate
-                    .builder()
-                    .fromCurrency(from)
-                    .toCurrency(to)
-                    .currencyRate(exchangeRatesClientDto.getResult())
-                    .build();
-            return exchangeRatesRepository.save(exchangeRate);
         }
+        ExchangeRatesClientDto exchangeRatesClientDto = exchangeRatesApiClient.getConversion(from, to, ONE);
+        ExchangeRate exchangeRate = ExchangeRate
+                .builder()
+                .fromCurrency(from)
+                .toCurrency(to)
+                .currencyRate(exchangeRatesClientDto.getResult())
+                .build();
+        return exchangeRatesRepository.save(exchangeRate);
     }
 
     public void deleteAllRates() {
