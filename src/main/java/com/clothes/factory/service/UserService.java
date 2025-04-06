@@ -101,14 +101,12 @@ public class UserService {
 
     public User authenticateUser(final String email, final String password) throws UserEmailNotFoundException, WrongPasswordException {
         User userFromDb = userRepository.findByEmailAddress(email).orElseThrow(UserEmailNotFoundException::new);
-
-        if (bCryptPasswordEncoder.matches(password, userFromDb.getPassword())) {
-            loginHistoryRepository.save(LoginHistory.builder().loginTime(LocalDateTime.now()).userMail(userFromDb.getEmailAddress()).succeed(true).build());
-            return userFromDb;
-        } else {
+        if (!bCryptPasswordEncoder.matches(password, userFromDb.getPassword())) {
             loginHistoryRepository.save(LoginHistory.builder().loginTime(LocalDateTime.now()).userMail(userFromDb.getEmailAddress()).succeed(false).build());
             throw new WrongPasswordException();
         }
+        loginHistoryRepository.save(LoginHistory.builder().loginTime(LocalDateTime.now()).userMail(userFromDb.getEmailAddress()).succeed(true).build());
+        return userFromDb;
     }
 
 }

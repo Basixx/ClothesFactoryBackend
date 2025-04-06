@@ -89,35 +89,34 @@ public class OrderService {
 
         if (cartFromDb.getClothesList().isEmpty()) {
             throw new EmptyCartException();
-        } else {
-            Order order = Order.builder()
-                    .orderDate(LocalDate.now())
-                    .paid(false)
-                    .sent(false)
-                    .user(userFromDb)
-                    .shipmentCompany(shipmentCompany)
-                    .shipmentCompanyName(shipmentCompany.getName())
-                    .shippingPrice(shipmentCompany.getPrice())
-                    .deliveryDays(shipmentCompany.getDeliveryDays())
-                    .totalOrderPrice(cartFromDb.getTotalPrice()
-                            .add(shipmentCompany.getPrice())
-                    ).address(address)
-                    .clothesList(cartFromDb.getClothesList())
-                    .build();
-
-            for (Cloth cloth : cartFromDb.getClothesList()) {
-                cloth.setCart(null);
-                cloth.setOrder(order);
-            }
-            cartFromDb.setTotalPrice(BigDecimal.ZERO);
-            cartFromDb.setClothesList(new ArrayList<>());
-
-            Order savedOrder = orderRepository.save(order);
-            emailService.send(adminMailCreator.createMailForAdminOrderCreated(savedOrder));
-            emailService.send(userMailCreator.createMailForUserOrderCreated(savedOrder));
-
-            return savedOrder;
         }
+        Order order = Order.builder()
+                .orderDate(LocalDate.now())
+                .paid(false)
+                .sent(false)
+                .user(userFromDb)
+                .shipmentCompany(shipmentCompany)
+                .shipmentCompanyName(shipmentCompany.getName())
+                .shippingPrice(shipmentCompany.getPrice())
+                .deliveryDays(shipmentCompany.getDeliveryDays())
+                .totalOrderPrice(cartFromDb.getTotalPrice()
+                        .add(shipmentCompany.getPrice())
+                ).address(address)
+                .clothesList(cartFromDb.getClothesList())
+                .build();
+
+        for (Cloth cloth : cartFromDb.getClothesList()) {
+            cloth.setCart(null);
+            cloth.setOrder(order);
+        }
+        cartFromDb.setTotalPrice(BigDecimal.ZERO);
+        cartFromDb.setClothesList(new ArrayList<>());
+
+        Order savedOrder = orderRepository.save(order);
+        emailService.send(adminMailCreator.createMailForAdminOrderCreated(savedOrder));
+        emailService.send(userMailCreator.createMailForUserOrderCreated(savedOrder));
+
+        return savedOrder;
     }
 
     public Order setOrderPaid(final Long id) throws OrderNotFoundException, OrderAlreadyPaidException {
