@@ -74,16 +74,17 @@ public class Cloth {
 
     @Override
     public String toString() {
-        return "Cloth: " +
-                "fashion: " + fashion +
-                ", color: " + color +
-                ", print: '" + print + '\'' +
-                ", font: " + font +
-                ", printColor: " + printColor +
-                ", size: " + size +
-                ", quantity: " + quantity +
-                ", price: " + price +
-                ".";
+        return "Cloth: fashion: %s, color: %s, print: '%s', font: %s, printColor: %s, size: %s, quantity: %s, price: %s."
+                .formatted(
+                        fashion,
+                        color,
+                        print,
+                        font,
+                        printColor,
+                        size,
+                        quantity,
+                        price
+                );
     }
 
 }

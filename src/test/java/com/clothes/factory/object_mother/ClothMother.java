@@ -62,7 +62,7 @@ public class ClothMother {
             clothesDto.add(ClothDto.builder()
                     .id(i + 1L)
                     .fashion(Fashion.LONGSLEEVE)
-                    .print("MyPrint " + i)
+                    .print("MyPrint %s".formatted(i))
                     .color(Color.RED)
                     .printColor(Color.WHITE)
                     .font(Font.ARIAL)

@@ -74,7 +74,12 @@ public class User {
 
     @Override
     public String toString() {
-        return street + ", " + streetAndApartmentNumber + ", " + city + ", " + postCode;
+        return "%s, %s, %s, %s".formatted(
+                street,
+                streetAndApartmentNumber,
+                city,
+                postCode
+        );
     }
 
 }

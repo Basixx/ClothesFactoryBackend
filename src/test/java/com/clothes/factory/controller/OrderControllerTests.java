@@ -321,24 +321,24 @@ class OrderControllerTests {
 
     private void matchResult(
             ResultActions resultActions,
-            String expression,
+            String expr,
             int id,
             boolean paid,
             boolean sent,
             int userId
     ) throws Exception {
         resultActions
-                .andExpect(jsonPath(expression + ".id", is(id)))
-                .andExpect(jsonPath(expression + ".orderDate", is("2022-04-26")))
-                .andExpect(jsonPath(expression + ".totalOrderPrice", is(100)))
-                .andExpect(jsonPath(expression + ".paid", is(paid)))
-                .andExpect(jsonPath(expression + ".sent", is(sent)))
-                .andExpect(jsonPath(expression + ".shipmentCompanyName", is("InPost")))
-                .andExpect(jsonPath(expression + ".shippingPrice", is(20)))
-                .andExpect(jsonPath(expression + ".deliveryDays", is(3)))
-                .andExpect(jsonPath(expression + ".address", is("Wilcza, 5/6, Warsaw, 02-234")))
-                .andExpect(jsonPath(expression + ".userId", is(userId)))
-                .andExpect(jsonPath(expression + ".clothesIdList", Matchers.hasSize(0)));
+                .andExpect(jsonPath("%s.id".formatted(expr), is(id)))
+                .andExpect(jsonPath("%s.orderDate".formatted(expr), is("2022-04-26")))
+                .andExpect(jsonPath("%s.totalOrderPrice".formatted(expr), is(100)))
+                .andExpect(jsonPath("%s.paid".formatted(expr), is(paid)))
+                .andExpect(jsonPath("%s.sent".formatted(expr), is(sent)))
+                .andExpect(jsonPath("%s.shipmentCompanyName".formatted(expr), is("InPost")))
+                .andExpect(jsonPath("%s.shippingPrice".formatted(expr), is(20)))
+                .andExpect(jsonPath("%s.deliveryDays".formatted(expr), is(3)))
+                .andExpect(jsonPath("%s.address".formatted(expr), is("Wilcza, 5/6, Warsaw, 02-234")))
+                .andExpect(jsonPath("%s.userId".formatted(expr), is(userId)))
+                .andExpect(jsonPath("%s.clothesIdList".formatted(expr), Matchers.hasSize(0)));
     }
 
 }
