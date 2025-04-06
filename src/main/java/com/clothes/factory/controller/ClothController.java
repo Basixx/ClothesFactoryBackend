@@ -50,13 +50,19 @@ public class ClothController {
 
     @PostMapping("/clothes")
     @ResponseStatus(CREATED)
-    public ClothDto createCloth(@RequestBody ClothDto clothDto) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException, ClothWithQuantityZeroException {
+    public ClothDto createCloth(@RequestBody ClothDto clothDto)
+            throws ProfanityCheckFailedException,
+            ClothPrintContainsBadWordsException,
+            ClothWithQuantityZeroException {
         return clothFacade.createCloth(clothDto);
     }
 
     @PutMapping("/clothes/{id}")
     @ResponseStatus(OK)
-    public ClothDto updateCloth(@PathVariable Long id, @RequestBody ClothDto clothDto) throws ClothNotFoundException, ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
+    public ClothDto updateCloth(@PathVariable Long id, @RequestBody ClothDto clothDto)
+            throws ClothNotFoundException,
+            ProfanityCheckFailedException,
+            ClothPrintContainsBadWordsException {
         return clothFacade.updateCloth(id, clothDto);
     }
 

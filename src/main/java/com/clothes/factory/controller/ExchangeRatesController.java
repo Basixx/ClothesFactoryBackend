@@ -21,7 +21,8 @@ public class ExchangeRatesController {
 
     @GetMapping
     @ResponseStatus(OK)
-    public ExchangeRateDto getExchangeRate(@RequestParam String from, @RequestParam String to) throws CurrencyExchangeFailedException {
+    public ExchangeRateDto getExchangeRate(@RequestParam String from, @RequestParam String to)
+            throws CurrencyExchangeFailedException {
         return exchangeRateFacade.getExchange(from, to);
     }
 

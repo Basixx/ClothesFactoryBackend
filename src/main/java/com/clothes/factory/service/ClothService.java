@@ -21,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static java.math.BigDecimal.ZERO;
+
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -37,18 +39,24 @@ public class ClothService {
     }
 
     public List<Cloth> getAllClothesFromUsersCart(final Long userId) throws UserNotFoundException {
-        User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        User userFromDb = userRepository
+                .findById(userId)
+                .orElseThrow(UserNotFoundException::new);
         Cart cartFromDb = userFromDb.getCart();
         return cartFromDb.getClothesList();
     }
 
     public List<Cloth> getAllClothesFromOrder(final Long orderId) throws OrderNotFoundException {
-        Order orderFromDb = orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new);
+        Order orderFromDb = orderRepository
+                .findById(orderId)
+                .orElseThrow(OrderNotFoundException::new);
         return orderFromDb.getClothesList();
     }
 
-    public Cloth createCloth(final Cloth cloth) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException, ClothWithQuantityZeroException {
-
+    public Cloth createCloth(final Cloth cloth)
+            throws ProfanityCheckFailedException,
+            ClothPrintContainsBadWordsException,
+            ClothWithQuantityZeroException {
         boolean containsBadWords = badWordsService.containsBadWords(cloth.getPrint());
         if (cloth.getQuantity() == 0) {
             throw new ClothWithQuantityZeroException();
@@ -59,10 +67,14 @@ public class ClothService {
         }
     }
 
-    public Cloth editCloth(final Long id, final Cloth cloth) throws ClothNotFoundException, ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
-        Cloth clothFromDb = clothRepository.findById(id).orElseThrow(ClothNotFoundException::new);
+    public Cloth editCloth(final Long id, final Cloth cloth)
+            throws ClothNotFoundException,
+            ProfanityCheckFailedException,
+            ClothPrintContainsBadWordsException {
+        Cloth clothFromDb = clothRepository
+                .findById(id)
+                .orElseThrow(ClothNotFoundException::new);
         boolean containsBadWords = badWordsService.containsBadWords(cloth.getPrint());
-
         if (!containsBadWords) {
             clothFromDb.setFashion(cloth.getFashion());
             clothFromDb.setColor(cloth.getColor());
@@ -71,8 +83,16 @@ public class ClothService {
             clothFromDb.setPrintColor(cloth.getPrintColor());
             clothFromDb.setSize(cloth.getSize());
             clothFromDb.setQuantity(cloth.getQuantity());
-            clothFromDb.setPrice(prices.findClothPrice(clothFromDb.getFashion()).multiply(BigDecimal.valueOf(clothFromDb.getQuantity())));
-            BigDecimal cartPrice = clothFromDb.getCart().getClothesList().stream().map(Cloth::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+            clothFromDb.setPrice(prices
+                    .findClothPrice(clothFromDb.getFashion())
+                    .multiply(BigDecimal.valueOf(clothFromDb.getQuantity()))
+            );
+            BigDecimal cartPrice = clothFromDb
+                    .getCart()
+                    .getClothesList()
+                    .stream()
+                    .map(Cloth::getPrice)
+                    .reduce(ZERO, BigDecimal::add);
             clothFromDb.getCart().setTotalPrice(cartPrice);
             return clothFromDb;
         } else {

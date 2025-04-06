@@ -33,11 +33,17 @@ public class ClothFacade {
         return clothMapper.mapToClothDtoList(clothService.getAllClothesFromOrder(orderId));
     }
 
-    public ClothDto createCloth(ClothDto clothDto) throws ProfanityCheckFailedException, ClothPrintContainsBadWordsException, ClothWithQuantityZeroException {
+    public ClothDto createCloth(ClothDto clothDto)
+            throws ProfanityCheckFailedException,
+            ClothPrintContainsBadWordsException,
+            ClothWithQuantityZeroException {
         return clothMapper.mapToClothDto(clothService.createCloth(clothMapper.mapToCloth(clothDto)));
     }
 
-    public ClothDto updateCloth(Long id, ClothDto clothDto) throws ClothNotFoundException, ProfanityCheckFailedException, ClothPrintContainsBadWordsException {
+    public ClothDto updateCloth(Long id, ClothDto clothDto)
+            throws ClothNotFoundException,
+            ProfanityCheckFailedException,
+            ClothPrintContainsBadWordsException {
         return clothMapper.mapToClothDto(clothService.editCloth(id, clothMapper.mapToCloth(clothDto)));
     }
 

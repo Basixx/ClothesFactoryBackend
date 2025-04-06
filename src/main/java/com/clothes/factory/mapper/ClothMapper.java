@@ -28,8 +28,10 @@ public class ClothMapper {
                 .printColor(clothDto.getPrintColor())
                 .size(clothDto.getSize())
                 .quantity(clothDto.getQuantity())
-                .price(prices.findClothPrice(clothDto.getFashion()).multiply(BigDecimal.valueOf(clothDto.getQuantity())))
-                .build();
+                .price(prices
+                        .findClothPrice(clothDto.getFashion())
+                        .multiply(BigDecimal.valueOf(clothDto.getQuantity()))
+                ).build();
     }
 
     public ClothDto mapToClothDto(final Cloth cloth) {

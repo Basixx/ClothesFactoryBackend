@@ -51,13 +51,21 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public UserResponseDto createUser(@RequestBody UserRequestDto userRequestDto) throws CartNotFoundException, OrderNotFoundException, UserAlreadyExistsException, EmailVerificationFailedException, EmailAddressDoesNotExistException {
+    public UserResponseDto createUser(@RequestBody UserRequestDto userRequestDto)
+            throws CartNotFoundException,
+            OrderNotFoundException,
+            UserAlreadyExistsException,
+            EmailVerificationFailedException,
+            EmailAddressDoesNotExistException {
         return userFacade.createUser(userRequestDto);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(OK)
-    public UserResponseDto updateUser(@PathVariable Long id, @RequestBody UserRequestDto userRequestDto) throws UserNotFoundException, CartNotFoundException, OrderNotFoundException {
+    public UserResponseDto updateUser(@PathVariable Long id, @RequestBody UserRequestDto userRequestDto)
+            throws UserNotFoundException,
+            CartNotFoundException,
+            OrderNotFoundException {
         return userFacade.updateUser(id, userRequestDto);
     }
 
@@ -69,7 +77,8 @@ public class UserController {
 
     @GetMapping(value = "/{email}/{password}")
     @ResponseStatus(OK)
-    public UserResponseDto authenticateUser(@PathVariable String email, @PathVariable String password) throws UserEmailNotFoundException, WrongPasswordException {
+    public UserResponseDto authenticateUser(@PathVariable String email, @PathVariable String password)
+            throws UserEmailNotFoundException, WrongPasswordException {
         return userFacade.authenticateUser(email, password);
     }
 

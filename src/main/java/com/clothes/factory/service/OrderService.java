@@ -60,16 +60,32 @@ public class OrderService {
     }
 
     public Order getOrder(final Long id) throws OrderNotFoundException {
-        return orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
+        return orderRepository
+                .findById(id)
+                .orElseThrow(OrderNotFoundException::new);
     }
 
-    public Order createOrder(final Long userId, final ShipmentMethod company) throws UserNotFoundException, CartNotFoundException, EmptyCartException, CurrencyExchangeFailedException {
-        User userFromDb = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-        Cart cartFromDb = cartRepository.findById(userFromDb.getCart().getId()).orElseThrow(CartNotFoundException::new);
+    public Order createOrder(final Long userId, final ShipmentMethod company)
+            throws UserNotFoundException,
+            CartNotFoundException,
+            EmptyCartException,
+            CurrencyExchangeFailedException {
+        User userFromDb = userRepository
+                .findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        Cart cartFromDb = cartRepository
+                .findById(userFromDb.getCart().getId())
+                .orElseThrow(CartNotFoundException::new);
 
         ShipmentCompany shipmentCompany = companySetter.setCompany(company);
 
-        String address = userFromDb.getStreet() + ", " + userFromDb.getStreetAndApartmentNumber() + ", " + userFromDb.getCity() + ", " + userFromDb.getPostCode();
+        String address = userFromDb.getStreet()
+                + ", "
+                + userFromDb.getStreetAndApartmentNumber()
+                + ", "
+                + userFromDb.getCity()
+                + ", "
+                + userFromDb.getPostCode();
 
         if (cartFromDb.getClothesList().isEmpty()) {
             throw new EmptyCartException();
@@ -83,8 +99,9 @@ public class OrderService {
                     .shipmentCompanyName(shipmentCompany.getName())
                     .shippingPrice(shipmentCompany.getPrice())
                     .deliveryDays(shipmentCompany.getDeliveryDays())
-                    .totalOrderPrice(cartFromDb.getTotalPrice().add(shipmentCompany.getPrice()))
-                    .address(address)
+                    .totalOrderPrice(cartFromDb.getTotalPrice()
+                            .add(shipmentCompany.getPrice())
+                    ).address(address)
                     .clothesList(cartFromDb.getClothesList())
                     .build();
 
@@ -104,7 +121,9 @@ public class OrderService {
     }
 
     public Order setOrderPaid(final Long id) throws OrderNotFoundException, OrderAlreadyPaidException {
-        Order orderFromDb = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
+        Order orderFromDb = orderRepository
+                .findById(id)
+                .orElseThrow(OrderNotFoundException::new);
         if (orderFromDb.isPaid()) {
             throw new OrderAlreadyPaidException();
         }
@@ -113,14 +132,21 @@ public class OrderService {
         paymentHistoryRepository.save(PaymentHistory.builder()
                 .paymentTime(LocalDateTime.now())
                 .orderId(orderFromDb.getId())
-                .userMail(orderFromDb.getUser().getEmailAddress())
-                .price(orderFromDb.getTotalOrderPrice())
+                .userMail(orderFromDb
+                        .getUser()
+                        .getEmailAddress()
+                ).price(orderFromDb.getTotalOrderPrice())
                 .build());
         return orderFromDb;
     }
 
-    public Order setOrderSent(final Long id) throws OrderNotFoundException, OrderNotPaidException, OrderAlreadySentException {
-        Order orderFromDb = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
+    public Order setOrderSent(final Long id)
+            throws OrderNotFoundException,
+            OrderNotPaidException,
+            OrderAlreadySentException {
+        Order orderFromDb = orderRepository
+                .findById(id)
+                .orElseThrow(OrderNotFoundException::new);
         if (!orderFromDb.isPaid()) {
             throw new OrderNotPaidException();
         } else if (orderFromDb.isSent()) {

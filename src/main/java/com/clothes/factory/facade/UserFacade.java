@@ -32,11 +32,19 @@ public class UserFacade {
         return userMapper.mapToUserResponseDto(userService.getUser(id));
     }
 
-    public UserResponseDto createUser(UserRequestDto userRequestDto) throws CartNotFoundException, OrderNotFoundException, UserAlreadyExistsException, EmailVerificationFailedException, EmailAddressDoesNotExistException {
+    public UserResponseDto createUser(UserRequestDto userRequestDto)
+            throws CartNotFoundException,
+            OrderNotFoundException,
+            UserAlreadyExistsException,
+            EmailVerificationFailedException,
+            EmailAddressDoesNotExistException {
         return userMapper.mapToUserResponseDto(userService.createUser(userMapper.mapToUser(userRequestDto)));
     }
 
-    public UserResponseDto updateUser(Long id, UserRequestDto userRequestDto) throws UserNotFoundException, CartNotFoundException, OrderNotFoundException {
+    public UserResponseDto updateUser(Long id, UserRequestDto userRequestDto)
+            throws UserNotFoundException,
+            CartNotFoundException,
+            OrderNotFoundException {
         return userMapper.mapToUserResponseDto(userService.editUser(id, userMapper.mapToUser(userRequestDto)));
     }
 
@@ -44,7 +52,8 @@ public class UserFacade {
         userService.deleteUser(id);
     }
 
-    public UserResponseDto authenticateUser(String email, String password) throws UserEmailNotFoundException, WrongPasswordException {
+    public UserResponseDto authenticateUser(String email, String password)
+            throws UserEmailNotFoundException, WrongPasswordException {
         return userMapper.mapToUserResponseDto(userService.authenticateUser(email, password));
     }
 
