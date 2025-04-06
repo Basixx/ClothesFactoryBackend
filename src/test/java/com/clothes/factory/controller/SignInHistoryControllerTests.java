@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -52,7 +53,7 @@ public class SignInHistoryControllerTests {
         signInHistoryDtoList.add(signInHistoryDto1);
         signInHistoryDtoList.add(signInHistoryDto2);
 
-        when(signInHistoryFacade.getAllSignInHistory())
+        when(signInHistoryFacade.getAllSignInHistory(anyInt(), anyInt()))
                 .thenReturn(signInHistoryDtoList);
 
         //When & Then

@@ -15,8 +15,8 @@ public class SignInHistoryService {
 
     private final SignInHistoryRepository signInHistoryRepository;
 
-    public List<SignInHistory> getAllSignInHistory() {
-        return signInHistoryRepository.findAll();
+    public List<SignInHistory> getAllSignInHistory(int page, int size) {
+        return signInHistoryRepository.findAll(page, size);
     }
 
 }
