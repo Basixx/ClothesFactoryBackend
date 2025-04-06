@@ -1,17 +1,17 @@
 package com.clothes.factory.repository;
 
 import com.clothes.factory.domain.ShipmentHistory;
-import lombok.NonNull;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface ShipmentHistoryRepository extends JpaRepository<ShipmentHistory, Long> {
 
-    @NonNull
-    @Override
-    Page<ShipmentHistory> findAll(@NonNull Pageable pageable);
+    default List<ShipmentHistory> findAll(int page, int size) {
+        return findAll(PageRequest.of(page, size)).getContent();
+    }
 
 }

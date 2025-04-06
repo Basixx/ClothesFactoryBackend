@@ -15,10 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsUserByEmailAddress(String email);
 
-//    @NonNull
-//    @Override
-//    Page<User> findAll(@NonNull Pageable pageable);
-
     default List<User> findAll(int page, int size) {
         return findAll(PageRequest.of(page, size)).getContent();
     }
