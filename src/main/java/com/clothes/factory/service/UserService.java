@@ -40,7 +40,7 @@ public class UserService {
     private final UserMailCreator userMailCreator;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Value("${app.mail.verification.enabled:false}")
+    @Value("${app.mail.verification.enabled}")
     private boolean isMailVerificationEnabled;
 
     public List<User> getAllUsers(int page, int size) {

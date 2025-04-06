@@ -21,6 +21,8 @@ services:
       - FACTORY_MAIL_USERNAME=${FACTORY_MAIL_USERNAME}
       - MYSQL_USER=${DB_USER}
       - MYSQL_PASSWORD=${DB_PASSWORD}
+      - SEND_EMAIL=${SEND_EMAIL}
+      - VERIFY_EMAIL=${VERIFY_EMAIL}
     networks:
       - c-f-net
   cf-db:

@@ -5,6 +5,8 @@ import com.clothes.factory.client.email_verification_api.EmailVerificationApiCli
 import com.clothes.factory.client.exchange_rates_api.ExchangeRatesApiClient;
 import com.clothes.factory.client.quotes_api.QuoteApiClient;
 import com.clothes.factory.mail.AdminMailCreator;
+import com.clothes.factory.service.EmailService;
+import com.clothes.factory.service.UserService;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
@@ -27,5 +29,11 @@ public abstract class BaseTest {
 
     @MockitoBean
     AdminMailCreator adminMailCreator;
+
+    @MockitoBean
+    EmailService emailService;
+
+    @MockitoBean
+    UserService userService;
 
 }
