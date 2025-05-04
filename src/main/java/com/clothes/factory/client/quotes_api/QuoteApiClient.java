@@ -21,12 +21,15 @@ public class QuoteApiClient {
     private String quoteEndpoint;
 
     public QuoteDto getQuote() throws QuoteNotFoundException {
-        URI url = UriComponentsBuilder.fromUriString(quoteEndpoint)
+        QuoteDto quoteResponse = restTemplate.getForObject(quoteURL(), QuoteDto.class);
+        return Optional.ofNullable(quoteResponse).orElseThrow(QuoteNotFoundException::new);
+    }
+
+    private URI quoteURL() {
+        return UriComponentsBuilder.fromUriString(quoteEndpoint)
                 .build()
                 .encode()
                 .toUri();
-        QuoteDto quoteResponse = restTemplate.getForObject(url, QuoteDto.class);
-        return Optional.ofNullable(quoteResponse).orElseThrow(QuoteNotFoundException::new);
     }
 
 }
