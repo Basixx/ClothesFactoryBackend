@@ -24,21 +24,21 @@ public class BadWordsApiClient {
     private String badWordsKey;
 
     public BadWordsClientDto checkProfanity(String text) throws ProfanityCheckFailedException {
+        BadWordsClientDto profanityResponse = restTemplate.postForObject(
+                badWordsURL(),
+                text,
+                BadWordsClientDto.class
+        );
+        return Optional.ofNullable(profanityResponse).orElseThrow(ProfanityCheckFailedException::new);
+    }
 
-        URI url = UriComponentsBuilder.fromUriString(
-                        badWordsEndpoint)
+    private URI badWordsURL() {
+        return UriComponentsBuilder.fromUriString(badWordsEndpoint)
                 .queryParam("censor_character", "x")
                 .queryParam("apikey", badWordsKey)
                 .build()
                 .encode()
                 .toUri();
-
-        BadWordsClientDto profanityResponse = restTemplate.postForObject(
-                url,
-                text,
-                BadWordsClientDto.class
-        );
-        return Optional.ofNullable(profanityResponse).orElseThrow(ProfanityCheckFailedException::new);
     }
 
 }
