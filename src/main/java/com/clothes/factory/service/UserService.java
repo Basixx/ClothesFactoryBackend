@@ -7,9 +7,8 @@ import com.clothes.factory.domain.User;
 import com.clothes.factory.exception.email.EmailAddressDoesNotExistException;
 import com.clothes.factory.exception.email.EmailVerificationFailedException;
 import com.clothes.factory.exception.user.UserAlreadyExistsException;
-import com.clothes.factory.exception.user.UserEmailNotFoundException;
 import com.clothes.factory.exception.user.UserNotFoundException;
-import com.clothes.factory.exception.user.WrongPasswordException;
+import com.clothes.factory.exception.user.WrongCredentialsException;
 import com.clothes.factory.mail.UserMailCreator;
 import com.clothes.factory.repository.CartRepository;
 import com.clothes.factory.repository.LoginHistoryRepository;
@@ -99,11 +98,11 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User authenticateUser(final String email, final String password) throws UserEmailNotFoundException, WrongPasswordException {
-        User userFromDb = userRepository.findByEmailAddress(email).orElseThrow(UserEmailNotFoundException::new);
+    public User authenticateUser(final String email, final String password) throws WrongCredentialsException {
+        User userFromDb = userRepository.findByEmailAddress(email).orElseThrow(WrongCredentialsException::new);
         if (!bCryptPasswordEncoder.matches(password, userFromDb.getPassword())) {
             loginHistoryRepository.save(LoginHistory.builder().loginTime(LocalDateTime.now()).userMail(userFromDb.getEmailAddress()).succeed(false).build());
-            throw new WrongPasswordException();
+            throw new WrongCredentialsException();
         }
         loginHistoryRepository.save(LoginHistory.builder().loginTime(LocalDateTime.now()).userMail(userFromDb.getEmailAddress()).succeed(true).build());
         return userFromDb;

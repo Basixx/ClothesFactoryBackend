@@ -4,9 +4,8 @@ import com.clothes.factory.domain.User;
 import com.clothes.factory.exception.email.EmailAddressDoesNotExistException;
 import com.clothes.factory.exception.email.EmailVerificationFailedException;
 import com.clothes.factory.exception.user.UserAlreadyExistsException;
-import com.clothes.factory.exception.user.UserEmailNotFoundException;
 import com.clothes.factory.exception.user.UserNotFoundException;
-import com.clothes.factory.exception.user.WrongPasswordException;
+import com.clothes.factory.exception.user.WrongCredentialsException;
 import com.clothes.factory.mail.UserMailCreator;
 import com.clothes.factory.repository.CartRepository;
 import com.clothes.factory.repository.LoginHistoryRepository;
@@ -172,7 +171,7 @@ public class UserServiceTests {
     }
 
     @Test
-    void testAuthenticateUserCorrectly() throws UserEmailNotFoundException, WrongPasswordException {
+    void testAuthenticateUserCorrectly() throws WrongCredentialsException {
         //Given
         User user = createUser1();
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
