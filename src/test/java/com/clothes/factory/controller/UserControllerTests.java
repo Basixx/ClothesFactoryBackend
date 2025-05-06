@@ -5,9 +5,8 @@ import com.clothes.factory.domain.UserResponseDto;
 import com.clothes.factory.exception.email.EmailAddressDoesNotExistException;
 import com.clothes.factory.exception.email.EmailVerificationFailedException;
 import com.clothes.factory.exception.user.UserAlreadyExistsException;
-import com.clothes.factory.exception.user.UserEmailNotFoundException;
 import com.clothes.factory.exception.user.UserNotFoundException;
-import com.clothes.factory.exception.user.WrongPasswordException;
+import com.clothes.factory.exception.user.WrongCredentialsException;
 import com.clothes.factory.facade.UserFacade;
 import com.google.gson.Gson;
 import org.hamcrest.Matchers;
@@ -194,28 +193,14 @@ class UserControllerTests {
     void testAuthenticateNonExistingUser() throws Exception {
         //Given
         when(userFacade.authenticateUser(anyString(), anyString()))
-                .thenThrow(new UserEmailNotFoundException());
+                .thenThrow(new WrongCredentialsException());
 
         //When & Then
         mockMvc.perform(
                         get("/users/mail@test.com/password")
                                 .contentType(MediaType.APPLICATION_JSON)
-                ).andExpect(MockMvcResultMatchers.status().is(404))
-                .andExpect(jsonPath("$", Matchers.is("User with given email does not exist.")));
-    }
-
-    @Test
-    void testAuthenticateUserWithWrongPassword() throws Exception {
-        //Given
-        when(userFacade.authenticateUser(anyString(), anyString()))
-                .thenThrow(new WrongPasswordException());
-
-        //When & Then
-        mockMvc.perform(
-                        get("/users/mail@test.com/password")
-                                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().is(400)
-                ).andExpect(jsonPath("$", Matchers.is("Wrong password.")));
+                ).andExpect(MockMvcResultMatchers.status().is(401))
+                .andExpect(jsonPath("$", Matchers.is("Please check your credentials.")));
     }
 
     @Test

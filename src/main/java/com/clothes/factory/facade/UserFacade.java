@@ -7,9 +7,8 @@ import com.clothes.factory.exception.email.EmailAddressDoesNotExistException;
 import com.clothes.factory.exception.email.EmailVerificationFailedException;
 import com.clothes.factory.exception.order.OrderNotFoundException;
 import com.clothes.factory.exception.user.UserAlreadyExistsException;
-import com.clothes.factory.exception.user.UserEmailNotFoundException;
 import com.clothes.factory.exception.user.UserNotFoundException;
-import com.clothes.factory.exception.user.WrongPasswordException;
+import com.clothes.factory.exception.user.WrongCredentialsException;
 import com.clothes.factory.mapper.UserMapper;
 import com.clothes.factory.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -52,8 +51,7 @@ public class UserFacade {
         userService.deleteUser(id);
     }
 
-    public UserResponseDto authenticateUser(String email, String password)
-            throws UserEmailNotFoundException, WrongPasswordException {
+    public UserResponseDto authenticateUser(String email, String password) throws WrongCredentialsException {
         return userMapper.mapToUserResponseDto(userService.authenticateUser(email, password));
     }
 

@@ -7,9 +7,8 @@ import com.clothes.factory.exception.email.EmailAddressDoesNotExistException;
 import com.clothes.factory.exception.email.EmailVerificationFailedException;
 import com.clothes.factory.exception.order.OrderNotFoundException;
 import com.clothes.factory.exception.user.UserAlreadyExistsException;
-import com.clothes.factory.exception.user.UserEmailNotFoundException;
 import com.clothes.factory.exception.user.UserNotFoundException;
-import com.clothes.factory.exception.user.WrongPasswordException;
+import com.clothes.factory.exception.user.WrongCredentialsException;
 import com.clothes.factory.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -77,8 +76,7 @@ public class UserController {
 
     @GetMapping(value = "/{email}/{password}")
     @ResponseStatus(OK)
-    public UserResponseDto authenticateUser(@PathVariable String email, @PathVariable String password)
-            throws UserEmailNotFoundException, WrongPasswordException {
+    public UserResponseDto authenticateUser(@PathVariable String email, @PathVariable String password) throws WrongCredentialsException {
         return userFacade.authenticateUser(email, password);
     }
 
