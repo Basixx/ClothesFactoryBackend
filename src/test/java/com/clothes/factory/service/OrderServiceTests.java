@@ -1,6 +1,6 @@
 package com.clothes.factory.service;
 
-import com.clothes.factory.auxiliary.ShipmentMethod;
+import com.clothes.factory.auxiliary.shipment.ShipmentConfigService;
 import com.clothes.factory.domain.Cart;
 import com.clothes.factory.domain.Cloth;
 import com.clothes.factory.domain.Order;
@@ -52,6 +52,9 @@ public class OrderServiceTests {
 
     @InjectMocks
     private OrderService orderService;
+
+    @Mock
+    private ShipmentConfigService shipmentConfigService;
 
     @Mock
     private OrderRepository orderRepository;
@@ -128,8 +131,9 @@ public class OrderServiceTests {
         Cloth cloth = createCloth1();
         cart.setClothesList(List.of(cloth));
         user.setCart(cart);
-        ShipmentMethod shipmentMethod = FEDEX;
-        Order order = createOrder(9L, user, new BigDecimal(500), shipmentMethod);
+        when(shipmentConfigService.getShippingPrice(any())).thenReturn(new BigDecimal(10));
+        when(shipmentConfigService.getDeliveryDays(any())).thenReturn(3);
+        Order order = createOrder(9L, user, new BigDecimal(500), FEDEX);
         order.setClothesList(List.of(cloth));
         when(userRepository.findById(anyLong()))
                 .thenReturn(Optional.of(user));
@@ -144,7 +148,7 @@ public class OrderServiceTests {
         Order resultOrder = orderService.createOrder(6L, UPS);
 
         //Then
-        assertEquals(shipmentMethod, resultOrder.getShipmentMethod());
+        assertEquals(FEDEX, resultOrder.getShipmentMethod());
         assertEquals(user, resultOrder.getUser());
         assertEquals(1, resultOrder.getClothesList().size());
     }

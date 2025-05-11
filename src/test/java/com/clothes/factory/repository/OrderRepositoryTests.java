@@ -45,8 +45,8 @@ public class OrderRepositoryTests extends BaseTest {
                 .paid(true)
                 .sent(false)
                 .shipmentMethod(FEDEX)
-                .shippingPrice(FEDEX.shippingPrice())
-                .deliveryDays(FEDEX.deliveryDays())
+                .shippingPrice(new BigDecimal(15))
+                .deliveryDays(4)
                 .address("address")
                 .build();
         order.getClothesList().add(cloth1);

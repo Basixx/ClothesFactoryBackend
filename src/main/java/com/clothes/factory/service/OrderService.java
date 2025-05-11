@@ -1,6 +1,7 @@
 package com.clothes.factory.service;
 
 import com.clothes.factory.auxiliary.ShipmentMethod;
+import com.clothes.factory.auxiliary.shipment.ShipmentConfigService;
 import com.clothes.factory.domain.Cart;
 import com.clothes.factory.domain.Cloth;
 import com.clothes.factory.domain.Order;
@@ -43,6 +44,7 @@ public class OrderService {
     private final ShipmentHistoryRepository shipmentHistoryRepository;
     private final PaymentHistoryRepository paymentHistoryRepository;
     private final EmailService emailService;
+    private final ShipmentConfigService shipmentConfigService;
     private final UserMailCreator userMailCreator;
     private final AdminMailCreator adminMailCreator;
 
@@ -90,10 +92,10 @@ public class OrderService {
                 .sent(false)
                 .user(userFromDb)
                 .shipmentMethod(shipmentMethod)
-                .shippingPrice(shipmentMethod.shippingPrice())
-                .deliveryDays(shipmentMethod.deliveryDays())
+                .shippingPrice(shipmentConfigService.getShippingPrice(shipmentMethod))
+                .deliveryDays(shipmentConfigService.getDeliveryDays(shipmentMethod))
                 .totalOrderPrice(cartFromDb.getTotalPrice()
-                        .add(shipmentMethod.shippingPrice())
+                        .add(shipmentConfigService.getShippingPrice(shipmentMethod))
                 ).address(address)
                 .clothesList(cartFromDb.getClothesList())
                 .build();
