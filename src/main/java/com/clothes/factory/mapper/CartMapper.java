@@ -5,8 +5,6 @@ import com.clothes.factory.domain.CartDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class CartMapper {
@@ -19,12 +17,6 @@ public class CartMapper {
                 .totalPrice(cart.getTotalPrice())
                 .clothesIdList(clothMapper.mapToClothesIdsFromClothes(cart.getClothesList()))
                 .build();
-    }
-
-    public List<CartDto> mapToCartDtoList(final List<Cart> carts) {
-        return carts.stream()
-                .map(this::mapToCartDto)
-                .toList();
     }
 
 }

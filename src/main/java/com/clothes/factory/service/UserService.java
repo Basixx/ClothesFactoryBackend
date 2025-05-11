@@ -64,10 +64,10 @@ public class UserService {
                 .totalPrice(BigDecimal.ZERO)
                 .clothesList(new ArrayList<>())
                 .build();
+        cartRepository.save(userCart);
         user.setCart(userCart);
         user.setOrdersList(new ArrayList<>());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        cartRepository.save(userCart);
         emailService.send(userMailCreator.accountCreationMail(user));
         signInHistoryRepository.save(SignInHistory.builder()
                 .signInTime(LocalDateTime.now())

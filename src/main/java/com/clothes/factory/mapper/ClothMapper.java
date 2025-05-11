@@ -3,8 +3,6 @@ package com.clothes.factory.mapper;
 import com.clothes.factory.auxiliary.Prices;
 import com.clothes.factory.domain.Cloth;
 import com.clothes.factory.domain.ClothDto;
-import com.clothes.factory.exception.cloth.ClothNotFoundException;
-import com.clothes.factory.repository.ClothRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClothMapper {
 
-    private final ClothRepository clothRepository;
     private final Prices prices = new Prices();
 
     public Cloth mapToCloth(final ClothDto clothDto) {
@@ -50,12 +47,6 @@ public class ClothMapper {
     public List<ClothDto> mapToClothDtoList(final List<Cloth> cloths) {
         return cloths.stream()
                 .map(this::mapToClothDto)
-                .toList();
-    }
-
-    public List<Cloth> mapToClothesFromIds(final List<Long> clothesIds) throws ClothNotFoundException {
-        return clothesIds.stream()
-                .map(id -> clothRepository.findById(id).orElseThrow(ClothNotFoundException::new))
                 .toList();
     }
 

@@ -5,7 +5,6 @@ import com.clothes.factory.domain.UserRequestDto;
 import com.clothes.factory.domain.UserResponseDto;
 import com.clothes.factory.exception.cart.CartNotFoundException;
 import com.clothes.factory.exception.order.OrderNotFoundException;
-import com.clothes.factory.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserMapper {
 
-    private final CartRepository cartRepository;
     private final OrderMapper orderMapper;
 
     public User mapToUser(final UserRequestDto userRequestDto) throws CartNotFoundException, OrderNotFoundException {
@@ -29,12 +27,7 @@ public class UserMapper {
                 .streetAndApartmentNumber(userRequestDto.getStreetAndApartmentNumber())
                 .city(userRequestDto.getCity())
                 .postCode(userRequestDto.getPostCode())
-                .cart(userRequestDto.getCartId() == null
-                        ? null
-                        : cartRepository.findById(userRequestDto.getCartId())
-                        .orElseThrow(CartNotFoundException::new)
-                ).ordersList(orderMapper.mapToOrdersFromIds(userRequestDto.getOrdersIdList())
-                ).build();
+                .build();
     }
 
     public UserResponseDto mapToUserResponseDto(final User user) {

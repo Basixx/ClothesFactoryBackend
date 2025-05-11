@@ -42,7 +42,6 @@ public class UserMother {
 
     public static UserRequestDto createUserRequestDto() {
         return UserRequestDto.builder()
-                .id(1L)
                 .name("John")
                 .surname("Smith")
                 .phoneNumber("111222333")
@@ -52,8 +51,6 @@ public class UserMother {
                 .streetAndApartmentNumber("1/2")
                 .city("Warsaw")
                 .postCode("00-111")
-                .ordersIdList(new ArrayList<>())
-                .cartId(2L)
                 .build();
     }
 
