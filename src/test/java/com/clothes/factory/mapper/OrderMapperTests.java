@@ -7,7 +7,6 @@ import com.clothes.factory.auxiliary.shipment.strategy.companies.Ups;
 import com.clothes.factory.domain.Order;
 import com.clothes.factory.domain.OrderDto;
 import com.clothes.factory.domain.User;
-import com.clothes.factory.exception.order.OrderNotFoundException;
 import com.clothes.factory.repository.OrderRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +18,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static com.clothes.factory.object_mother.OrderMother.createOrder;
 import static com.clothes.factory.object_mother.UserMother.createUser1;
@@ -104,34 +102,6 @@ public class OrderMapperTests {
         assertEquals(6L, ordersDto.get(1).getUserId());
         assertEquals("john@smith.com", ordersDto.get(1).getUserMail());
         assertEquals(0, ordersDto.get(1).getClothesIdList().size());
-    }
-
-    @Test
-    void testMapToOrdersFromIds() throws OrderNotFoundException {
-        //Given
-        List<Long> ordersIds = new ArrayList<>();
-        ordersIds.add(4L);
-        ordersIds.add(5L);
-
-        User user = createUser1();
-
-        Order order1 = createOrder(4L, user, new BigDecimal(30), new InPost());
-        Order order2 = createOrder(5L, user, new BigDecimal(100), new Ups());
-
-        when(orderRepository.findById(4L))
-                .thenReturn(Optional.of(order1));
-        when(orderRepository.findById(5L))
-                .thenReturn(Optional.of(order2));
-
-        //When
-        List<Order> orders = orderMapper.mapToOrdersFromIds(ordersIds);
-
-        //Then
-        assertEquals(2, orders.size());
-        assertEquals(4L, orders.getFirst().getId());
-        assertEquals(5L, orders.get(1).getId());
-        assertEquals(new BigDecimal(30), orders.getFirst().getTotalOrderPrice());
-        assertEquals(new BigDecimal(100), orders.get(1).getTotalOrderPrice());
     }
 
     @Test

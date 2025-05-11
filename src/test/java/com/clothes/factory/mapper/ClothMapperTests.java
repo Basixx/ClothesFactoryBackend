@@ -2,7 +2,6 @@ package com.clothes.factory.mapper;
 
 import com.clothes.factory.domain.Cloth;
 import com.clothes.factory.domain.ClothDto;
-import com.clothes.factory.exception.cloth.ClothNotFoundException;
 import com.clothes.factory.repository.ClothRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static com.clothes.factory.auxiliary.Color.BLACK;
 import static com.clothes.factory.auxiliary.Color.RED;
@@ -29,7 +27,6 @@ import static com.clothes.factory.object_mother.ClothMother.createCloth1;
 import static com.clothes.factory.object_mother.ClothMother.createCloth2;
 import static com.clothes.factory.object_mother.ClothMother.createClothDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class ClothMapperTests {
@@ -114,29 +111,6 @@ public class ClothMapperTests {
         assertEquals(XXL, clothDtoList.get(1).getSize());
         assertEquals(3, clothDtoList.get(1).getQuantity());
         assertEquals(new BigDecimal(150), clothDtoList.get(1).getPrice());
-    }
-
-    @Test
-    void testMapToClothesFromIds() throws ClothNotFoundException {
-        //Given
-        List<Long> clothesIds = new ArrayList<>();
-        clothesIds.add(1L);
-        clothesIds.add(2L);
-
-        Cloth cloth1 = createCloth1();
-        Cloth cloth2 = createCloth2();
-        when(clothRepository.findById(1L))
-                .thenReturn(Optional.of(cloth1));
-        when(clothRepository.findById(2L))
-                .thenReturn(Optional.of(cloth2));
-
-        //When
-        List<Cloth> clothes = clothMapper.mapToClothesFromIds(clothesIds);
-
-        //Then
-        assertEquals(2, clothes.size());
-        assertEquals(1L, clothes.getFirst().getId());
-        assertEquals(2L, clothes.get(1).getId());
     }
 
     @Test

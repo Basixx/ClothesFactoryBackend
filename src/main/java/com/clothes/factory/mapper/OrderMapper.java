@@ -2,8 +2,6 @@ package com.clothes.factory.mapper;
 
 import com.clothes.factory.domain.Order;
 import com.clothes.factory.domain.OrderDto;
-import com.clothes.factory.exception.order.OrderNotFoundException;
-import com.clothes.factory.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +11,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderMapper {
 
-    private final OrderRepository orderRepository;
     private final ClothMapper clothMapper;
 
     public OrderDto mapToOrderDto(final Order order) {
@@ -36,12 +33,6 @@ public class OrderMapper {
     public List<OrderDto> mapToOrderDtoList(final List<Order> orders) {
         return orders.stream()
                 .map(this::mapToOrderDto)
-                .toList();
-    }
-
-    public List<Order> mapToOrdersFromIds(final List<Long> ordersIds) throws OrderNotFoundException {
-        return ordersIds.stream()
-                .map(id -> orderRepository.findById(id).orElseThrow(OrderNotFoundException::new))
                 .toList();
     }
 

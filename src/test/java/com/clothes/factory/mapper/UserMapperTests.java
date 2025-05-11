@@ -16,7 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static com.clothes.factory.object_mother.CartMother.createCart;
 import static com.clothes.factory.object_mother.UserMother.createUser1;
@@ -24,7 +23,6 @@ import static com.clothes.factory.object_mother.UserMother.createUser2;
 import static com.clothes.factory.object_mother.UserMother.createUserRequestDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,25 +40,19 @@ public class UserMapperTests {
         //Given
         UserRequestDto userRequestDto = createUserRequestDto();
 
-        Cart cart = createCart(new BigDecimal(40));
-
-        when(cartRepository.findById(anyLong()))
-                .thenReturn(Optional.ofNullable(cart));
-        when(orderMapper.mapToOrdersFromIds(anyList()))
-                .thenReturn(new ArrayList<>());
-
         //When
         User user = userMapper.mapToUser(userRequestDto);
 
-        Long cartId = user.getCart().getId();
         //Then
         assertEquals("John", user.getName());
         assertEquals("Smith", user.getSurname());
         assertEquals("111222333", user.getPhoneNumber());
         assertEquals("john@smith.com", user.getEmailAddress());
         assertEquals("password", user.getPassword());
-        assertEquals(9L, cartId);
-        assertEquals(0, user.getOrdersList().size());
+        assertEquals("Marszalkowska", user.getStreet());
+        assertEquals("1/2", user.getStreetAndApartmentNumber());
+        assertEquals("Warsaw", user.getCity());
+        assertEquals("00-111", user.getPostCode());
     }
 
     @Test
