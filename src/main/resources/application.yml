@@ -41,3 +41,18 @@ app:
       enabled: ${SEND_EMAIL:true}
     verification:
       enabled: ${VERIFY_EMAIL:true}
+
+shipment:
+  methods:
+    FEDEX:
+      price: 10
+      days: 4
+    DHL:
+      price: 15
+      days: 3
+    UPS:
+      price: 20
+      days: 3
+    IN_POST:
+      price: 12
+      days: 5

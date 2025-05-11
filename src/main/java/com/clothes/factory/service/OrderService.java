@@ -1,8 +1,7 @@
 package com.clothes.factory.service;
 
-import com.clothes.factory.auxiliary.shipment.strategy.CompanySetter;
-import com.clothes.factory.auxiliary.shipment.strategy.ShipmentCompany;
-import com.clothes.factory.auxiliary.shipment.strategy.ShipmentMethod;
+import com.clothes.factory.auxiliary.ShipmentMethod;
+import com.clothes.factory.auxiliary.shipment.ShipmentConfigService;
 import com.clothes.factory.domain.Cart;
 import com.clothes.factory.domain.Cloth;
 import com.clothes.factory.domain.Order;
@@ -45,9 +44,9 @@ public class OrderService {
     private final ShipmentHistoryRepository shipmentHistoryRepository;
     private final PaymentHistoryRepository paymentHistoryRepository;
     private final EmailService emailService;
+    private final ShipmentConfigService shipmentConfigService;
     private final UserMailCreator userMailCreator;
     private final AdminMailCreator adminMailCreator;
-    private final CompanySetter companySetter;
 
     public List<Order> getAllOrders(int page, int size) {
         return orderRepository.findAll(page, size);
@@ -65,7 +64,7 @@ public class OrderService {
                 .orElseThrow(OrderNotFoundException::new);
     }
 
-    public Order createOrder(final Long userId, final ShipmentMethod company)
+    public Order createOrder(final Long userId, final ShipmentMethod shipmentMethod)
             throws UserNotFoundException,
             CartNotFoundException,
             EmptyCartException,
@@ -76,8 +75,6 @@ public class OrderService {
         Cart cartFromDb = cartRepository
                 .findById(userFromDb.getCart().getId())
                 .orElseThrow(CartNotFoundException::new);
-
-        ShipmentCompany shipmentCompany = companySetter.setCompany(company);
 
         String address = "%s, %s, %s, %s".formatted(
                 userFromDb.getStreet(),
@@ -94,12 +91,11 @@ public class OrderService {
                 .paid(false)
                 .sent(false)
                 .user(userFromDb)
-                .shipmentCompany(shipmentCompany)
-                .shipmentCompanyName(shipmentCompany.getName())
-                .shippingPrice(shipmentCompany.getPrice())
-                .deliveryDays(shipmentCompany.getDeliveryDays())
+                .shipmentMethod(shipmentMethod)
+                .shippingPrice(shipmentConfigService.getShippingPrice(shipmentMethod))
+                .deliveryDays(shipmentConfigService.getDeliveryDays(shipmentMethod))
                 .totalOrderPrice(cartFromDb.getTotalPrice()
-                        .add(shipmentCompany.getPrice())
+                        .add(shipmentConfigService.getShippingPrice(shipmentMethod))
                 ).address(address)
                 .clothesList(cartFromDb.getClothesList())
                 .build();
@@ -156,7 +152,7 @@ public class OrderService {
                 .shipmentTime(LocalDateTime.now())
                 .orderId(orderFromDb.getId())
                 .userMail(orderFromDb.getUser().getEmailAddress())
-                .shippingCompany(orderFromDb.getShipmentCompanyName())
+                .shippingCompany(orderFromDb.getShipmentMethod().name())
                 .build());
         return orderFromDb;
     }

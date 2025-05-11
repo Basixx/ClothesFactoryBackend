@@ -37,7 +37,7 @@ public class AdminMailCreator {
                 .formatted(
                         order.getTotalOrderPrice(),
                         order.getAddress(),
-                        order.getShipmentCompanyName()
+                        order.getShipmentMethod()
                 )
         );
         return new Mail(adminMail, subject, message.toString());

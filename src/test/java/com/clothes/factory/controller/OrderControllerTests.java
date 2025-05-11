@@ -1,6 +1,6 @@
 package com.clothes.factory.controller;
 
-import com.clothes.factory.auxiliary.shipment.strategy.ShipmentMethod;
+import com.clothes.factory.auxiliary.ShipmentMethod;
 import com.clothes.factory.domain.OrderDto;
 import com.clothes.factory.exception.cart.EmptyCartException;
 import com.clothes.factory.exception.order.OrderAlreadyPaidException;
@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.clothes.factory.auxiliary.ShipmentMethod.IN_POST;
 import static com.clothes.factory.object_mother.OrderMother.createOrderDto;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -78,7 +79,7 @@ class OrderControllerTests {
                     .totalOrderPrice(new BigDecimal(100))
                     .paid(false)
                     .sent(false)
-                    .shipmentCompanyName("InPost")
+                    .shipmentMethod(IN_POST)
                     .shippingPrice(new BigDecimal(20))
                     .deliveryDays(3)
                     .address("Wilcza, 5/6, Warsaw, 02-234")
@@ -175,7 +176,7 @@ class OrderControllerTests {
                 .totalOrderPrice(new BigDecimal(100))
                 .paid(true)
                 .sent(false)
-                .shipmentCompanyName("InPost")
+                .shipmentMethod(IN_POST)
                 .shippingPrice(new BigDecimal(20))
                 .deliveryDays(3)
                 .address("Wilcza, 5/6, Warsaw, 02-234")
@@ -212,7 +213,7 @@ class OrderControllerTests {
                 .totalOrderPrice(new BigDecimal(100))
                 .paid(true)
                 .sent(true)
-                .shipmentCompanyName("InPost")
+                .shipmentMethod(IN_POST)
                 .shippingPrice(new BigDecimal(20))
                 .deliveryDays(3)
                 .address("Wilcza, 5/6, Warsaw, 02-234")
@@ -333,7 +334,7 @@ class OrderControllerTests {
                 .andExpect(jsonPath("%s.totalOrderPrice".formatted(expr), is(100)))
                 .andExpect(jsonPath("%s.paid".formatted(expr), is(paid)))
                 .andExpect(jsonPath("%s.sent".formatted(expr), is(sent)))
-                .andExpect(jsonPath("%s.shipmentCompanyName".formatted(expr), is("InPost")))
+                .andExpect(jsonPath("%s.shipmentMethod".formatted(expr), is(IN_POST.name())))
                 .andExpect(jsonPath("%s.shippingPrice".formatted(expr), is(20)))
                 .andExpect(jsonPath("%s.deliveryDays".formatted(expr), is(3)))
                 .andExpect(jsonPath("%s.address".formatted(expr), is("Wilcza, 5/6, Warsaw, 02-234")))

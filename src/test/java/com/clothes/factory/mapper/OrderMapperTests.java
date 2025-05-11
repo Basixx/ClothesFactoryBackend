@@ -1,9 +1,5 @@
 package com.clothes.factory.mapper;
 
-import com.clothes.factory.auxiliary.shipment.strategy.companies.Dhl;
-import com.clothes.factory.auxiliary.shipment.strategy.companies.Fedex;
-import com.clothes.factory.auxiliary.shipment.strategy.companies.InPost;
-import com.clothes.factory.auxiliary.shipment.strategy.companies.Ups;
 import com.clothes.factory.domain.Order;
 import com.clothes.factory.domain.OrderDto;
 import com.clothes.factory.domain.User;
@@ -19,6 +15,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.clothes.factory.auxiliary.ShipmentMethod.DHL;
+import static com.clothes.factory.auxiliary.ShipmentMethod.FEDEX;
+import static com.clothes.factory.auxiliary.ShipmentMethod.IN_POST;
+import static com.clothes.factory.auxiliary.ShipmentMethod.UPS;
 import static com.clothes.factory.object_mother.OrderMother.createOrder;
 import static com.clothes.factory.object_mother.UserMother.createUser1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,7 +44,7 @@ public class OrderMapperTests {
         //Given
         User user = createUser1();
 
-        Order order = createOrder(1L, user, new BigDecimal(30), new Dhl());
+        Order order = createOrder(1L, user, new BigDecimal(30), DHL);
         when(clothMapper.mapToClothesIdsFromClothes(anyList()))
                 .thenReturn(new ArrayList<>());
 
@@ -68,8 +68,8 @@ public class OrderMapperTests {
     void testMapToOrderDtoList() {
         //Given
         User user = createUser1();
-        Order order1 = createOrder(2L, user, new BigDecimal(20), new Fedex());
-        Order order2 = createOrder(3L, user, new BigDecimal(50), new Ups());
+        Order order1 = createOrder(2L, user, new BigDecimal(20), FEDEX);
+        Order order2 = createOrder(3L, user, new BigDecimal(50), UPS);
 
         List<Order> orders = new ArrayList<>();
         orders.add(order1);
@@ -109,9 +109,9 @@ public class OrderMapperTests {
         //Given
         User user = createUser1();
 
-        Order order1 = createOrder(5L, user, new BigDecimal(50), new InPost());
-        Order order2 = createOrder(6L, user, new BigDecimal(200), new Dhl());
-        Order order3 = createOrder(7L, user, new BigDecimal(70), new Fedex());
+        Order order1 = createOrder(5L, user, new BigDecimal(50), IN_POST);
+        Order order2 = createOrder(6L, user, new BigDecimal(200), DHL);
+        Order order3 = createOrder(7L, user, new BigDecimal(70), FEDEX);
 
         List<Order> orders = new ArrayList<>();
 

@@ -1,6 +1,6 @@
 package com.clothes.factory.object_mother;
 
-import com.clothes.factory.auxiliary.shipment.strategy.ShipmentCompany;
+import com.clothes.factory.auxiliary.ShipmentMethod;
 import com.clothes.factory.domain.Order;
 import com.clothes.factory.domain.OrderDto;
 import com.clothes.factory.domain.User;
@@ -9,9 +9,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import static com.clothes.factory.auxiliary.ShipmentMethod.IN_POST;
+
 public class OrderMother {
 
-    public static Order createOrder(Long id, User user, BigDecimal price, ShipmentCompany shipmentCompany) {
+    public static Order createOrder(Long id, User user, BigDecimal price, ShipmentMethod shipmentMethod) {
 
         String address = user.toString();
 
@@ -21,7 +23,7 @@ public class OrderMother {
                 .totalOrderPrice(price)
                 .paid(true)
                 .sent(false)
-                .shipmentCompany(shipmentCompany)
+                .shipmentMethod(shipmentMethod)
                 .shippingPrice(new BigDecimal(20))
                 .address(address)
                 .user(user)
@@ -36,7 +38,7 @@ public class OrderMother {
                 .totalOrderPrice(new BigDecimal(100))
                 .paid(false)
                 .sent(false)
-                .shipmentCompanyName("InPost")
+                .shipmentMethod(IN_POST)
                 .shippingPrice(new BigDecimal(20))
                 .deliveryDays(3)
                 .address("Wilcza, 5/6, Warsaw, 02-234")

@@ -1,7 +1,6 @@
 package com.clothes.factory.service;
 
 import com.clothes.factory.auxiliary.Prices;
-import com.clothes.factory.auxiliary.shipment.strategy.companies.Fedex;
 import com.clothes.factory.domain.Cart;
 import com.clothes.factory.domain.Cloth;
 import com.clothes.factory.domain.Order;
@@ -32,6 +31,7 @@ import static com.clothes.factory.auxiliary.Fashion.HOODIE;
 import static com.clothes.factory.auxiliary.Fashion.T_SHIRT;
 import static com.clothes.factory.auxiliary.Font.ARIAL;
 import static com.clothes.factory.auxiliary.Font.COMIC_SANS;
+import static com.clothes.factory.auxiliary.ShipmentMethod.FEDEX;
 import static com.clothes.factory.auxiliary.Size.M;
 import static com.clothes.factory.auxiliary.Size.XXL;
 import static com.clothes.factory.object_mother.CartMother.createCart;
@@ -119,7 +119,7 @@ public class ClothServiceTests {
         List<Cloth> clothesList = List.of(cloth1, cloth2);
 
         User user = createUser1();
-        Order order = createOrder(8L, user, new BigDecimal(100), new Fedex());
+        Order order = createOrder(8L, user, new BigDecimal(100), FEDEX);
 
         order.setClothesList(clothesList);
 
