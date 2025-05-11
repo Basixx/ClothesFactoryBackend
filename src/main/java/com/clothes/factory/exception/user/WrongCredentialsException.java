@@ -1,5 +1,5 @@
 package com.clothes.factory.exception.user;
 
-public class WrongCredentialsException extends Exception {
+public class WrongCredentialsException extends RuntimeException {
 
 }

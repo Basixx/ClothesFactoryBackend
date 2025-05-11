@@ -1,4 +1,5 @@
 package com.clothes.factory.exception.order;
 
-public class OrderNotPaidException extends Exception {
+public class OrderNotPaidException extends RuntimeException {
+
 }

@@ -7,7 +7,6 @@ import com.clothes.factory.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,24 +40,15 @@ public class OrderMapper {
     }
 
     public List<Order> mapToOrdersFromIds(final List<Long> ordersIds) throws OrderNotFoundException {
-        List<Order> orders = new ArrayList<>();
-
-        if (!ordersIds.isEmpty()) {
-            for (Long orderId : ordersIds) {
-                orders.add(orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new));
-            }
-        }
-        return orders;
+        return ordersIds.stream()
+                .map(id -> orderRepository.findById(id).orElseThrow(OrderNotFoundException::new))
+                .toList();
     }
 
     public List<Long> mapToOrdersIdsFromOrders(final List<Order> orders) {
-        List<Long> ordersIds = new ArrayList<>();
-        if (!orders.isEmpty()) {
-            ordersIds = orders.stream()
-                    .map(Order::getId)
-                    .toList();
-        }
-        return ordersIds;
+        return orders.stream()
+                .map(Order::getId)
+                .toList();
     }
 
 }
