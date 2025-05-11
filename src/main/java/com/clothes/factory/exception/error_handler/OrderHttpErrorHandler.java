@@ -4,17 +4,20 @@ import com.clothes.factory.exception.order.OrderAlreadyPaidException;
 import com.clothes.factory.exception.order.OrderAlreadySentException;
 import com.clothes.factory.exception.order.OrderNotFoundException;
 import com.clothes.factory.exception.order.OrderNotPaidException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+@Slf4j
 @ControllerAdvice
 public class OrderHttpErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(OrderNotFoundException.class)
     public ResponseEntity<Object> handleOrderNotFoundException() {
+        log.error("Order not found.");
         return new ResponseEntity<>("Order with given id doesn't exist or can't be found.", HttpStatus.NOT_FOUND);
     }
 

@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -55,25 +54,15 @@ public class ClothMapper {
     }
 
     public List<Cloth> mapToClothesFromIds(final List<Long> clothesIds) throws ClothNotFoundException {
-        List<Cloth> clothes = new ArrayList<>();
-
-        if (!clothesIds.isEmpty()) {
-            for (Long clothId : clothesIds) {
-                Cloth cloth = clothRepository.findById(clothId).orElseThrow(ClothNotFoundException::new);
-                clothes.add(cloth);
-            }
-        }
-        return clothes;
+        return clothesIds.stream()
+                .map(id -> clothRepository.findById(id).orElseThrow(ClothNotFoundException::new))
+                .toList();
     }
 
     public List<Long> mapToClothesIdsFromClothes(final List<Cloth> clothes) {
-        List<Long> clothesIds = new ArrayList<>();
-        if (!clothes.isEmpty()) {
-            clothesIds = clothes.stream()
-                    .map(Cloth::getId)
-                    .toList();
-        }
-        return clothesIds;
+        return clothes.stream()
+                .map(Cloth::getId)
+                .toList();
     }
 
 }

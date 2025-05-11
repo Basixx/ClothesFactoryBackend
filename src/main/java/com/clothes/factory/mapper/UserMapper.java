@@ -33,9 +33,7 @@ public class UserMapper {
                         ? null
                         : cartRepository.findById(userRequestDto.getCartId())
                         .orElseThrow(CartNotFoundException::new)
-                ).ordersList(userRequestDto.getOrdersIdList() == null
-                        ? null
-                        : orderMapper.mapToOrdersFromIds(userRequestDto.getOrdersIdList())
+                ).ordersList(orderMapper.mapToOrdersFromIds(userRequestDto.getOrdersIdList())
                 ).build();
     }
 

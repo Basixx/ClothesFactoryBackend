@@ -1,4 +1,5 @@
 package com.clothes.factory.exception.user;
 
-public class UserNotFoundException extends Exception {
+public class UserNotFoundException extends RuntimeException {
+
 }
