@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import static com.clothes.factory.auxiliary.ShipmentMethod.IN_POST;
+
 public class OrderMother {
 
     public static Order createOrder(Long id, User user, BigDecimal price, ShipmentMethod shipmentMethod) {
@@ -36,7 +38,7 @@ public class OrderMother {
                 .totalOrderPrice(new BigDecimal(100))
                 .paid(false)
                 .sent(false)
-                .shipmentCompanyName("InPost")
+                .shipmentMethod(IN_POST)
                 .shippingPrice(new BigDecimal(20))
                 .deliveryDays(3)
                 .address("Wilcza, 5/6, Warsaw, 02-234")

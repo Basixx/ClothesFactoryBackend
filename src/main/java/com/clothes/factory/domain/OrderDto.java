@@ -1,5 +1,6 @@
 package com.clothes.factory.domain;
 
+import com.clothes.factory.auxiliary.ShipmentMethod;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +21,7 @@ public class OrderDto {
     private BigDecimal totalOrderPrice;
     private boolean paid;
     private boolean sent;
-    private String shipmentCompanyName;
+    private ShipmentMethod shipmentMethod;
     private BigDecimal shippingPrice;
     private int deliveryDays;
     private String address;
