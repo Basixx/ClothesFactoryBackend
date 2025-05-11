@@ -1,6 +1,6 @@
 package com.clothes.factory.controller;
 
-import com.clothes.factory.auxiliary.shipment.strategy.ShipmentMethod;
+import com.clothes.factory.auxiliary.ShipmentMethod;
 import com.clothes.factory.domain.OrderDto;
 import com.clothes.factory.exception.cart.EmptyCartException;
 import com.clothes.factory.exception.order.OrderAlreadyPaidException;

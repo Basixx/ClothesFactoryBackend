@@ -1,12 +1,6 @@
 package com.clothes.factory.service;
 
-import com.clothes.factory.auxiliary.shipment.strategy.CompanySetter;
-import com.clothes.factory.auxiliary.shipment.strategy.ShipmentCompany;
-import com.clothes.factory.auxiliary.shipment.strategy.ShipmentMethod;
-import com.clothes.factory.auxiliary.shipment.strategy.companies.Dhl;
-import com.clothes.factory.auxiliary.shipment.strategy.companies.Fedex;
-import com.clothes.factory.auxiliary.shipment.strategy.companies.InPost;
-import com.clothes.factory.auxiliary.shipment.strategy.companies.Ups;
+import com.clothes.factory.auxiliary.ShipmentMethod;
 import com.clothes.factory.domain.Cart;
 import com.clothes.factory.domain.Cloth;
 import com.clothes.factory.domain.Order;
@@ -36,6 +30,10 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import static com.clothes.factory.auxiliary.ShipmentMethod.DHL;
+import static com.clothes.factory.auxiliary.ShipmentMethod.FEDEX;
+import static com.clothes.factory.auxiliary.ShipmentMethod.IN_POST;
+import static com.clothes.factory.auxiliary.ShipmentMethod.UPS;
 import static com.clothes.factory.object_mother.CartMother.createCart;
 import static com.clothes.factory.object_mother.ClothMother.createCloth1;
 import static com.clothes.factory.object_mother.OrderMother.createOrder;
@@ -79,17 +77,15 @@ public class OrderServiceTests {
     @Mock
     private AdminMailCreator adminMailCreator;
 
-    @Mock
-    private CompanySetter companySetter;
 
     @Test
     void testGetAllOrders() {
         //Given
         User user1 = createUser1();
-        Order order1 = createOrder(5L, user1, new BigDecimal(100), new InPost());
+        Order order1 = createOrder(5L, user1, new BigDecimal(100), IN_POST);
 
         User user2 = createUser2();
-        Order order2 = createOrder(6L, user2, new BigDecimal(200), new Dhl());
+        Order order2 = createOrder(6L, user2, new BigDecimal(200), DHL);
 
         List<Order> orderList = List.of(order1, order2);
         when(orderRepository.findAll(0, 10))
@@ -108,8 +104,8 @@ public class OrderServiceTests {
     void testGetAllUsersOrder() {
         //Given
         User user = createUser1();
-        Order order1 = createOrder(5L, user, new BigDecimal(100), new Ups());
-        Order order2 = createOrder(6L, user, new BigDecimal(200), new Fedex());
+        Order order1 = createOrder(5L, user, new BigDecimal(100), UPS);
+        Order order2 = createOrder(6L, user, new BigDecimal(200), FEDEX);
         List<Order> orderList = List.of(order1, order2);
 
         when(orderRepository.findAllByUserId(anyLong(), anyInt(), anyInt()))
@@ -132,8 +128,8 @@ public class OrderServiceTests {
         Cloth cloth = createCloth1();
         cart.setClothesList(List.of(cloth));
         user.setCart(cart);
-        ShipmentCompany shipmentCompany = new Fedex();
-        Order order = createOrder(9L, user, new BigDecimal(500), shipmentCompany);
+        ShipmentMethod shipmentMethod = FEDEX;
+        Order order = createOrder(9L, user, new BigDecimal(500), shipmentMethod);
         order.setClothesList(List.of(cloth));
         when(userRepository.findById(anyLong()))
                 .thenReturn(Optional.of(user));
@@ -141,16 +137,14 @@ public class OrderServiceTests {
                 .thenReturn(Optional.of(cart));
         when(orderRepository.save(any()))
                 .thenReturn(order);
-        when(companySetter.setCompany(any()))
-                .thenReturn(shipmentCompany);
         doNothing().when(emailService)
                 .send(any());
 
         //When
-        Order resultOrder = orderService.createOrder(6L, ShipmentMethod.UPS);
+        Order resultOrder = orderService.createOrder(6L, UPS);
 
         //Then
-        assertEquals(shipmentCompany, resultOrder.getShipmentCompany());
+        assertEquals(shipmentMethod, resultOrder.getShipmentMethod());
         assertEquals(user, resultOrder.getUser());
         assertEquals(1, resultOrder.getClothesList().size());
     }
@@ -162,8 +156,7 @@ public class OrderServiceTests {
         Cloth cloth = createCloth1();
         cart.setClothesList(List.of(cloth));
         user.setCart(cart);
-        ShipmentCompany shipmentCompany = new Fedex();
-        Order order = createOrder(9L, user, new BigDecimal(500), shipmentCompany);
+        Order order = createOrder(9L, user, new BigDecimal(500), FEDEX);
         order.setClothesList(List.of(cloth));
         order.setPaid(false);
 
@@ -186,8 +179,7 @@ public class OrderServiceTests {
         Cloth cloth = createCloth1();
         cart.setClothesList(List.of(cloth));
         user.setCart(cart);
-        ShipmentCompany shipmentCompany = new Fedex();
-        Order order = createOrder(9L, user, new BigDecimal(500), shipmentCompany);
+        Order order = createOrder(9L, user, new BigDecimal(500), FEDEX);
         order.setClothesList(List.of(cloth));
 
         when(orderRepository.findById(anyLong()))

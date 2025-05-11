@@ -1,8 +1,6 @@
 package com.clothes.factory.repository;
 
 import com.clothes.factory.BaseTest;
-import com.clothes.factory.auxiliary.shipment.strategy.ShipmentCompany;
-import com.clothes.factory.auxiliary.shipment.strategy.companies.Fedex;
 import com.clothes.factory.domain.Cloth;
 import com.clothes.factory.domain.Order;
 import com.clothes.factory.exception.order.OrderNotFoundException;
@@ -15,6 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import static com.clothes.factory.auxiliary.ShipmentMethod.FEDEX;
 import static com.clothes.factory.object_mother.ClothMother.createCloth1;
 import static com.clothes.factory.object_mother.ClothMother.createCloth2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -39,18 +38,15 @@ public class OrderRepositoryTests extends BaseTest {
         Cloth cloth2 = createCloth2();
         cloth2.setId(null);
 
-        ShipmentCompany fedex = new Fedex();
-
         Order order = Order.builder()
                 .orderDate(LocalDate.of(2022, 4, 23))
                 .clothesList(new ArrayList<>())
                 .totalOrderPrice(new BigDecimal(50))
                 .paid(true)
                 .sent(false)
-                .shipmentCompany(fedex)
-                .shipmentCompanyName(fedex.getName())
-                .shippingPrice(new BigDecimal(20))
-                .deliveryDays(fedex.getShipmentSetting().getDeliveryDays())
+                .shipmentMethod(FEDEX)
+                .shippingPrice(FEDEX.shippingPrice())
+                .deliveryDays(FEDEX.deliveryDays())
                 .address("address")
                 .build();
         order.getClothesList().add(cloth1);

@@ -1,6 +1,6 @@
 package com.clothes.factory.domain;
 
-import com.clothes.factory.auxiliary.shipment.strategy.ShipmentCompany;
+import com.clothes.factory.auxiliary.ShipmentMethod;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,10 +49,7 @@ public class Order {
     private boolean sent;
 
     @Transient
-    private ShipmentCompany shipmentCompany;
-
-    @NotNull
-    private String shipmentCompanyName;
+    private ShipmentMethod shipmentMethod;
 
     @NotNull
     private BigDecimal shippingPrice;

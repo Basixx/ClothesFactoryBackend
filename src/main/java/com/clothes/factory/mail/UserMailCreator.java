@@ -47,7 +47,7 @@ public class UserMailCreator {
                 calculateCurrency("GBP", totalPrice),
                 order.getId(),
                 order.getAddress(),
-                order.getShipmentCompanyName(), order.getDeliveryDays()
+                order.getShipmentMethod(), order.getDeliveryDays()
         ));
         return new Mail(userEmail, subject, message.toString());
     }
